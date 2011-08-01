@@ -40,6 +40,17 @@ test "equals", () ->
     ok(not eq(1, 1, 1, 2), "Shouldn't be equal")
     ok(not eq(1, 2, 1.0, 1), "Shouldn't be equal")
 
+test "sum", () ->
+    p = new timber.Point(1, 2)
+    v = new timber.Vector(4, -5)
+
+    p2 = p.sum(v)
+
+    ok(p2 instanceof timber.Point, "summing vector and point produces a point")
+
+    equals(p2.x, 5, "addition works")
+    equals(p2.y, -3, "addition works")
+
 
 
 module "timber.Vector"
@@ -56,7 +67,6 @@ test "length", () ->
 
 
 test "normalize", () ->
-
     equalsNorm = (x1, y1, x2, y2) ->
         n = new timber.Vector(x1, y1).normalize()
         e = new timber.Vector(x2, y2)
@@ -71,4 +81,43 @@ test "normalize zero vector", () ->
         new timber.Vector(0, 0).normalize()
     , "The zero vector can't be normalized")
 
+
+test "scale", () ->
+    v = new timber.Vector(3, 4)
+    equals(v.scale(0).length(), 0, "Scaling by zero produces the zero vector")
+    equals(v.scale(1).length(), 5, "Scaling by one is idempotent")
+    equals(v.scale(2).x, 6, "Scaling works")
+    equals(v.scale(2).y, 8, "Scaling works")
+
+
+
+
+
+
+module "timber.Environment"
+
+
+test "Static elements don't move", () ->
+    p = new timber.Point(5, 5)
+    d = new timber.Vector(1, 0)
+    s = 0
+    e = new timber.Element(p, d, s)
+
+    env = new timber.Environment()
+    env.elapse(e, 100)
+    ok(e.position.equals(p.copy()), "Position is unchanged")
+
+
+test "Elements with speed & direction move", () ->
+    p = new timber.Point(0, 0)
+    d = new timber.Vector(1, 0)
+    s = 1
+    e = new timber.Element(p, d, s)
+
+    env = new timber.Environment()
+    env.elapse(e, 1000)
+
+    equals(e.position.x, 1000, "Moves along x axis")
+    equals(e.position.y, 0, "Moves along x axis")
+    
 
