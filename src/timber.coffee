@@ -163,8 +163,9 @@ class timber.Environment
     elapse: (element, milliseconds) ->
 
         velocity = element.speed * milliseconds
-        d = element.direction.scale(velocity)
-        element.position = element.position.sum(d)
+        displacement = element.direction.scale(velocity)
+        position = element.position.sum(displacement)
+        element.position = position
         return element
 
 # 
