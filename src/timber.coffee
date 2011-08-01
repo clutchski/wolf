@@ -91,6 +91,7 @@ class timber.Point
     # @param other {Object} the point to compare against.
     # @return {Boolean}
     equals : (other) ->
+        # FIXME: floating point math. What to do here?
         return @x == other.x and @y == other.y
 
 
@@ -101,7 +102,10 @@ class timber.Vector extends timber.Point
     #
     # @return {Object} a normalized vector
     normalize : () ->
-        return new timber.Vector(0, 0)
+        length = this.length()
+        if length == 0
+            throw new Error("the zero vector can't be normalized")
+        return new timber.Vector(@x/length, @y/length)
 
     # Return this vector's length.
     #

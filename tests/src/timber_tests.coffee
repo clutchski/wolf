@@ -40,8 +40,10 @@ test "equals", () ->
     ok(not eq(1, 1, 1, 2), "Shouldn't be equal")
     ok(not eq(1, 2, 1.0, 1), "Shouldn't be equal")
 
- 
+
+
 module "timber.Vector"
+
 
 test "length", () ->
     length = (x, y) ->
@@ -49,6 +51,24 @@ test "length", () ->
     equals(length(0, 0), 0, "No length is zero")
     equals(length(1, 0), 1, "x unit vector has length 1")
     equals(length(0, 1), 1, "y unit vector has length 1")
-    equals(length(3, 4), 5, "Pythagoras works")
-    equals(length(-3, 4), 5, "Pythagoras works with negative numbers")
+    equals(length(3, 4), 5, "Classic pythagorarean vector works")
+    equals(length(-3, 4), 5, "Works with negative numbers")
+
+
+test "normalize", () ->
+
+    equalsNorm = (x1, y1, x2, y2) ->
+        n = new timber.Vector(x1, y1).normalize()
+        e = new timber.Vector(x2, y2)
+        return n.equals(e)
+
+    ok(equalsNorm(1, 0, 1, 0), "x unit vector is unchanged")
+    ok(equalsNorm(0, 1, 0, 1), "y unit vector is unchanged")
+    ok(equalsNorm(3, 4, 0.6, 0.8), "pythagorarean unit vector is normalized")
+
+test "normalize zero vector", () ->
+    raises(() ->
+        new timber.Vector(0, 0).normalize()
+    , "The zero vector can't be normalized")
+
 
