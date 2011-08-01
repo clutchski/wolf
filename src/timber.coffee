@@ -70,7 +70,6 @@ class timber.Canvas
 
         @elements = []
 
-
     # Add the element to the canvas.
     #
     # @param element {Object} the timber element to add to the canvas
@@ -82,7 +81,11 @@ class timber.Canvas
     render: () ->
         (e.render(@context) for e in @elements)
 
- 
+
+    # Clear the canvas.
+    clear: () ->
+        @context.clearRect(0, 0, @canvas.width, @canvas.height)
+        
 
 class timber.Point
 
@@ -189,6 +192,45 @@ class timber.Element
     # @param context {Object} the HTML5 canvas context
     render : (context) ->
         throw new Error("Not Implemented error")
+
+
+#
+# A circle element.
+#
+
+class timber.Circle extends timber.Element
+
+    constructor : (position, direction, speed, radius) ->
+        super(position, direction, speed)
+        @radius = radius
+
+    render : (context) ->
+        context.beginPath()
+        context.arc(@position.x, @position.y, @radius, 0, Math.PI *2)
+        context.stroke()
+
+
+
+class timber.Engine
+
+    constructor : (canvas, environment) ->
+        @logger = new timber.Logger("timber.Engine")
+        @canvas = canvas
+        @environment = environment
+        @refreshRate = 35
     
+    run : () ->
+        setTimeout () =>
+            @canvas.clear()
+            @canvas.render()
+            elements = @canvas.elements
+            for e in elements
+                @environment.elapse(e, @refreshRate)
+            @run()
+        , @refreshRate
+                
+            
+        
+        
 
-
+        
