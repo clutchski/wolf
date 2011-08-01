@@ -38,6 +38,7 @@ class timber.Logger
     info : (message) ->
         @_write("INFO", message)
 
+
 #
 # The timber canvas.
 #
@@ -55,6 +56,8 @@ class timber.Canvas
         # Set-up the canvas.
         @canvas = document.getElementById(@id)
         @context = @canvas.getContext("2d")
+        if not @context
+            throw new Error("no context")
 
         @elements = []
 
@@ -87,7 +90,22 @@ class timber.Element
         throw new Error("Not Implemented error")
     
 
-class timber.Circle
+class timber.Circle extends timber.Element
 
+    # Create a circle element.
+    #
+    # @param x {Number} the x offset of the circle's center
+    # @param y {Number} the y offset of the circle's center
+    constructor : (x, y, radius) ->
+        @logger = new timber.Logger("timber.Circle")
+        @x = x
+        @y = y
+        @radius = radius
 
-    
+    render : (context) ->
+        @logger.info("Rendering")
+        context.beginPath()
+        context.arc(@x, @y, @radius, 0, Math.PI * 2)
+        context.stroke()
+        
+
