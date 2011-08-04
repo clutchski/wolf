@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <style type="text/css">
+      body {
+        background-color: #2b2b2b;
+      }
+
+      #game {
+        width:800px;
+        margin-left:auto;
+        margin-right:auto;
+      }
+
+      #circles { 
+        background-color:white;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="game">
+      <canvas id="circles" width="800" height="600"></canvas>
+    </div>
+      
+    
+    <script type="text/javascript" src="../../build/timber.js"></script>
+    <script type="text/javascript" src="circles.js"></script>
+    <script type="text/javascript">
+      window.onload = function () {
+        circles.run();
+      }
+    </script>
+    
+  </body>
+</html>
+  
