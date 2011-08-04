@@ -47,7 +47,6 @@ class timber.Logger
     info : (message) ->
         @_write("INFO", message)
 
-
 #
 # The timber canvas.
 #
@@ -85,7 +84,6 @@ class timber.Canvas
     # Clear the canvas.
     clear: () ->
         @context.clearRect(0, 0, @canvas.width, @canvas.height)
-        
 
 class timber.Point
 
@@ -217,7 +215,7 @@ class timber.Engine
         @logger = new timber.Logger("timber.Engine")
         @canvas = canvas
         @environment = environment
-        @refreshRate = 35
+        @refreshRate = 1
     
     run : () ->
         setTimeout () =>
