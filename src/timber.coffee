@@ -67,18 +67,11 @@ class timber.Canvas
         if not @context
             throw new Error("no context")
 
-        @elements = []
-
-    # Add the element to the canvas.
+    # Render the given elements on the canvas.
     #
-    # @param element {Object} the timber element to add to the canvas
-    add: (element) ->
-        @elements.push(element)
-
-
-    # Render the canvas.
-    render: () ->
-        (e.render(@context) for e in @elements)
+    # @param elements {Array} an array of elements to render.
+    render: (elements) ->
+        (e.render(@context) for e in elements)
 
 
     # Clear the canvas.
@@ -211,24 +204,23 @@ class timber.Circle extends timber.Element
 
 class timber.Engine
 
-    constructor : (canvas, environment) ->
+    constructor : (canvasId) ->
         @logger = new timber.Logger("timber.Engine")
-        @canvas = canvas
-        @environment = environment
+        @canvas = new timber.Canvas(canvasId)
+        @environment = new timber.Environment()
         @refreshRate = 1
+        @elements = []
     
     run : () ->
         setTimeout () =>
             @canvas.clear()
-            @canvas.render()
-            elements = @canvas.elements
-            for e in elements
+            @canvas.render(@elements)
+            for e in @elements
                 @environment.elapse(e, @refreshRate)
             @run()
         , @refreshRate
-                
-            
-        
-        
 
-        
+    # Add the given element to the engine.
+    add : (element) ->
+        @elements.push(element)
+

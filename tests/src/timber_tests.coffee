@@ -12,12 +12,15 @@ test "Non-existant canvas", () ->
     , "A canvas that doesn't exist should throw an error")
 
 
+
+module "timber.Engine"
+
 test "No elements", () ->
-    c = new timber.Canvas("test-canvas")
+    c = new timber.Engine("test-canvas")
     equals(c.elements.length, 0, "New canvas has no elements")
 
 test "Add elements", () ->
-    c = new timber.Canvas("test-canvas")
+    c = new timber.Engine("test-canvas")
     c.add(new timber.Element())
     equals(c.elements.length, 1, "Element was added")
 
