@@ -118,7 +118,7 @@ test "Elements with speed & direction move", () ->
     e = new timber.Element(p, d, s)
 
     env = new timber.Environment()
-    env.elapse(e, 1000)
+    env.elapse([e], 1000)
 
     equals(e.position.x, 1000, "Moves along x axis")
     equals(e.position.y, 0, "Moves along x axis")

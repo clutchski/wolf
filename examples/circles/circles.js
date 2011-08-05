@@ -21,6 +21,8 @@
 
         if (key === 78) {
            circles.addNew();
+        } else if (key === 81) {
+            engine.stop();
         } else {
             var x, y;
             for (var i=0; i<engine.elements.length; i++) {
@@ -28,15 +30,17 @@
                 x = Math.random() * 2 - 1;
                 y = Math.random() * 2 - 1;
               } while (x === 0 || y === 0);
-              engine.elements[i].direction = new timber.Vector(x,
-                  y).normalize();
+
+              var d = new timber.Vector(x, y).normalize();
+              engine.elements[i].direction = d;
+              engine.elements[i].speed = Math.random() * 3;
             }
         }
     };
 
     circles.run = function () {
         $(document).keydown(circles.handleKeypress);
-        engine.run();
+        engine.start();
     };
 
 })();

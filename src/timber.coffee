@@ -137,22 +137,25 @@ class timber.Vector extends timber.Point
 #
 class timber.Environment
 
+    # Create a new environment.
     constructor: () ->
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
-    # Update the element with the effects of the given number of milliseconds
+
+    # Update the elements with the effects of the given number of milliseconds
     # passing.
     #
-    # @param element {Object} the element to update
+    # @param element {Array} the element to update
     # @param milliseconds {Number} the number of ms that have elapsed
-    elapse: (element, milliseconds) ->
+    elapse: (elements, milliseconds) ->
+        
+        for element in elements
+            velocity = element.speed * milliseconds
+            displacement = element.direction.scale(velocity)
+            position = element.position.sum(displacement)
+            element.position = position
 
-        velocity = element.speed * milliseconds
-        displacement = element.direction.scale(velocity)
-        position = element.position.sum(displacement)
-        element.position = position
-        return element
 
 # 
 # An abstract base class for any drawable thing.
@@ -196,23 +199,48 @@ class timber.Circle extends timber.Element
 
 class timber.Engine
 
+    # Create an engine instance.
+    #
+    # @param canvasId {String} the id of the canvas element.
     constructor : (canvasId) ->
         @logger = new timber.Logger("timber.Engine")
         @canvas = new timber.Canvas(canvasId)
         @environment = new timber.Environment()
-        @refreshRate = 1
-        @elements = []
-    
-    run : () ->
-        setTimeout () =>
-            @canvas.clear()
-            @canvas.render(@elements)
-            for e in @elements
-                @environment.elapse(e, @refreshRate)
-            @run()
-        , @refreshRate
 
-    # Add the given element to the engine.
+        @elements = []
+        @timestamp = null
+        @continue = true
+   
+    # Start the engine's event loop.
+    start : () ->
+        @continue = true
+        @timestamp = new Date()
+        @loop()
+
+    # Stop the engine's event loop.
+    stop : () ->
+        @continue = false
+        @timestamp = null
+
+    # Add given element to the engine.
+    #
+    # @param element {Object} the element to be added
     add : (element) ->
         @elements.push(element)
 
+    loop : () ->
+        # Stop, if so desired.
+        return if not @continue
+
+        # Update the state of the world.
+        now = new Date()
+        elapsed = now - @timestamp
+        @environment.elapse(@elements, 1)
+        @canvas.clear()
+        @canvas.render(@elements)
+        @timestamp = now
+
+        # Loop again, when the stack clear.
+        setTimeout () =>
+            @.loop()
+        , 10
