@@ -11,14 +11,6 @@ root = this
 root.timber = timber
 
 
-# Throw an assertion error if the given condition is not true.
-#
-# @param condition {Boolean} the condition to test
-# @param message {String} An optional error message
-timber.assert = (condition, message='') ->
-    # Add in debug mode eventually?
-    throw new Error("Assert error #{message}") if condition
-
 
 #
 # The timber logger.
