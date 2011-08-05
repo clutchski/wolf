@@ -1,6 +1,12 @@
 #
 # Timber is a javascript game engine.
 #
+# It uses the following units for it's (very basic) physics
+# calculations:
+#
+#   length = pixels
+#   time   = ms
+#
 
 
 timber = {}
