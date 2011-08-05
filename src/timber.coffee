@@ -234,6 +234,7 @@ class timber.Engine
     add : (element) ->
         @elements.push(element)
 
+    # Run the engine's event loop.
     loop : () ->
         # Stop, if so desired.
         return if not @continue
@@ -241,7 +242,7 @@ class timber.Engine
         # Update the state of the world.
         now = new Date()
         elapsed = now - @timestamp
-        @environment.elapse(@elements, 1)
+        @environment.elapse(@elements, elapsed)
         @canvas.clear()
         @canvas.render(@elements)
         @timestamp = now
@@ -249,4 +250,4 @@ class timber.Engine
         # Loop again, when the stack clear.
         setTimeout () =>
             @.loop()
-        , 10
+        , 0
