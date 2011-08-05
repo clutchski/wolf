@@ -117,7 +117,7 @@ class timber.Vector extends timber.Point
     # @return {Object} a normalized vector
     normalize : () ->
         if @x == 0 and @y == 0
-            throw new Error("the zero vector can't be normalized")
+            return new timber.Vector(0, 0)
         length = this.length()
         return new timber.Vector(@x/length, @y/length)
 

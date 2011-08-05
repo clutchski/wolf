@@ -80,9 +80,9 @@ test "normalize", () ->
     ok(equalsNorm(3, 4, 0.6, 0.8), "pythagorarean unit vector is normalized")
 
 test "normalize zero vector", () ->
-    raises(() ->
-        new timber.Vector(0, 0).normalize()
-    , "The zero vector can't be normalized")
+    v = new timber.Vector(0, 0).normalize()
+    equals(0, v.x, "x is zero")
+    equals(0, v.y, "y is zero")
 
 
 test "scale", () ->
