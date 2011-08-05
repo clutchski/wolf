@@ -31,7 +31,7 @@ class timber.Logger
         @module = module
 
     _write : (level, message) ->
-        console.log("#{@module} | #{level} | #{message}") if console
+        console.log([level, @module, message].join(" | ")) if console
 
     # Log a message at the debug level.
     #
