@@ -126,6 +126,7 @@ class timber.Vector extends timber.Point
     # Return a new vector scaled by the given value.
     #
     # @param scalar {Number} the value to scale by
+    # @return {Object} the scaled vector.
     scale : (scalar) ->
         return new timber.Vector(@x*scalar, @y*scalar)
 
@@ -134,7 +135,6 @@ class timber.Vector extends timber.Point
     # @return {Number}
     length : () ->
         return Math.sqrt(@x*@x + @y*@y)
-
 
 
 
