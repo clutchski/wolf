@@ -45,6 +45,7 @@ class timber.Logger
     info : (message) ->
         @_write("INFO", message)
 
+
 #
 # The timber canvas.
 #
@@ -76,6 +77,7 @@ class timber.Canvas
     clear: () ->
         @context.clearRect(0, 0, @canvas.width, @canvas.height)
 
+
 class timber.Point
 
     # Create a point.
@@ -103,7 +105,7 @@ class timber.Point
     # vector.
     #
     # @param vector {Object}
-    # @return {Objec} the resultant point
+    # @return {Object} the resultant point
     sum : (vector) ->
         return new timber.Vector(@x + vector.x, @y + vector.y)
 
