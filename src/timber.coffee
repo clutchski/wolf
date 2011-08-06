@@ -249,7 +249,7 @@ class timber.Engine
         @canvas.render(@elements)
         @timestamp = now
 
-        # Loop again, when the stack clear.
+        # Loop again, when the stack clears.
         setTimeout () =>
             @.loop()
         , 0
