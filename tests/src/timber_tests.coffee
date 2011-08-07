@@ -84,6 +84,14 @@ test "normalize zero vector", () ->
     equals(0, v.x, "x is zero")
     equals(0, v.y, "y is zero")
 
+test "sum", () ->
+    x = new timber.Vector(-1, -5)
+    y = new timber.Vector(1, 4)
+    s = x.sum(y)
+
+    equals(s.x, 0, "x is right")
+    equals(s.y, -1, "y is right")
+
 
 test "scale", () ->
     v = new timber.Vector(3, 4)
@@ -91,8 +99,6 @@ test "scale", () ->
     equals(v.scale(1).length(), 5, "Scaling by one is idempotent")
     equals(v.scale(2).x, 6, "Scaling works")
     equals(v.scale(2).y, 8, "Scaling works")
-
-
 
 
 

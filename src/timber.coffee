@@ -17,6 +17,15 @@ root = this
 root.timber = timber
 
 
+#
+# Utility functions.
+#
+
+
+timber.square = (n) ->
+    return n * n
+
+
 
 #
 # The timber logger.
@@ -138,7 +147,12 @@ class timber.Vector extends timber.Point
     length : () ->
         return Math.sqrt(@x*@x + @y*@y)
 
-
+    # Return the vector sum of this and the other vector.
+    #
+    # @param {Object} the other vector
+    # @return {Object}
+    sum : (other) ->
+        return new timber.Vector(@x + other.x, @y + other.y)
 
 
 #
@@ -152,6 +166,8 @@ class timber.Environment
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
+        @density = 0.8  # The density of the environment's medium. 
+
 
     # Update the elements with the effects of the given number of milliseconds
     # passing.
@@ -161,10 +177,34 @@ class timber.Environment
     elapse: (elements, milliseconds) ->
         
         for element in elements
-            velocity = element.speed * milliseconds
-            displacement = element.direction.scale(velocity)
+
+
+            forces = [ element.velocity()]
+
+            if element.speed > 0.05
+                forces.push(@drag(element))
+
+            resultant = new timber.Vector(0, 0)
+            for force in forces
+                resultant = resultant.sum(force)
+
+            displacement = resultant.scale(milliseconds)
             position = element.position.sum(displacement)
+
             element.position = position
+            element.speed = resultant.length()
+            element.direction = resultant.normalize()
+
+    # Return the force of drag on the element.
+    #
+    # @param {Object} the element moving through the environment
+    # @return {Object} the drag on the element.
+    drag : (element) ->
+        m = 0.5 * @density * timber.square(element.speed) *
+                             element.dragCoefficient *
+                             element.area
+
+        return element.direction.scale(-m)
 
 
 # 
@@ -181,6 +221,15 @@ class timber.Element
         @position = position
         @direction = direction
         @speed = speed
+
+        @area = 1
+        @dragCoefficient =  0.7
+
+    # Return the element's velocity.
+    #
+    # @return {Object} the velocity vector.
+    velocity : () ->
+        return @direction.normalize().scale(@speed)
 
 
     # Render the element on the given canvas context.
