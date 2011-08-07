@@ -10,29 +10,30 @@
     <script type="text/javascript" src="../../build/timber.js"></script>
     <script type="text/javascript" src="../common/jquery-1.6.2.js"></script>
     <script type="text/javascript">
-(function () {
+$(document).ready(function () {
 
-    var circles = {}; // Root object
 
     var engine = new timber.Engine("example");
     var logger = new timber.Logger("app");
 
-    circles.addNew = function () {
+    var addNew = function () {
         var p = new timber.Point(0, 0);
         var d = new timber.Vector(1, 1).normalize();
         var circle = new timber.Circle(p, d, 1, 100);
         engine.add(circle);
     };
 
-    circles.handleKeypress = function (event) {
+    var handleKeypress = function (event) {
         var key = (event.which) ? event.which : e.keyCode;
         logger.debug("keypress: " + event.which);
 
         if (key === 78) {
-           circles.addNew();
+           addNew();
         } else if (key === 81) {
             engine.stop();
         } else {
+          
+            // Scatter the circles.
             var x, y;
             for (var i=0; i<engine.elements.length; i++) {
               do {
@@ -47,11 +48,10 @@
         }
     };
 
-    $(document).keydown(circles.handleKeypress);
+    $(document).keydown(handleKeypress);
     engine.start();
 
-})();
-
+});
   </script>
     
   </body>
