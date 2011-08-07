@@ -1,35 +1,58 @@
 <html>
   <head>
-    <style type="text/css">
-      body {
-        background-color: #2b2b2b;
-      }
-
-      #game {
-        width:800px;
-        margin-left:auto;
-        margin-right:auto;
-      }
-
-      #circles { 
-        background-color:white;
-      }
-    </style>
+    <link href="../common/examples.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <div id="game">
-      <canvas id="circles" width="800" height="600"></canvas>
+      <canvas id="example" width="800" height="600"></canvas>
     </div>
-      
     
     <script type="text/javascript" src="../../build/timber.js"></script>
-    <script type="text/javascript" src="../vendor/jquery-1.6.2.js"></script>
-    <script type="text/javascript" src="circles.js"></script>
+    <script type="text/javascript" src="../common/jquery-1.6.2.js"></script>
     <script type="text/javascript">
-      $(function () {
-        circles.run();
-      });
-    </script>
+(function () {
+
+    var circles = {}; // Root object
+
+    var engine = new timber.Engine("example");
+    var logger = new timber.Logger("app");
+
+    circles.addNew = function () {
+        var p = new timber.Point(0, 0);
+        var d = new timber.Vector(1, 1).normalize();
+        var circle = new timber.Circle(p, d, 1, 100);
+        engine.add(circle);
+    };
+
+    circles.handleKeypress = function (event) {
+        var key = (event.which) ? event.which : e.keyCode;
+        logger.debug("keypress: " + event.which);
+
+        if (key === 78) {
+           circles.addNew();
+        } else if (key === 81) {
+            engine.stop();
+        } else {
+            var x, y;
+            for (var i=0; i<engine.elements.length; i++) {
+              do {
+                x = Math.random() * 2 - 1;
+                y = Math.random() * 2 - 1;
+              } while (x === 0 || y === 0);
+
+              var d = new timber.Vector(x, y).normalize();
+              engine.elements[i].direction = d;
+              engine.elements[i].speed = Math.random() * 3;
+            }
+        }
+    };
+
+    $(document).keydown(circles.handleKeypress);
+    engine.start();
+
+})();
+
+  </script>
     
   </body>
 </html>
