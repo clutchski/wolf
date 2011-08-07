@@ -62,6 +62,8 @@ class timber.Canvas
 
         # Set-up the canvas.
         @canvas = document.getElementById(@id)
+        throw new Error("No element with id: #{id}") if not @canvas
+
         @context = @canvas.getContext("2d")
         if not @context
             throw new Error("no context")
