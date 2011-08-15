@@ -166,6 +166,7 @@ class timber.Environment
         @logger.debug("Initializing")
 
         @density = 10  # The density of the environment's medium. 
+        @gravitationalConstant = 0.5
 
 
     # Update the elements with the effects of the given number of milliseconds
@@ -178,7 +179,11 @@ class timber.Environment
         for element in elements
 
             # Find the net force on the element.
-            forces = [element.velocity(), @drag(element)]
+            forces = [
+                element.velocity(),
+                @drag(element),
+                @gravity(element)
+            ]
 
             resultant = forces.reduce (t, s) -> t.sum(s)    #FIXME: not portable
 
@@ -209,6 +214,13 @@ class timber.Environment
 
         return element.direction.scale(-m)
 
+
+    # Return the force of gravity on the given element.
+    #
+    # @param element {Object} 
+    gravity : (element) ->
+        force = new timber.Vector(0, @gravitationalConstant)
+        
 
 # 
 # An abstract base class for any drawable thing.
