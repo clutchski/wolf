@@ -12,6 +12,15 @@ test "Non-existant canvas", () ->
     , "A canvas that doesn't exist should throw an error")
 
 
+module "Element"
+
+test "mass", () ->
+    e = new timber.Element()
+    ok(e.mass, "mass has a default value")
+    e.mass = 10
+    equals(e.mass, 10, "mass is settable")
+
+
 
 module "timber.Engine"
 

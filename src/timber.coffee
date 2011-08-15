@@ -221,7 +221,7 @@ class timber.Element
         @position = position
         @direction = direction
         @speed = speed
-
+        @mass = 1
         @area = 1
         @dragCoefficient =  0.7
 
