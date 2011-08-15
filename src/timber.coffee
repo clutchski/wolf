@@ -183,20 +183,19 @@ class timber.Environment
                 @drag(element),
                 @gravity(element)
             ]
-
             resultant = forces.reduce (t, s) -> t.sum(s)    #FIXME: not portable
 
+            # Calculate the effect of the forces on the element.
             acceleration = resultant.scale(1/element.mass)
-
             velocity = element.velocity().sum(acceleration.scale(milliseconds))
-
             displacement = velocity.scale(milliseconds)
-
             position = element.position.sum(displacement)
 
+            # Update the element.
             element.position = position
             element.speed = velocity.length()
             element.direction = velocity.normalize()
+
 
     # Return the force of drag on the element.
     #
