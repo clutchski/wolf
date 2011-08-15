@@ -180,7 +180,6 @@ class timber.Environment
 
             # Find the net force on the element.
             forces = [
-                element.velocity(),
                 @drag(element),
                 @gravity(element)
             ]

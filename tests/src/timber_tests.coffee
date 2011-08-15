@@ -133,6 +133,9 @@ test "Elements with speed & direction move", () ->
     e = new timber.Element(p, d, s)
 
     env = new timber.Environment()
+    env.gravitationalConstant = 0
+    env.density = 0
+
     env.elapse([e], 1000)
 
     equals(e.position.x, 1000, "Moves along x axis")
