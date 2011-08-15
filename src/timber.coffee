@@ -203,6 +203,9 @@ class timber.Environment
     # @return {Object} the drag on the element.
     drag : (element) ->
 
+        # FIXME: this is broken at low speeds, and will in fact return a force
+        # that is larger than the element's velocity.
+
         s = element.speed
         s = if s > 1 then timber.square(s) else s
 
