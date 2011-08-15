@@ -165,8 +165,8 @@ class timber.Environment
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
-        @density = 10  # The density of the environment's medium. 
-        @gravitationalConstant = 0.5
+        @density = 10              # The density of the environment's medium.
+        @gravitationalConstant = 3 # The strength of the environment's gravity.
 
 
     # Update the elements with the effects of the given number of milliseconds
@@ -219,7 +219,8 @@ class timber.Environment
     #
     # @param element {Object} 
     gravity : (element) ->
-        force = new timber.Vector(0, @gravitationalConstant)
+        # FIXME: technically, we should add drag as well.
+        return new timber.Vector(0, @gravitationalConstant)
         
 
 # 
