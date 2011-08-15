@@ -17,7 +17,7 @@ $(document).ready(function () {
     var p = new timber.Point(0, 0);
     var d = new timber.Vector(1, 1).normalize();
 
-    var element = new timber.Circle(p, d, 1, 100);
+    var element = new timber.Circle(p, d, 0.5, 100);
     element.dragCoefficient = 0.4
     engine.add(element);
 

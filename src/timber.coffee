@@ -21,7 +21,6 @@ root.timber = timber
 # Utility functions.
 #
 
-
 timber.square = (n) ->
     return n * n
 
@@ -166,7 +165,7 @@ class timber.Environment
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
-        @density = 0.8  # The density of the environment's medium. 
+        @density = 10  # The density of the environment's medium. 
 
 
     # Update the elements with the effects of the given number of milliseconds
@@ -178,29 +177,33 @@ class timber.Environment
         
         for element in elements
 
+            # Find the net force on the element.
+            forces = [element.velocity(), @drag(element)]
 
-            forces = [ element.velocity()]
+            resultant = forces.reduce (t, s) -> t.sum(s)    #FIXME: not portable
 
-            if element.speed > 0.05
-                forces.push(@drag(element))
+            acceleration = resultant.scale(1/element.mass)
 
-            resultant = new timber.Vector(0, 0)
-            for force in forces
-                resultant = resultant.sum(force)
+            velocity = element.velocity().sum(acceleration.scale(milliseconds))
 
-            displacement = resultant.scale(milliseconds)
+            displacement = velocity.scale(milliseconds)
+
             position = element.position.sum(displacement)
 
             element.position = position
-            element.speed = resultant.length()
-            element.direction = resultant.normalize()
+            element.speed = velocity.length()
+            element.direction = velocity.normalize()
 
     # Return the force of drag on the element.
     #
     # @param {Object} the element moving through the environment
     # @return {Object} the drag on the element.
     drag : (element) ->
-        m = 0.5 * @density * timber.square(element.speed) *
+
+        s = element.speed
+        s = if s > 1 then timber.square(s) else s
+
+        m = 0.5 * @density * s *
                              element.dragCoefficient *
                              element.area
 
@@ -221,7 +224,7 @@ class timber.Element
         @position = position
         @direction = direction
         @speed = speed
-        @mass = 1
+        @mass = 1000
         @area = 1
         @dragCoefficient =  0.7
 
