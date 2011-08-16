@@ -73,8 +73,7 @@ class timber.Canvas
         throw new Error("No element with id: #{id}") if not @canvas
 
         @context = @canvas.getContext("2d")
-        if not @context
-            throw new Error("no context")
+        throw new Error("no context") if not @context
 
     # Render the given elements on the canvas.
     #
