@@ -140,5 +140,12 @@ test "Elements with speed & direction move", () ->
 
     equals(e.position.x, 1000, "Moves along x axis")
     equals(e.position.y, 0, "Moves along x axis")
+
+test "gravity", () ->
+    ok false, "add tests for gravity"
+
+test "drag", () ->
+    ok false, "add tests for drag"
+
     
 
