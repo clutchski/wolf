@@ -7,19 +7,33 @@ require 'sprockets'
 
 SOURCE_DIR = 'src'
 BUILD_DIR = 'build'
+EXAMPLE_DIR = 'examples'
 
 TEST_SOURCE_DIR = 'tests/src'
 TEST_BUILD_DIR = 'tests/build'
 
+
 #
-# Compilation tasks.
+# Common functions.
 #
 
+# Open the given file with it's default program.
+def open(file)
+    cmd = "gnome-open" # FIXME: not portable
+    sh("#{cmd} #{file}")
+end
 
+
+# Compile the given coffeescript files.
 def compile(source_dir, build_dir, watch=false)
   opts = (watch) ? '--watch' : ''
   sh("coffee #{opts} -o #{build_dir} -c #{source_dir}")
 end
+
+
+#
+# Compilation tasks.
+#
 
 namespace "compile" do
 
@@ -31,7 +45,8 @@ namespace "compile" do
   task "watch" do
     compile_timber(true)
   end
-task "compile" do
+
+  task "compile" do
     compile_timber()
   end
 
@@ -61,11 +76,21 @@ namespace "test" do
   end
 
   task "browser" => ["compile"] do
-    open = "gnome-open" #FIXME: add open for macosx
-    sh("#{open} tests/tests.html")
+    open("tests/tests.html")
   end
 
 end
 
 desc "Run tests in a browser."
 task "test" => ["test:browser"]
+
+#
+# Example tasks.
+#
+
+desc "Run the example programs."
+task "examples" => "compile" do
+    Dir.glob("#{EXAMPLE_DIR}/*.html").each do |example|
+        open(example)
+    end
+end
