@@ -38,9 +38,6 @@ class timber.Logger
     constructor : (module) ->
         @module = module
 
-    _write : (level, message) ->
-        console.log([level, @module, message].join(" | ")) if console
-
     # Log a message at the debug level.
     #
     # @param message {String} the message to log.
@@ -52,6 +49,10 @@ class timber.Logger
     # @param message {String} the message to log.
     info : (message) ->
         @_write("INFO", message)
+
+    _write : (level, message) ->
+        console.log([level, @module, message].join(" | ")) if console
+
 
 
 #
