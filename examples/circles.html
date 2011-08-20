@@ -16,11 +16,33 @@ $(document).ready(function () {
     var engine = new timber.Engine("example");
     var logger = new timber.Logger("app");
 
+    var f = true;
+
     var addNew = function () {
         var p = new timber.Point(0, 0);
-        var d = new timber.Vector(1, 1).normalize();
-        var circle = new timber.Circle(p, d, 1, 100);
-        engine.add(circle);
+
+        var dx = Math.random() + 0.8;
+        var dy = Math.random() + 0.2;
+        var d = new timber.Vector(dx, dy).normalize();
+
+        var s = Math.random();
+        var s2 = Math.random();
+
+        var w = Math.random() * 20 + 50;
+        var h = Math.random() * 10 + 50;
+        var r = Math.random() * 50 + 10;
+
+        var circle = new timber.Circle(p, d, s, r);
+        var rectangle = new timber.Rectangle(p, d, s2, w, h);
+
+        if (f) {
+            engine.add(circle);
+        } else {
+            engine.add(rectangle);
+        }
+        f = !f;
+
+        window.c = engine.canvas.context;
     };
 
     var handleKeypress = function (event) {
