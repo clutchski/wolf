@@ -256,6 +256,7 @@ class timber.Element
         throw new Error("Not Implemented error")
 
 
+
 #
 # A circle element.
 #
@@ -271,6 +272,40 @@ class timber.Circle extends timber.Element
         context.arc(@position.x, @position.y, @radius, 0, Math.PI *2)
         context.stroke()
 
+
+#
+# A rectangle element.
+#
+
+class timber.Rectangle extends timber.Element
+
+    constructor : (position, direction, speed, height, width) ->
+        super(position, direction, speed)
+        @height = height
+        @width = width
+
+    render : (context) ->
+
+        # Find the co-ordinates of the rectangle's corners.
+        x1 = @position.x
+        y1 = @position.y
+        x2 = @position.x + @width
+        y2 = @position.y + @height
+
+        # Order them in drawing order.
+        points = [
+            [x2, y1],
+            [x2, y2],
+            [x1, y2],
+            [x1, y1]
+        ]
+
+        # Draw them.
+        context.beginPath()
+        context.moveTo(x1, y1)
+        for p in points
+            context.lineTo(p[0], p[1])
+        context.stroke()
 
 
 class timber.Engine
