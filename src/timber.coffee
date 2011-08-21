@@ -127,6 +127,9 @@ class timber.Point
     sum : (vector) ->
         return new timber.Vector(@x + vector.x, @y + vector.y)
 
+    # Return a string representation of the point.
+    toString : () ->
+        return "timber.Point(#{@x}, #{@y})"
 
 
 class timber.Vector extends timber.Point
@@ -178,6 +181,11 @@ class timber.Vector extends timber.Point
     project : (other) ->
         b = other.normalize()
         return b.scale(this.dotProduct(b))
+
+    # Return a string representation of the vector.
+    toString : () ->
+        return "timber.Vector(#{@x}, #{@y})"
+
 
 
 #

@@ -73,6 +73,8 @@ test "sum", () ->
     equals(p2.x, 5, "addition works")
     equals(p2.y, -3, "addition works")
 
+test "toString", () ->
+    equals("timber.Point(10, -10)", new Point(10, -10).toString(), "alls well")
 
 
 module "timber.Vector"
