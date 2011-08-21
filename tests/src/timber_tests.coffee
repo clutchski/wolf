@@ -109,7 +109,17 @@ test "scale", () ->
     equals(v.scale(2).x, 6, "Scaling works")
     equals(v.scale(2).y, 8, "Scaling works")
 
+test "dot product", () ->
 
+    v0 = new timber.Vector(0, 0)
+    v1 = new timber.Vector(1, 1)
+    v2 = new timber.Vector(2, 2)
+
+    for v in [v1, v2]
+        equals(v0.dotProduct(v), 0, "Zero vector's dot product is zero")
+
+    equals(v1.dotProduct(v1), 2, "Dot product is correct")
+    equals(v1.dotProduct(v2), 4, "Dot product is correct")
 
 
 module "timber.Environment"

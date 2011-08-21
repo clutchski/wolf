@@ -153,6 +153,16 @@ class timber.Vector extends timber.Point
     sum : (other) ->
         return new timber.Vector(@x + other.x, @y + other.y)
 
+    # Return the dot product of this vector with the other vector.
+    #
+    # @param {Object} the other vector.
+    # @return {Number}
+    dotProduct : (other) ->
+        pairs = [[@x, other.x], [@y, other.y]]
+        return pairs.reduce((sum, coords) ->
+            return sum + coords[0] * coords[1]
+        , 0)
+
 
 #
 # The environment is responsible for applying fundamental forces like time and
