@@ -24,6 +24,14 @@ root.timber = timber
 timber.square = (n) ->
     return n * n
 
+# Return true if the value n is contained in the closed interval
+# [l, u], false otherwise.
+#
+# @param l {Number] the interval's lower bound
+# @param u {Number] the interval's upper bound
+# @return {Boolean}
+timber.is_between = (l, u, n) ->
+    return l <= n and n <= u
 
 
 #
@@ -193,7 +201,7 @@ class timber.Environment
     # @param element {Array} the element to update
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
-        
+
         for element in elements
 
             # Find the net force on the element.
@@ -236,13 +244,13 @@ class timber.Environment
 
     # Return the force of gravity on the given element.
     #
-    # @param element {Object} 
+    # @param element {Object}
     gravity : (element) ->
         # FIXME: technically, we should add drag as well.
         return new timber.Vector(0, @gravitationalConstant)
-        
 
-# 
+
+#
 # An abstract base class for any drawable thing.
 #
 class timber.Element
@@ -274,6 +282,42 @@ class timber.Element
         throw new Error("Not Implemented error")
 
 
+    # Return true if this element intersects with the other
+    # element, false otherwise.
+    #
+    # @param other {Object} the other element
+    # @return {Boolean}
+    intersects : (other) ->
+        bb = this.getAxisAlignedBoundingBox()
+        ob = other.getAxisAlignedBoundingBox()
+
+        [ttl, ttr, tbl, tbr] = bb # this top left, this top right, etc.
+        [otl, otr, obl, obr] = ob # other top left, other top, right, etc.
+
+        # Find axis projection intervals.
+        ty = [ttl.y, tbl.y]
+        oy = [otl.y, obl.y]
+        tx = [ttl.x, ttr.x]
+        ox = [otl.x, otr.x]
+
+        interval_intersects = (i1, i2) ->
+            i2.some (p) ->
+                timber.is_between(i1[0], i1[1], p)
+
+        return interval_intersects(ty, oy) or interval_intersects(tx, ox)
+
+
+    # Return an array of points that when joined create a convex polygon
+    # that fully enclosed the element.
+    #
+    # @return {Array} an array of points
+    getAxisAlignedBoundingBox : () ->
+        # FIXME: not sure if an array of points is the best way to represent
+        # this, though it might be the easiest way to extend to non-axis
+        # aligned shapes.
+        throw new Error("Not Implemented error")
+
+
 
 #
 # A circle element.
@@ -297,33 +341,40 @@ class timber.Circle extends timber.Element
 
 class timber.Rectangle extends timber.Element
 
+
+    # Create a rectangle element.
+    #
+    # @param position {Object} the top left corner of the rectangle.
     constructor : (position, direction, speed, height, width) ->
         super(position, direction, speed)
         @height = height
         @width = width
 
-    render : (context) ->
-
+    getCorners : () ->
         # Find the co-ordinates of the rectangle's corners.
         x1 = @position.x
         y1 = @position.y
         x2 = @position.x + @width
         y2 = @position.y + @height
-
-        # Order them in drawing order.
-        points = [
-            [x2, y1],
-            [x2, y2],
-            [x1, y2],
-            [x1, y1]
+        return [
+            new timber.Point(x1, y1)
+            new timber.Point(x2, y1),
+            new timber.Point(x2, y2),
+            new timber.Point(x1, y2)
         ]
 
-        # Draw them.
+    render : (context) ->
+        corners = this.getCorners()
         context.beginPath()
-        context.moveTo(x1, y1)
-        for p in points
-            context.lineTo(p[0], p[1])
+        first = corners.shift()
+        context.moveTo(first.x, first.y)
+        corners.push(first)
+        for c in corners
+            context.lineTo(c.x, c.y)
         context.stroke()
+
+    getAxisAlignedBoundingBox : () ->
+        return this.getCorners()
 
 
 class timber.Engine
@@ -339,7 +390,7 @@ class timber.Engine
         @elements = []
         @timestamp = null
         @continue = true
-   
+
     # Start the engine's event loop.
     start : () ->
         @continue = true

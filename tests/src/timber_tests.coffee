@@ -3,6 +3,16 @@
 #
 
 
+# Shortcuts
+
+Vector = timber.Vector
+Rectangle = timber.Rectangle
+Position = timber.Position
+Point = timber.Point
+
+
+
+
 module "timber.Canvas"
 
 
@@ -12,7 +22,7 @@ test "Non-existant canvas", () ->
     , "A canvas that doesn't exist should throw an error")
 
 
-module "Element"
+module "timber.Element"
 
 test "mass", () ->
     e = new timber.Element()
@@ -173,5 +183,27 @@ test "gravity", () ->
 test "drag", () ->
     ok false, "add tests for drag"
 
-    
 
+
+module "timber.Rectangle"
+
+test "intersection", () ->
+    # A shortcut test function to ensure intersection is always 
+    # commutative.
+    intersects = (tr1, tr2) ->
+        return tr1.intersects(tr2) && tr2.intersects(tr1)
+
+    s = 0
+    d = new Vector(1, 1)
+
+    r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
+    r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
+    r3 = new Rectangle(new Point(150, 150), s, d, 100, 100)
+    r4 = new Rectangle(new Point(50, 50), s, d, 100, 100)
+    r5 = new Rectangle(new Point(50, 150), s, d, 100, 100)
+
+    ok(intersects(r1, r2), "Containing rectangles intersect")
+    ok(intersects(r2, r4), "Partially overlapping rectangles intersect")
+    ok(not intersects(r1, r3), "Non overlapping don't intersect")
+    ok(not intersects(r2, r3), "Non overlapping don't intersect")
+    ok(intersects(r3, r4), "One point adjacent rectangles intersect")
