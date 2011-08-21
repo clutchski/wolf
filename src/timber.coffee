@@ -413,15 +413,17 @@ class timber.Engine
         # Stop, if so desired.
         return if not @continue
 
-        # Update the state of the world.
+        # Determine how much time hsa elapsed since the last loop.
         now = new Date()
         elapsed = now - @timestamp
+
+        # Update the state of the world.
         @environment.elapse(@elements, elapsed)
         @canvas.clear()
         @canvas.render(@elements)
-        @timestamp = now
 
         # Loop again, when the stack clears.
+        @timestamp = now
         setTimeout () =>
             @.loop()
         , 0
