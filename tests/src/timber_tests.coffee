@@ -207,5 +207,4 @@ test "intersection", () ->
     ok(intersects(r1, r2), "Containing rectangles intersect")
     ok(intersects(r2, r4), "Partially overlapping rectangles intersect")
     ok(not intersects(r1, r3), "Non overlapping don't intersect")
-    ok(not intersects(r2, r3), "Non overlapping don't intersect")
     ok(intersects(r3, r4), "One point adjacent rectangles intersect")

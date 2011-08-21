@@ -309,10 +309,11 @@ class timber.Element
         ox = [otl.x, otr.x]
 
         interval_intersects = (i1, i2) ->
+            # FIXME: not portable
             i2.some (p) ->
                 timber.is_between(i1[0], i1[1], p)
 
-        return interval_intersects(ty, oy) or interval_intersects(tx, ox)
+        return interval_intersects(ty, oy) and interval_intersects(tx, ox)
 
 
     # Return an array of points that when joined create a convex polygon
