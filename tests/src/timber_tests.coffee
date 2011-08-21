@@ -121,6 +121,22 @@ test "dot product", () ->
     equals(v1.dotProduct(v1), 2, "Dot product is correct")
     equals(v1.dotProduct(v2), 4, "Dot product is correct")
 
+test "project", () ->
+    xAxis = new timber.Vector(1, 0)
+    yAxis = new timber.Vector(0, 1)
+
+    v1 = new timber.Vector(3, 4)
+    v2 = new timber.Vector(1, 3)
+    v3 = new timber.Vector(-1, 2)
+
+    # Assert project onto the axes works
+    ok(v1.project(xAxis).equals(new timber.Vector(3, 0)), "x axis projection")
+    ok(v1.project(yAxis).equals(new timber.Vector(0, 4)), "y axis projection")
+
+    # Project a vector onto another.
+    ok(v1.project(v1).equals(v1), "vector projected on itself")
+    ok(v2.project(v3).equals(v3), "vector projection works")
+
 
 module "timber.Environment"
 
