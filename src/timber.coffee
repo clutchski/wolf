@@ -210,6 +210,8 @@ class timber.Environment
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
 
+        collisions = this.detectCollisions(elements)
+
         for element in elements
 
             # Find the net force on the element.
@@ -257,6 +259,17 @@ class timber.Environment
         # FIXME: technically, we should add drag as well.
         return new timber.Vector(0, @gravitationalConstant)
 
+    # Return a list of pairs of elements that are colliding.
+    #
+    # @return {Array}
+    detectCollisions : (elements) ->
+        #FIXME: inefficient.
+        collisions = []
+        for element, i in elements
+            for other in elements[i+1..elements.length]
+                if element.intersects(other)
+                    collisions.push([element, other])
+        return collisions
 
 #
 # An abstract base class for any drawable thing.

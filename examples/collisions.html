@@ -1,0 +1,58 @@
+<html>
+  <head>
+    <link href="common/examples.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="game">
+      <canvas id="example" width="800" height="600"></canvas>
+    </div>
+    
+    <script type="text/javascript" src="../build/timber.js"></script>
+    <script type="text/javascript" src="common/jquery-1.6.2.js"></script>
+    <script type="text/javascript">
+
+$(document).ready(function () {
+
+    var engine = new timber.Engine("example");
+    
+    // Turn off gravity for this one.
+    engine.environment.density = 0
+    engine.environment.gravitationalConstant = 0
+
+    var logger = new timber.Logger("app");
+
+    var s = 1;
+    var l = 200;
+
+    // Create a rectangle on the right of the canvas moving left.
+    var p1 = new timber.Point(800, 50);
+    var d1 = new timber.Vector(-1, 0);
+    var r1 = new timber.Rectangle(p1, d1, s, l, l);
+
+    // Create a rectangle on the left of the canvas moving right;
+    var p2 = new timber.Point(0, 50);
+    var d2 = new timber.Vector(1, 0);
+    var r2 = new timber.Rectangle(p2, d2, s, l, l);
+
+    engine.add(r1);
+    engine.add(r2);
+
+    var handleKeypress = function (event) {
+        var key = (event.which) ? event.which : e.keyCode;
+        logger.debug("keypress: " + event.which);
+
+        if (key === 81) {
+            engine.stop();
+        }
+    };
+
+    $(document).keydown(handleKeypress);
+    engine.start();
+
+});
+  </script>
+    
+  </body>
+</html>
+ 
+
