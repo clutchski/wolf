@@ -343,6 +343,24 @@ class timber.Circle extends timber.Element
         context.arc(@position.x, @position.y, @radius, 0, Math.PI *2)
         context.stroke()
 
+    getAxisAlignedBoundingBox : () ->
+        # FIXME: need non-alis aligned collisions for this
+
+        yt = @position.y - @radius
+        yb = @position.y + @radius
+        xl = @position.x - @radius
+        xr = @position.x + @radius
+
+        return [
+            new timber.Point(xl, yt)
+            new timber.Point(xr, yt)
+            new timber.Point(xr, yb)
+            new timber.Point(xl, yb)
+        ]
+
+
+
+
 
 #
 # A rectangle element.
