@@ -357,7 +357,7 @@ class timber.Circle extends timber.Element
         context.stroke()
 
     getAxisAlignedBoundingBox : () ->
-        # FIXME: need non-alis aligned collisions for this
+        # FIXME: need non-axis aligned collisions for this
 
         yt = @position.y - @radius
         yb = @position.y + @radius
