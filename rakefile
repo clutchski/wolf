@@ -2,8 +2,6 @@
 # Timber build script.
 #
 
-require 'sprockets'
-
 
 SOURCE_DIR = 'src'
 BUILD_DIR = 'build'
