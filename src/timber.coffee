@@ -27,8 +27,8 @@ timber.square = (n) ->
 # Return true if the value n is contained in the closed interval
 # [l, u], false otherwise.
 #
-# @param l {Number] the interval's lower bound
-# @param u {Number] the interval's upper bound
+# @param l {Number} the interval's lower bound
+# @param u {Number} the interval's upper bound
 # @return {Boolean}
 timber.is_between = (l, u, n) ->
     return l <= n and n <= u
