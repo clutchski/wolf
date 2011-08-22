@@ -453,7 +453,7 @@ class timber.Engine
         # Stop, if so desired.
         return if not @continue
 
-        # Determine how much time hsa elapsed since the last loop.
+        # Determine how much time has elapsed since the last loop.
         now = new Date()
         elapsed = now - @timestamp
 
