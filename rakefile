@@ -15,9 +15,13 @@ TEST_BUILD_DIR = 'tests/build'
 # Common functions.
 #
 
+def macos?
+    RUBY_PLATFORM.downcase.include? 'darwin'
+end
+
 # Open the given file with it's default program.
 def open(file)
-    cmd = "gnome-open" # FIXME: not portable
+    cmd = macos? ? "open" : "gnome-open" # supports macos and gnome
     sh("#{cmd} #{file}")
 end
 
