@@ -1,12 +1,13 @@
+###
 #
-# Timber is a javascript game engine.
+#  Timber - An HTML5 Canvas game engine.
 #
-# It uses the following units for it's (very basic) physics
-# calculations:
+#  Copyright 2011, Matthew Perpick.
+#  Timber is freely distributable under the MIT license.
 #
-#   length = pixels
-#   time   = ms
+#  https://github.com/clutchski/timber
 #
+###
 
 
 # The timber global object.
