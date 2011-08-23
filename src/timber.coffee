@@ -225,7 +225,7 @@ class timber.Environment
 
             # Calculate the effect of the forces on the element.
             acceleration = resultant.scale(element.getInverseMass())
-            velocity = element.velocity().sum(acceleration.scale(milliseconds))
+            velocity = element.getVelocity().sum(acceleration.scale(milliseconds))
             displacement = velocity.scale(milliseconds)
             position = element.position.sum(displacement)
 
@@ -294,7 +294,7 @@ class timber.Element
     # Return the element's velocity.
     #
     # @return {Object} the velocity vector.
-    velocity : () ->
+    getVelocity : () ->
         return @direction.normalize().scale(@speed)
 
 
