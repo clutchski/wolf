@@ -17,7 +17,6 @@ timber = {}
 this.timber = timber
 
 
-
 #
 # Utility functions.
 #
@@ -372,9 +371,6 @@ class timber.Circle extends timber.Element
             new timber.Point(xr, yb)
             new timber.Point(xl, yb)
         ]
-
-
-
 
 
 #
