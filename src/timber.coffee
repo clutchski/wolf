@@ -143,7 +143,7 @@ class timber.Vector extends timber.Point
     normalize : () ->
         if @x == 0 and @y == 0
             return new timber.Vector(0, 0)
-        length = this.length()
+        length = this.getLength()
         return new timber.Vector(@x/length, @y/length)
 
     # Return a new vector scaled by the given value.
@@ -156,7 +156,7 @@ class timber.Vector extends timber.Point
     # Return this vector's length.
     #
     # @return {Number}
-    length : () ->
+    getLength : () ->
         return Math.sqrt(@x*@x + @y*@y)
 
     # Return the vector sum of this and the other vector.
@@ -231,7 +231,7 @@ class timber.Environment
 
             # Update the element.
             element.position = position
-            element.speed = velocity.length()
+            element.speed = velocity.getLength()
             element.direction = velocity.normalize()
 
 

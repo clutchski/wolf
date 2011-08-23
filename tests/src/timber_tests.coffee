@@ -83,7 +83,7 @@ module "timber.Vector"
 
 test "length", () ->
     length = (x, y) ->
-        return new timber.Vector(x, y).length()
+        return new timber.Vector(x, y).getLength()
     equals(length(0, 0), 0, "No length is zero")
     equals(length(1, 0), 1, "x unit vector has length 1")
     equals(length(0, 1), 1, "y unit vector has length 1")
@@ -117,8 +117,8 @@ test "sum", () ->
 
 test "scale", () ->
     v = new timber.Vector(3, 4)
-    equals(v.scale(0).length(), 0, "Scaling by zero produces the zero vector")
-    equals(v.scale(1).length(), 5, "Scaling by one is idempotent")
+    equals(v.scale(0).getLength(), 0, "Scaling by zero produces the zero vector")
+    equals(v.scale(1).getLength(), 5, "Scaling by one is idempotent")
     equals(v.scale(2).x, 6, "Scaling works")
     equals(v.scale(2).y, 8, "Scaling works")
 
