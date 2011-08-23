@@ -224,7 +224,7 @@ class timber.Environment
             resultant = forces.reduce (t, s) -> t.sum(s)    #FIXME: not portable
 
             # Calculate the effect of the forces on the element.
-            acceleration = resultant.scale(element.inverseMass())
+            acceleration = resultant.scale(element.getInverseMass())
             velocity = element.velocity().sum(acceleration.scale(milliseconds))
             displacement = velocity.scale(milliseconds)
             position = element.position.sum(displacement)
@@ -344,7 +344,7 @@ class timber.Element
     # Return the element's inverse mass.
     #
     # @return {Number}
-    inverseMass : () ->
+    getInverseMass : () ->
         return 1/@mass
 
 

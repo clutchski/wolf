@@ -29,7 +29,7 @@ test "mass", () ->
     ok(e.mass, "mass has a default value")
     e.mass = 10
     equals(e.mass, 10, "mass is settable")
-    equals(e.inverseMass(), 1/10, "inverse mass works")
+    equals(e.getInverseMass(), 1/10, "inverse mass works")
 
 
 
