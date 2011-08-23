@@ -9,17 +9,19 @@
 #
 
 
+# The timber global object.
 timber = {}
 
-# Export timber to global scope.
 
-root = this
-root.timber = timber
+# Export timber to global scope.
+this.timber = timber
+
 
 
 #
 # Utility functions.
 #
+
 
 timber.square = (n) ->
     return n * n
