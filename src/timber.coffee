@@ -297,6 +297,13 @@ class timber.Element
     render : (context) ->
         throw new Error("Not Implemented error")
 
+    # Apply an impulse force to the element.
+    #
+    applyImpulse : (impulse) ->
+        velocity = @getVelocity().sum(impulse)
+        @direction = velocity.normalize()
+        @speed = velocity.getLength()
+
 
     # Return true if this element intersects with the other
     # element, false otherwise.
@@ -428,6 +435,32 @@ class timber.Collision
     getElements : () ->
         return [@element1, @element2]
 
+    # Return the collision's concact normal vector, relative
+    # to the first element in the collision.
+    #
+    # @return {Object}
+    getContactNormal : () ->
+        return @getRelativeVelocity().normalize()
+        
+    # Return the seperating velocity of the two elements.
+    #
+    # @return {Number}
+    getSeperatingVelocity : () ->
+        return @getRelativeVelocity().dotProduct(@getContactNormal())
+
+    getRelativeVelocity : () ->
+        return @element1.getVelocity().subtract(@element2.getVelocity())
+
+    # Return the co-efficient of restitution for the given collision.
+    # 
+    # @return {Number}
+    getRestitutionCoefficient : () ->
+        #FIXME: implement me
+        return 0.5
+
+    getMass : () ->
+        return @element1.mass + @element2.mass
+
 
 
 class timber.CollisionHandler
@@ -473,7 +506,28 @@ class timber.CollisionHandler
     # 
     # @param {collision} the collision to resolve.
     resolveCollision : (collision) ->
-            
+      
+        # Calcule the seperating velocity of the elements.
+        seperatingVelocity = collision.getSeperatingVelocity()
+
+        #return if 0 < seperatingVelocity
+
+        # Change the direction and scale by the elasticity of the objects.
+        velocity = -seperatingVelocity * collision.getRestitutionCoefficient()
+
+        magnitude = velocity * collision.getMass()
+        impulse = collision.getContactNormal().scale(magnitude)
+
+        # Apply the force of the collision to each element in proportion to
+        # their mass.
+        impulse1 = impulse.scale(collision.element1.getInverseMass())
+        collision.element1.applyImpulse(impulse1)
+
+        # The impulse direction is relative to the first element, so flip that 
+        # here.
+        impulse2 = impulse.scale(-1 * collision.element2.getInverseMass())
+        collision.element2.applyImpulse(impulse2)
+
 
 class timber.Engine
 

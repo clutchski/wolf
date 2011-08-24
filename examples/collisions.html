@@ -16,8 +16,8 @@ $(document).ready(function () {
     var engine = new timber.Engine("example");
     
     // Turn off gravity for this one.
-    engine.environment.density = 0
-    engine.environment.gravitationalConstant = 0
+    engine.environment.density = 0;
+    engine.environment.gravitationalConstant = 0.1;
 
     var logger = new timber.Logger("app");
 
@@ -33,9 +33,17 @@ $(document).ready(function () {
     var p2 = new timber.Point(0, 50);
     var d2 = new timber.Vector(1, 0);
     var r2 = new timber.Rectangle(p2, d2, s, l, l);
+    r2.mass += 500
+
+    // Create a rectangle on the left of the canvas moving right;
+    var p3 = new timber.Point(400, 800);
+    var d3 = new timber.Vector(0.5, -1.5).normalize();
+    var r3 = new timber.Rectangle(p3, d3, 1.5, l, l);
+    r3.mass - 200;
 
     engine.add(r1);
     engine.add(r2);
+    engine.add(r3);
 
     var handleKeypress = function (event) {
         var key = (event.which) ? event.which : e.keyCode;
