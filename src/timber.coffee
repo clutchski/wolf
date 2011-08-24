@@ -212,8 +212,6 @@ class timber.Environment
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
 
-        collisions = this.detectCollisions(elements)
-
         for element in elements
 
             # Find the net force on the element.
@@ -260,18 +258,6 @@ class timber.Environment
     gravity : (element) ->
         # FIXME: technically, we should add drag as well.
         return new timber.Vector(0, @gravitationalConstant)
-
-    # Return a list of pairs of elements that are colliding.
-    #
-    # @return {Array}
-    detectCollisions : (elements) ->
-        #FIXME: inefficient.
-        collisions = []
-        for element, i in elements
-            for other in elements[i+1..elements.length]
-                if element.intersects(other)
-                    collisions.push([element, other])
-        return collisions
 
 #
 # An abstract base class for any drawable thing.
@@ -422,6 +408,51 @@ class timber.Rectangle extends timber.Element
         return this.getCorners()
 
 
+class timber.Collision
+
+    # Create a collision object.
+    #
+    # @param element1 {Object}
+    # @param element2 {Object}
+    constructor : (element1, element2) ->
+        @element1 = element1
+        @element2 = element2
+
+
+
+class timber.CollisionHandler
+
+    # Create a collision handler.
+    constructor : () ->
+        @logger = new timber.Logger("timber.CollisionHandler")
+
+
+    # Check the given elements for collisions, and update them accordingly.
+    #
+    # @param elements {Array} a list of elements to check for collisions.
+    # @param milliseconds {Number} the time since the last collision check.
+    elapse : (elements, milliseconds) ->
+        collisions = this.detectCollisions(elements)
+        @logger.debug("number of collisions: #{collisions.length}")
+
+
+    # Return the collisions occuring between the given elements.
+    #
+    # @param elements {Array} the elements to check for collisions.
+    # @return {Array} an array of collisions.
+    detectCollisions : (elements) ->
+
+        # FIXME: brute force implementation.
+        collisions = []
+        for element, i in elements
+            for other in elements[i+1..elements.length]
+                if element.intersects(other)
+                    c = new timber.Collision(element, other)
+                    collisions.push(c)
+        return collisions
+
+
+
 class timber.Engine
 
     # Create an engine instance.
@@ -431,6 +462,7 @@ class timber.Engine
         @logger = new timber.Logger("timber.Engine")
         @canvas = new timber.Canvas(canvasId)
         @environment = new timber.Environment()
+        @collisionHandler = new timber.CollisionHandler()
 
         @elements = []
         @timestamp = null
@@ -463,7 +495,10 @@ class timber.Engine
         elapsed = now - @timestamp
 
         # Update the state of the world.
+        @collisionHandler.elapse(@elements, elapsed)
         @environment.elapse(@elements, elapsed)
+
+        # Draw them on the screen.
         @canvas.clear()
         @canvas.render(@elements)
 

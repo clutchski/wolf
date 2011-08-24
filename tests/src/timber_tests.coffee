@@ -209,3 +209,29 @@ test "intersection", () ->
     ok(intersects(r2, r4), "Partially overlapping rectangles intersect")
     ok(not intersects(r1, r3), "Non overlapping don't intersect")
     ok(intersects(r3, r4), "One point adjacent rectangles intersect")
+
+
+module "timber.CollisionHandler"
+
+test "detectCollisions", () ->
+    ch = new timber.CollisionHandler()
+
+    s = 0
+    d = new Vector(1, 1)
+
+    r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
+    r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
+    r3 = new Rectangle(new Point(150, 150), s, d, 100, 100)
+    r4 = new Rectangle(new Point(50, 50), s, d, 100, 100)
+    r5 = new Rectangle(new Point(50, 150), s, d, 100, 100)
+    r6 = new Rectangle(new Point(500, 500), s, d, 100, 100)
+
+    equals(ch.detectCollisions([]).length, 0, "no elements")
+    equals(ch.detectCollisions([r1]).length, 0, "one element")
+    equals(ch.detectCollisions([r1, r3, r6]).length, 0, "no collisions")
+
+    collisions = ch.detectCollisions([r1, r2])
+    equals(collisions.length, 1, "found one collision")
+
+    collisions = ch.detectCollisions([r1, r2, r3, r4, r5, r6])
+    equals(collisions.length, 5, "found five collisions")
