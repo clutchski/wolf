@@ -418,6 +418,9 @@ class timber.Collision
         @element1 = element1
         @element2 = element2
 
+    getElements : () ->
+        return [@element1, @element2]
+
 
 
 class timber.CollisionHandler
@@ -433,25 +436,37 @@ class timber.CollisionHandler
     # @param milliseconds {Number} the time since the last collision check.
     elapse : (elements, milliseconds) ->
         collisions = this.detectCollisions(elements)
-        @logger.debug("number of collisions: #{collisions.length}")
-
+        (@resolveCollision(c) for c in collisions)
 
     # Return the collisions occuring between the given elements.
     #
     # @param elements {Array} the elements to check for collisions.
     # @return {Array} an array of collisions.
     detectCollisions : (elements) ->
+        
+        # FIXME: naive & inefficient solution.
 
-        # FIXME: brute force implementation.
         collisions = []
         for element, i in elements
             for other in elements[i+1..elements.length]
-                if element.intersects(other)
-                    c = new timber.Collision(element, other)
-                    collisions.push(c)
+                c = @detectCollision(element, other)
+                collisions.push(c) if c
         return collisions
 
+    # Return a collision if the two elements are colliding, null 
+    # otherwise.
+    #
+    # @param e1 {Object} the first of the elements
+    # @param e2 {Object} the second of the elements
+    # @return {Object} or {null}
+    detectCollision : (e1, e2) ->
+        if e1.intersects(e2) then new timber.Collision(e1, e2) else null
 
+    # Resolve the given collision.
+    # 
+    # @param {collision} the collision to resolve.
+    resolveCollision : (collision) ->
+            
 
 class timber.Engine
 

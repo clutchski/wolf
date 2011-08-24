@@ -235,3 +235,18 @@ test "detectCollisions", () ->
 
     collisions = ch.detectCollisions([r1, r2, r3, r4, r5, r6])
     equals(collisions.length, 5, "found five collisions")
+
+test "detectCollision", () ->
+
+    s = 0
+    d = new Vector(1, 1)
+
+    r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
+    r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
+    r3 = new Rectangle(new Point(20, 20), s, d, 100, 100)
+
+    ch = new timber.CollisionHandler()
+
+    ok(ch.detectCollision(r1, r2), "collision")
+    ok(not ch.detectCollision(r1, r3), "no collision")
+
