@@ -510,21 +510,19 @@ class timber.CollisionHandler
         # Calcule the seperating velocity of the elements.
         seperatingVelocity = collision.getSeperatingVelocity()
 
-        #return if 0 < seperatingVelocity
+        #return if 0 > seperatingVelocity
 
-        # Change the direction and scale by the elasticity of the objects.
+        # Change the direction and scale by the elasticity of the elements.
         velocity = -seperatingVelocity * collision.getRestitutionCoefficient()
 
         magnitude = velocity * collision.getMass()
         impulse = collision.getContactNormal().scale(magnitude)
 
         # Apply the force of the collision to each element in proportion to
-        # their mass.
+        # it's mass.
         impulse1 = impulse.scale(collision.element1.getInverseMass())
         collision.element1.applyImpulse(impulse1)
 
-        # The impulse direction is relative to the first element, so flip that 
-        # here.
         impulse2 = impulse.scale(-1 * collision.element2.getInverseMass())
         collision.element2.applyImpulse(impulse2)
 
