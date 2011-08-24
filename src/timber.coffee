@@ -513,11 +513,11 @@ class timber.Engine
         @collisionHandler.elapse(@elements, elapsed)
         @environment.elapse(@elements, elapsed)
 
-        # Draw them on the screen.
+        # Update the canvas.
         @canvas.clear()
         @canvas.render(@elements)
 
-        # Loop again, when the stack clears.
+        # Do it again when the stack clears.
         @timestamp = now
         setTimeout () =>
             @.loop()
