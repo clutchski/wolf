@@ -166,6 +166,13 @@ class timber.Vector extends timber.Point
     sum : (other) ->
         return new timber.Vector(@x + other.x, @y + other.y)
 
+    # Return the difference of this vector and the other.
+    #
+    # @param {Object} the other vector
+    # @return {Object}
+    subtract : (other) ->
+        return new timber.Vector(@x - other.x, @y - other.y)
+
     # Return the dot product of this vector with the other vector.
     #
     # @param {Object} the other vector.

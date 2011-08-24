@@ -114,7 +114,15 @@ test "sum", () ->
     equals(s.x, 0, "x is right")
     equals(s.y, -1, "y is right")
 
+test "subtract", () ->
+    x = new timber.Vector(-1, -5)
+    y = new timber.Vector(1, 4)
+    s = x.subtract(y)
 
+    equals(s.x, -2, "x is correct")
+    equals(s.y, -9, "y is correct")
+
+    
 test "scale", () ->
     v = new timber.Vector(3, 4)
     equals(v.scale(0).getLength(), 0, "Scaling by zero produces the zero vector")
