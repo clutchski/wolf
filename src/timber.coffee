@@ -32,7 +32,7 @@ timber.square = (n) ->
 # @param l {Number} the interval's lower bound
 # @param u {Number} the interval's upper bound
 # @return {Boolean}
-timber.is_between = (l, u, n) ->
+timber.isBetween = (l, u, n) ->
     return l <= n and n <= u
 
 
@@ -323,12 +323,12 @@ class timber.Element
         tx = [ttl.x, ttr.x]
         ox = [otl.x, otr.x]
 
-        interval_intersects = (i1, i2) ->
+        intervalIntersects = (i1, i2) ->
             # FIXME: not portable
             i2.some (p) ->
-                timber.is_between(i1[0], i1[1], p)
+                timber.isBetween(i1[0], i1[1], p)
 
-        return interval_intersects(ty, oy) and interval_intersects(tx, ox)
+        return intervalIntersects(ty, oy) and intervalIntersects(tx, ox)
 
 
     # Return an array of points that when joined create a convex polygon
