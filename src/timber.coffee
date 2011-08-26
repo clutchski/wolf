@@ -500,6 +500,7 @@ class timber.CollisionHandler
     # @param e2 {Object} the second of the elements
     # @return {Object} or {null}
     detectCollision : (e1, e2) ->
+        #FIXME: add an error of margin
         if e1.intersects(e2) then new timber.Collision(e1, e2) else null
 
     # Resolve the given collision.
