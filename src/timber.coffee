@@ -277,6 +277,10 @@ class timber.Element
     # @param direction {Object} a unit vector representing direction
     # @param speed {Object} the speed in pixels per millisecond
     constructor : (position, direction, speed) ->
+        
+        #FIXME: change this class to have sane default arguments, like 0 speed,
+        #position at the origin, etc.
+
         @position = position
         @direction = direction
         @speed = speed
