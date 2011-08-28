@@ -36,6 +36,20 @@ timber.isBetween = (l, u, n) ->
     return l <= n and n <= u
 
 
+# Return true if the given interval intersects, false otherwise.
+#
+# @param i1 {Array} an interval
+# @param i2 {Array} an interval
+# @return {Boolean}
+timber.intervalIntersects = (i1, i2) ->
+
+    ib = timber.isBetween
+
+    return ib(i1[0], i1[1], i2[0]) or
+           ib(i1[0], i1[1], i2[1]) or
+           ib(i2[0], i2[1], i1[0]) or
+           ib(i2[0], i2[1], i1[1])
+
 #
 # The timber logger.
 #
@@ -329,12 +343,8 @@ class timber.Element
         tx = [ttl.x, ttr.x]
         ox = [otl.x, otr.x]
 
-        intervalIntersects = (i1, i2) ->
-            # FIXME: not portable
-            i2.some (p) ->
-                timber.isBetween(i1[0], i1[1], p)
-
-        return intervalIntersects(ty, oy) and intervalIntersects(tx, ox)
+        ii = timber.intervalIntersects
+        return ii(ty, oy) and ii(ox, tx)
 
 
     # Return an array of points that when joined create a convex polygon

@@ -12,6 +12,19 @@ Point = timber.Point
 
 
 
+module "timber"
+
+test "intervalIntersects", () ->
+
+    ii = timber.intervalIntersects
+
+    ok(not ii([0, 1], [2, 5]), "Doesn't intersect")
+    ok(ii([0, 1], [1, 2]), "Adjacent intersect")
+    ok(ii([0, 2], [1, 2]), "Overlapping intersect")
+    ok(ii([1, 2], [0, 2]), "Overlapping intersect both ways")
+    ok(ii([1, 10], [5, 6]),"Containing intervals intersect")
+    ok(ii([0, 2], [0, 2]),"Identical intervals intersect")
+
 
 module "timber.Canvas"
 
@@ -215,10 +228,23 @@ test "intersection", () ->
     r4 = new Rectangle(new Point(50, 50), s, d, 100, 100)
     r5 = new Rectangle(new Point(50, 150), s, d, 100, 100)
 
+
+
+
+
+
     ok(intersects(r1, r2), "Containing rectangles intersect")
     ok(intersects(r2, r4), "Partially overlapping rectangles intersect")
     ok(not intersects(r1, r3), "Non overlapping don't intersect")
     ok(intersects(r3, r4), "One point adjacent rectangles intersect")
+
+test "containing intersection", () ->
+  d = new timber.Vector(1, -1)
+
+  one = new timber.Rectangle(new Point(10, 10), 0, d, 10, 800)
+  two = new timber.Rectangle(new Point(50, 0), 0, d, 50, 50)
+
+  ok(one.intersects(two), "overlapping rectangles intersect")
 
 
 module "timber.CollisionHandler"
