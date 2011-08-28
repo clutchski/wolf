@@ -205,6 +205,8 @@ class timber.Environment
 
     # Create a new environment.
     constructor: () ->
+        #FIXME: add arguments for gravity and whatnot.
+
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
