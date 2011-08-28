@@ -73,7 +73,7 @@ class timber.Canvas
 
     # Create a timber canvas object.
     #
-    # @param id: the id of the Canvas element.
+    # @param id {String} the id of the page's canvas element.
     constructor : (id) ->
         @logger = new timber.Logger("timber.Canvas")
         @logger.debug("creating canvas with id #{id}")
