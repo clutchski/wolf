@@ -43,7 +43,7 @@ namespace "compile" do
     compile(SOURCE_DIR, BUILD_DIR, watch)
   end
 
-  desc "Compile when source files change."
+  desc "Compile source code when it changes."
   task "watch" do
     compile_timber(true)
   end
@@ -54,7 +54,7 @@ namespace "compile" do
 
 end
 
-desc "Compile source files."
+desc "Compile source code."
 task "compile" => ["compile:compile"]
 
 #
@@ -67,12 +67,12 @@ namespace "test" do
     compile(TEST_SOURCE_DIR, TEST_BUILD_DIR, watch)
   end
 
-  desc "Compile tests when source changes."
+  desc "Compile test code."
   task "compile" do
     compile_tests()
   end
 
-  desc "Compile tests when source changes."
+  desc "Compile test code when it changes."
   task "compile:watch" do
     compile_tests(true)
   end
