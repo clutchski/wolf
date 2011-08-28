@@ -126,7 +126,7 @@ class timber.Point
     #
     # @param vector {Object}
     # @return {Object} the resultant point
-    sum : (vector) ->
+    add : (vector) ->
         return new timber.Vector(@x + vector.x, @y + vector.y)
 
     # Return a string representation of the point.
@@ -163,7 +163,7 @@ class timber.Vector extends timber.Point
     #
     # @param {Object} the other vector
     # @return {Object}
-    sum : (other) ->
+    add : (other) ->
         return new timber.Vector(@x + other.x, @y + other.y)
 
     # Return the difference of this vector and the other.
@@ -228,13 +228,13 @@ class timber.Environment
                 @drag(element),
                 @gravity(element)
             ]
-            resultant = forces.reduce (t, s) -> t.sum(s)    #FIXME: not portable
+            resultant = forces.reduce (t, s) -> t.add(s)    #FIXME: not portable
 
             # Calculate the effect of the forces on the element.
             acceleration = resultant.scale(element.getInverseMass())
-            velocity = element.getVelocity().sum(acceleration.scale(milliseconds))
+            velocity = element.getVelocity().add(acceleration.scale(milliseconds))
             displacement = velocity.scale(milliseconds)
-            position = element.position.sum(displacement)
+            position = element.position.add(displacement)
 
             # Update the element.
             element.position = position
@@ -306,7 +306,7 @@ class timber.Element
     # Apply an impulse force to the element.
     #
     applyImpulse : (impulse) ->
-        velocity = @getVelocity().sum(impulse)
+        velocity = @getVelocity().add(impulse)
         @direction = velocity.normalize()
         @speed = velocity.getLength()
 
@@ -549,6 +549,8 @@ class timber.Engine
         @timestamp = null
         @continue = true
 
+        @_debugElapsedTime = null
+
     # Start the engine's event loop.
     start : () ->
         @continue = true
@@ -573,7 +575,7 @@ class timber.Engine
 
         # Determine how much time has elapsed since the last loop.
         now = new Date()
-        elapsed = now - @timestamp
+        elapsed = @_debugElapsedTime || now - @timestamp
 
         # Update the state of the world.
         @collisionHandler.elapse(@elements, elapsed)

@@ -63,13 +63,13 @@ test "equals", () ->
     ok(not eq(1, 1, 1, 2), "Shouldn't be equal")
     ok(not eq(1, 2, 1.0, 1), "Shouldn't be equal")
 
-test "sum", () ->
+test "add", () ->
     p = new timber.Point(1, 2)
     v = new timber.Vector(4, -5)
 
-    p2 = p.sum(v)
+    p2 = p.add(v)
 
-    ok(p2 instanceof timber.Point, "summing vector and point produces a point")
+    ok(p2 instanceof timber.Point, "adding vector and point produces a point")
 
     equals(p2.x, 5, "addition works")
     equals(p2.y, -3, "addition works")
@@ -106,10 +106,10 @@ test "normalize zero vector", () ->
     equals(0, v.x, "x is zero")
     equals(0, v.y, "y is zero")
 
-test "sum", () ->
+test "add", () ->
     x = new timber.Vector(-1, -5)
     y = new timber.Vector(1, 4)
-    s = x.sum(y)
+    s = x.add(y)
 
     equals(s.x, 0, "x is right")
     equals(s.y, -1, "y is right")
