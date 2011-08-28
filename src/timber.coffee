@@ -562,11 +562,10 @@ class timber.Engine
         @continue = false
         @timestamp = null
 
-    # Add given element to the engine.
-    #
-    # @param element {Object} the element to be added
-    add : (element) ->
-        @elements.push(element)
+    # Add the given elements to the engine.
+    add : (elements...) ->
+        @elements.push(element) for element in elements
+        
 
     # Run the engine's event loop.
     loop : () ->

@@ -44,6 +44,8 @@ test "Add elements", () ->
     c.add(new timber.Element())
     equals(c.elements.length, 1, "Element was added")
 
+    c.add(new timber.Element(), new timber.Element())
+    equals(c.elements.length, 3, "variadic add works")
 
 
 module "timber.Point"
