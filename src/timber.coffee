@@ -1,12 +1,12 @@
 ###
-#
-#  Timber - An HTML5 Canvas game engine.
-#
-#  Copyright 2011, Matthew Perpick.
-#  Timber is freely distributable under the MIT license.
-#
-#  https://github.com/clutchski/timber
-#
+
+Timber - An HTML5 Canvas game engine.
+
+Copyright 2011, Matthew Perpick.
+Timber is freely distributable under the MIT license.
+
+https://github.com/clutchski/timber
+
 ###
 
 
