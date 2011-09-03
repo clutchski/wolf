@@ -556,8 +556,9 @@ class timber.Engine
         @collisionHandler = new timber.CollisionHandler()
 
         @elements = []
-        @timestamp = null
+        @timestamp = null  # The timestamp of the last step.
         @continue = true
+        @interval = 5      # The # of the milliseconds to sleep between steps.
 
     # Start the engine's event loop.
     start : () ->
@@ -596,4 +597,4 @@ class timber.Engine
         @timestamp = now
         setTimeout () =>
             @.loop()
-        , 0
+        , @interval
