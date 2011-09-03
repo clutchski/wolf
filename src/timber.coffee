@@ -559,8 +559,6 @@ class timber.Engine
         @timestamp = null
         @continue = true
 
-        @_debugElapsedTime = null
-
     # Start the engine's event loop.
     start : () ->
         @continue = true
@@ -584,7 +582,7 @@ class timber.Engine
 
         # Determine how much time has elapsed since the last loop.
         now = new Date()
-        elapsed = @_debugElapsedTime || now - @timestamp
+        elapsed = now - @timestamp
 
         # Update the state of the world.
         @collisionHandler.elapse(@elements, elapsed)
