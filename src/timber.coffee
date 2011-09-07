@@ -529,7 +529,7 @@ class timber.CollisionHandler
         # Calcule the seperating velocity of the elements.
         seperatingVelocity = collision.getSeperatingVelocity()
 
-        #return if 0 > seperatingVelocity
+        return if 0 > seperatingVelocity
 
         # Change the direction and scale by the elasticity of the elements.
         velocity = -seperatingVelocity * collision.getRestitutionCoefficient()
