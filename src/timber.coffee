@@ -475,8 +475,10 @@ class timber.Collision
         return 0.5
 
     getMass : () ->
-        return @element1.mass + @element2.mass
-
+        @getElements().reduce((mass, e) ->
+            mass += e.mass if 0 < e.mass
+            return mass
+        , 0)
 
 
 class timber.CollisionHandler
