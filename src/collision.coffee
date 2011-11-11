@@ -4,6 +4,7 @@
 
 
 #= require logger
+#= require math
 
 
 class timber.Collision
