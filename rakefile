@@ -61,42 +61,17 @@ end
 # 
 
 desc "Compile the source."
-task "build" do
+task :build do
     mkdir_p BUILD_DIR
     sprocketize('timber.coffee', "#{BUILD_DIR}/timber.js", [SOURCE_DIR])
     notify("compiled source")
 end
 
 desc "Clean build artifacts."
-task "clean" do
+task :clean do
     rm_rf BUILD_DIR
     notify("Clean!")
 end
-
-
-#
-# Compilation tasks.
-#
-
-namespace "compile" do
-
-  def compile_timber(watch=false)
-    compile(SOURCE_DIR, BUILD_DIR, watch)
-  end
-
-  desc "Compile source code when it changes."
-  task "watch" do
-    compile_timber(true)
-  end
-
-  task "compile" do
-    compile_timber()
-  end
-
-end
-
-desc "Compile source code."
-task "compile" => ["compile:compile"]
 
 #
 # Testing tasks
@@ -118,7 +93,7 @@ namespace "test" do
     compile_tests(true)
   end
 
-  task "browser" => ["compile"] do
+  task "browser" => [:build] do
     open("tests/tests.html")
   end
 
@@ -132,7 +107,7 @@ task "test" => ["test:browser"]
 #
 
 desc "Run the example programs."
-task "examples" => "compile" do
+task "examples" => :build do
     Dir.glob("#{EXAMPLE_DIR}/*.html").each do |example|
         open(example)
     end

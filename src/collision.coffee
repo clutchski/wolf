@@ -1,0 +1,114 @@
+#
+# The code that has collision detection and resolution.
+#
+
+
+#= require logger
+
+
+class timber.Collision
+
+    # Create a collision object.
+    #
+    # @param element1 {Object}
+    # @param element2 {Object}
+    constructor : (element1, element2) ->
+        @element1 = element1
+        @element2 = element2
+
+    getElements : () ->
+        return [@element1, @element2]
+
+    # Return the collision's concact normal vector, relative
+    # to the first element in the collision.
+    #
+    # @return {Object}
+    getContactNormal : () ->
+        return @getRelativeVelocity().normalize()
+        
+    # Return the seperating velocity of the two elements.
+    #
+    # @return {Number}
+    getSeperatingVelocity : () ->
+        return @getRelativeVelocity().dotProduct(@getContactNormal())
+
+    getRelativeVelocity : () ->
+        return @element1.getVelocity().subtract(@element2.getVelocity())
+
+    # Return the co-efficient of restitution for the given collision.
+    # 
+    # @return {Number}
+    getRestitutionCoefficient : () ->
+        #FIXME: implement me
+        return 0.5
+
+    getMass : () ->
+        @getElements().reduce((mass, e) ->
+            mass += e.mass if 0 < e.mass
+            return mass
+        , 0)
+
+
+class timber.CollisionHandler
+
+    # Create a collision handler.
+    constructor : () ->
+        @logger = new timber.Logger("timber.CollisionHandler")
+
+
+    # Check the given elements for collisions, and update them accordingly.
+    #
+    # @param elements {Array} a list of elements to check for collisions.
+    # @param milliseconds {Number} the time since the last collision check.
+    elapse : (elements, milliseconds) ->
+        collisions = this.detectCollisions(elements)
+        (@resolveCollision(c) for c in collisions)
+
+    # Return the collisions occuring between the given elements.
+    #
+    # @param elements {Array} the elements to check for collisions.
+    # @return {Array} an array of collisions.
+    detectCollisions : (elements) ->
+        
+        # FIXME: naive & inefficient solution.
+
+        collisions = []
+        for element, i in elements
+            for other in elements[i+1..elements.length]
+                c = @detectCollision(element, other)
+                collisions.push(c) if c
+        return collisions
+
+    # Return a collision if the two elements are colliding, null 
+    # otherwise.
+    #
+    # @param e1 {Object} the first of the elements
+    # @param e2 {Object} the second of the elements
+    # @return {Object} or {null}
+    detectCollision : (e1, e2) ->
+        #FIXME: add an error of margin
+        if e1.intersects(e2) then new timber.Collision(e1, e2) else null
+
+    # Resolve the given collision.
+    # 
+    # @param {collision} the collision to resolve.
+    resolveCollision : (collision) ->
+      
+        # Calcule the seperating velocity of the elements.
+        seperatingVelocity = collision.getSeperatingVelocity()
+
+        return if 0 > seperatingVelocity
+
+        # Change the direction and scale by the elasticity of the elements.
+        velocity = -seperatingVelocity * collision.getRestitutionCoefficient()
+
+        magnitude = velocity * collision.getMass()
+        impulse = collision.getContactNormal().scale(magnitude)
+
+        # Apply the force of the collision to each element in proportion to
+        # it's mass.
+        impulse1 = impulse.scale(collision.element1.getInverseMass())
+        collision.element1.applyImpulse(impulse1)
+
+        impulse2 = impulse.scale(-1 * collision.element2.getInverseMass())
+        collision.element2.applyImpulse(impulse2)
