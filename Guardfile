@@ -5,3 +5,7 @@
 guard 'shell' do
   watch(%r{src/}) { `rake build`}
 end
+
+guard 'shell' do
+  watch(%r{tests/}) { `rake test:build` }
+end
