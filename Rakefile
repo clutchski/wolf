@@ -9,9 +9,7 @@ require "sprockets"
 SOURCE_DIR = 'src'
 BUILD_DIR = 'build'
 EXAMPLE_DIR = 'examples'
-
-TEST_SOURCE_DIR = 'tests/src'
-TEST_BUILD_DIR = 'tests/build'
+TEST_DIR = 'tests'
 
 
 #
@@ -27,14 +25,6 @@ def open(file)
     cmd = macos? ? "open" : "gnome-open" # supports macos and gnome
     sh("#{cmd} #{file}")
 end
-
-
-# Compile the given coffeescript files.
-def compile(source_dir, build_dir, watch=false)
-  opts = (watch) ? '--watch' : ''
-  sh("coffee #{opts} -o #{build_dir} -c #{source_dir}")
-end
-
 
 # Compile with sprockets.
 def sprocketize(input_file, output_file, include_paths=[])
@@ -77,30 +67,15 @@ end
 # Testing tasks
 #
 
-namespace "test" do
-
-  def compile_tests(watch=false)
-    compile(TEST_SOURCE_DIR, TEST_BUILD_DIR, watch)
-  end
-
-  desc "Compile test code."
-  task "compile" do
-    compile_tests()
-  end
-
-  desc "Compile test code when it changes."
-  task "compile:watch" do
-    compile_tests(true)
-  end
-
-  task "browser" => [:build] do
-    open("tests/tests.html")
-  end
-
+desc "Build the test source."
+task "test:build" do
+  sprocketize('timber_tests.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
 end
 
 desc "Run tests in a browser."
-task "test" => ["test:browser"]
+task "test" => ["test:build"] do
+  open("tests/tests.html")
+end
 
 #
 # Example tasks.
