@@ -1,0 +1,51 @@
+<html>
+  <head>
+    <link href="common/examples.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    <div id="game">
+      <canvas id="example" width="800" height="600"></canvas>
+    </div>
+    
+    <script type="text/javascript" src="../build/timber.js"></script>
+    <script type="text/javascript" src="common/jquery-1.6.2.js"></script>
+    <script type="text/javascript">
+$(document).ready(function () {
+
+
+    var engine = new timber.Engine("example");
+    var logger = new timber.Logger("asteroids");
+
+    engine.environment.gravitationalConstant = 0;
+    engine.environment.density = 0;
+
+    var d = new timber.Vector(0, 1).normalize();
+    var p = new timber.Point(500, 530);
+    var plane = new timber.Rectangle(p, d, 0, 10, 10);
+
+    engine.add(plane);
+
+    var nextEnemyIn = function () {
+        return Math.random() * 1000;
+    };
+
+    var createEnemy = function () {
+        var p = new timber.Point(Math.random() * 800, 100);
+        var speed = Math.random() * 0.5 + 0.2;
+
+        return new timber.Rectangle(p, new timber.Vector(0, 1), speed, 20, 20);
+    };
+
+    setInterval(function () {
+        var e = createEnemy();
+        engine.add(e);
+    }, 1000);
+
+    engine.start();
+
+});
+  </script>
+    
+  </body>
+</html>
+  
