@@ -3,6 +3,9 @@
 #
 
 
+require "sprockets"
+
+
 SOURCE_DIR = 'src'
 BUILD_DIR = 'build'
 EXAMPLE_DIR = 'examples'
@@ -30,6 +33,44 @@ end
 def compile(source_dir, build_dir, watch=false)
   opts = (watch) ? '--watch' : ''
   sh("coffee #{opts} -o #{build_dir} -c #{source_dir}")
+end
+
+
+# Compile with sprockets.
+def sprocketize(input_file, output_file, include_paths=[])
+    environment = Sprockets::Environment.new
+    include_paths.each{|p| environment.append_path(p)}
+
+    File.open(output_file, 'w') do |f|
+        f.write(environment[input_file])
+    end
+end
+
+# Print a notice message.
+def notify(message)
+  padding = 4
+  line = '*' * (message.length + padding)
+  puts line
+  puts "* #{message.upcase} *"
+  puts line
+end
+
+
+#
+# Tasks
+# 
+
+desc "Compile the source."
+task "build" do
+    mkdir_p BUILD_DIR
+    sprocketize('timber.coffee', "#{BUILD_DIR}/timber.js", [SOURCE_DIR])
+    notify("compiled source")
+end
+
+desc "Clean build artifacts."
+task "clean" do
+    rm_rf BUILD_DIR
+    notify("Clean!")
 end
 
 
