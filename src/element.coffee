@@ -161,5 +161,3 @@ class timber.Rectangle extends timber.Element
     getAxisAlignedBoundingBox : () ->
         return this.getCorners()
 
-
-
