@@ -72,7 +72,9 @@ namespace "test" do
 
   desc "Build the test source."
   task :build do
+    mkdir_p BUILD_DIR
     sprocketize('timber_tests.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
+    notify("Built tests!")
   end
 
   task :browser => [:build] do
