@@ -10,6 +10,7 @@ SOURCE_DIR = 'src'
 BUILD_DIR = 'build'
 EXAMPLE_DIR = 'examples'
 TEST_DIR = 'tests'
+TEST_HARNESS = "#{TEST_DIR}/tests.html"
 
 
 #
@@ -67,15 +68,29 @@ end
 # Testing tasks
 #
 
-desc "Build the test source."
-task "test:build" do
-  sprocketize('timber_tests.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
+namespace "test" do
+
+  desc "Build the test source."
+  task :build do
+    sprocketize('timber_tests.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
+  end
+
+  task :browser => [:build] do
+    open(TEST_HARNESS)
+  end
+
+  desc "Run tests in phantomjs."
+  task :phantomjs => [:build] do
+      qunit_html = File.expand_path(TEST_HARNESS)
+      cmd = "phantomjs #{TEST_DIR}/tests-phantom.js file://#{qunit_html}"
+      sh(cmd)
+  end
 end
 
 desc "Run tests in a browser."
-task "test" => ["test:build"] do
-  open("tests/tests.html")
-end
+task :test => ["test:browser"]
+
+task :default => :test
 
 #
 # Example tasks.
