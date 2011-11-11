@@ -43,7 +43,6 @@ class timber.Element
         throw new Error("Not Implemented error")
 
     # Apply an impulse force to the element.
-    #
     applyImpulse : (impulse) ->
         velocity = @getVelocity().add(impulse)
         @direction = velocity.normalize()
