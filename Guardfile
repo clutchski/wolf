@@ -3,5 +3,5 @@
 #
 
 guard 'shell' do
-    watch(%r{src/}) { `rake build`}
+  watch(%r{src/}) { `rake build`}
 end
