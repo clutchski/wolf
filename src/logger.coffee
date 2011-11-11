@@ -26,5 +26,3 @@ class timber.Logger
     _write : (level, message) ->
         console.log([level, @module, message].join(" | ")) if console
 
-
-
