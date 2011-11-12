@@ -203,13 +203,6 @@ test "Elements with speed & direction move", () ->
     equals(e.position.x, 1000, "Moves along x axis")
     equals(e.position.y, 0, "Moves along x axis")
 
-test "gravity", () ->
-    ok false, "add tests for gravity"
-
-test "drag", () ->
-    ok false, "add tests for drag"
-
-
 
 module "timber.Rectangle"
 
@@ -285,21 +278,3 @@ test "detectCollision", () ->
 
     ok(ch.detectCollision(r1, r2), "collision")
     ok(not ch.detectCollision(r1, r3), "no collision")
-
-test "resolveCollision", () ->
-
-    s = 0
-    d = new Vector(1, 1)
-    p1 = new Point(10, 10)
-    p2 = new Point(20, 20)
-
-    r1 = new Rectangle(p1, d, s, 50, 50)
-    r2 = new Rectangle(p1, d, s, 50, 50)
-
-    ch = new timber.CollisionHandler()
-    
-    c = ch.detectCollision(r1, r2)
-    ok(c, "Ensure our shapes intersect")
-
-    ch.resolveCollision(c)
-    ok(not ch.detectCollision(r1, r2), "the shapes no longer intersect")
