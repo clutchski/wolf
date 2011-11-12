@@ -38,7 +38,7 @@ test "Non-existant canvas", () ->
 module "timber.Element"
 
 test "mass", () ->
-    e = new timber.Element()
+    e = new timber.Rectangle()
     ok(e.mass, "mass has a default value")
     e.mass = 10
     equals(e.mass, 10, "mass is settable")
@@ -54,10 +54,10 @@ test "No elements", () ->
 
 test "Add elements", () ->
     c = new timber.Engine("test-canvas")
-    c.add(new timber.Element())
+    c.add(new timber.Rectangle())
     equals(c.elements.length, 1, "Element was added")
 
-    c.add(new timber.Element(), new timber.Element())
+    c.add(new timber.Rectangle(), new timber.Rectangle())
     equals(c.elements.length, 3, "variadic add works")
 
 
@@ -181,7 +181,7 @@ test "Static elements don't move", () ->
     p = new timber.Point(5, 5)
     d = new timber.Vector(1, 0)
     s = 0
-    e = new timber.Element(p, d, s)
+    e = new timber.Rectangle(p, d, s)
 
     env = new timber.Environment()
     env.elapse(e, 100)
@@ -192,7 +192,7 @@ test "Elements with speed & direction move", () ->
     p = new timber.Point(0, 0)
     d = new timber.Vector(1, 0)
     s = 1
-    e = new timber.Element(p, d, s)
+    e = new timber.Rectangle(p, d, s)
 
     env = new timber.Environment()
     env.gravitationalConstant = 0

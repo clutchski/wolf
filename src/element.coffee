@@ -12,6 +12,8 @@
 #
 class timber.Element
 
+    @key : null
+
     # Create an element.
     #
     # @param position {Object} a point representing the position
@@ -28,6 +30,9 @@ class timber.Element
         @mass = 1000
         @area = 1
         @dragCoefficient =  0.7
+
+        if not @constructor.key
+            throw new Error("Class missing required property 'key'")
 
     # Return the element's velocity.
     #
@@ -95,6 +100,8 @@ class timber.Element
 
 class timber.Circle extends timber.Element
 
+    @key : "timber.Circle",
+
     constructor : (position, direction, speed, radius) ->
         super(position, direction, speed)
         @radius = radius
@@ -126,6 +133,7 @@ class timber.Circle extends timber.Element
 
 class timber.Rectangle extends timber.Element
 
+    @key : "timber.Rectangle",
 
     # Create a rectangle element.
     #
