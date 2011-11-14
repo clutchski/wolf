@@ -95,6 +95,19 @@ task :test => ["test:browser"]
 task :default => :test
 
 #
+# Documentation tasks.
+#
+
+task "readme" do
+  mkdir_p BUILD_DIR
+  sh("markdown README.md > #{BUILD_DIR}/readme.html")
+end
+
+task "readme:open" => ["readme"] do
+  open("#{BUILD_DIR}/readme.html")
+end
+
+#
 # Example tasks.
 #
 
