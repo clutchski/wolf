@@ -40,10 +40,10 @@ class timber.Environment
             acceleration = resultant.scale(element.getInverseMass())
             velocity = element.getVelocity().add(acceleration.scale(milliseconds))
             displacement = velocity.scale(milliseconds)
-            position = element.position.add(displacement)
+            position = element.getPosition().add(displacement)
 
             # Update the element.
-            element.position = position
+            element.setPosition(position)
             element.speed = velocity.getLength()
             element.direction = velocity.normalize()
 
@@ -60,9 +60,7 @@ class timber.Environment
         s = element.speed
         s = if s > 1 then timber.square(s) else s
 
-        m = 0.5 * @density * s *
-                             element.dragCoefficient *
-                             element.area
+        m = 0.5 * @density * s * element.dragCoefficient
 
         return element.direction.scale(-m)
 
@@ -73,5 +71,4 @@ class timber.Environment
     gravity : (element) ->
         # FIXME: technically, we should add drag as well.
         return new timber.Vector(0, @gravitationalConstant)
-
 

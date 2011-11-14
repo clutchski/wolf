@@ -14,32 +14,43 @@ class timber.Element
 
     @key : null
 
-    # Create an element.
+    # Create an element. The constructor takes a single argument which is a map
+    # of options. Here are the accepted parameters:
     #
-    # @param position {Object} a point representing the position
-    # @param direction {Object} a unit vector representing direction
-    # @param speed {Object} the speed in pixels per millisecond
-    constructor : (position, direction, speed) ->
-        
-        #FIXME: change this class to have sane default arguments, like 0 speed,
-        #position at the origin, etc.
+    #   x: The x co-ordinate. Defaults to zero.
+    #   y: The y co-ordinate. Defaults to zero.
+    #   direction: A direction vector. Defaults to (0, 0)
+    #   speed: The element's initial speed. Defaults to zero.
+    #   mass: The element's mass. Defaults to 1000.
+    #   dragCoefficient: The element's drag co-efficient. Defaults to 0.7.
+    constructor : (opts = {}) ->
+        # Set default variables if necessary.
+        @x = opts.x or 0
+        @y = opts.y or 0
+        @speed = opts.speed or 0
+        @mass = opts.mass or 1000
+        @direction = opts.direction or new timber.Vector(0, 0)
+        @dragCoefficient = opts.dragCoefficient or 0.7
 
-        @position = position
-        @direction = direction
-        @speed = speed
-        @mass = 1000
-        @area = 1
-        @dragCoefficient =  0.7
-
+        # Ensure the Element class has a unique key, used for registering
+        # class collision events.
         if not @constructor.key
             throw new Error("Class missing required property 'key'")
+
+    # Return the element's position.
+    getPosition : () ->
+        return new timber.Point(@x, @y)
+
+    # Set the element's position.
+    setPosition : (point) ->
+        @x = point.x
+        @y = point.y
 
     # Return the element's velocity.
     #
     # @return {Object} the velocity vector.
     getVelocity : () ->
         return @direction.normalize().scale(@speed)
-
 
     # Render the element on the given canvas context.
     #
@@ -52,7 +63,6 @@ class timber.Element
         velocity = @getVelocity().add(impulse)
         @direction = velocity.normalize()
         @speed = velocity.getLength()
-
 
     # Return true if this element intersects with the other
     # element, false otherwise.
@@ -102,22 +112,22 @@ class timber.Circle extends timber.Element
 
     @key : "timber.Circle",
 
-    constructor : (position, direction, speed, radius) ->
-        super(position, direction, speed)
-        @radius = radius
+    constructor : (opts) ->
+        super(opts)
+        @radius = opts.radius
 
     render : (context) ->
         context.beginPath()
-        context.arc(@position.x, @position.y, @radius, 0, Math.PI *2)
+        context.arc(@x, @y, @radius, 0, Math.PI *2)
         context.stroke()
 
     getAxisAlignedBoundingBox : () ->
         # FIXME: need non-axis aligned collisions for this
 
-        yt = @position.y - @radius
-        yb = @position.y + @radius
-        xl = @position.x - @radius
-        xr = @position.x + @radius
+        yt = @y - @radius
+        yb = @y + @radius
+        xl = @x - @radius
+        xr = @x + @radius
 
         return [
             new timber.Point(xl, yt)
@@ -135,20 +145,19 @@ class timber.Rectangle extends timber.Element
 
     @key : "timber.Rectangle",
 
-    # Create a rectangle element.
-    #
-    # @param position {Object} the top left corner of the rectangle.
-    constructor : (position, direction, speed, height, width) ->
-        super(position, direction, speed)
-        @height = height
-        @width = width
+    # Create a rectangle element. Rectangles take the same standard parameters
+    # as elements, along with two additional paramters, width and height.
+    constructor : (opts = {}) ->
+        super(opts)
+        @height = opts.height
+        @width = opts.width
 
     getCorners : () ->
         # Find the co-ordinates of the rectangle's corners.
-        x1 = @position.x
-        y1 = @position.y
-        x2 = @position.x + @width
-        y2 = @position.y + @height
+        x1 = @x
+        y1 = @y
+        x2 = @x + @width
+        y2 = @y + @height
         return [
             new timber.Point(x1, y1)
             new timber.Point(x2, y1),

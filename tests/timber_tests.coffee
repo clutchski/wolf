@@ -178,21 +178,18 @@ module "timber.Environment"
 
 
 test "Static elements don't move", () ->
-    p = new timber.Point(5, 5)
     d = new timber.Vector(1, 0)
-    s = 0
-    e = new timber.Rectangle(p, d, s)
+    e = new timber.Rectangle({x:5, y:5, direction:d, speed:0})
 
     env = new timber.Environment()
     env.elapse(e, 100)
-    ok(e.position.equals(p.copy()), "Position is unchanged")
+    equals(e.x, 5, "x is unchanged")
+    equals(e.y, 5, "y is unchanged")
 
 
 test "Elements with speed & direction move", () ->
-    p = new timber.Point(0, 0)
     d = new timber.Vector(1, 0)
-    s = 1
-    e = new timber.Rectangle(p, d, s)
+    e = new timber.Rectangle({x:0, y:0, speed:1, direction:d})
 
     env = new timber.Environment()
     env.gravitationalConstant = 0
@@ -200,8 +197,8 @@ test "Elements with speed & direction move", () ->
 
     env.elapse([e], 1000)
 
-    equals(e.position.x, 1000, "Moves along x axis")
-    equals(e.position.y, 0, "Moves along x axis")
+    equals(e.x, 1000, "Moves along x axis")
+    equals(e.y, 0, "Moves along x axis")
 
 
 module "timber.Rectangle"
@@ -212,19 +209,11 @@ test "intersection", () ->
     intersects = (tr1, tr2) ->
         return tr1.intersects(tr2) && tr2.intersects(tr1)
 
-    s = 0
-    d = new Vector(1, 1)
-
-    r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
-    r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
-    r3 = new Rectangle(new Point(150, 150), s, d, 100, 100)
-    r4 = new Rectangle(new Point(50, 50), s, d, 100, 100)
-    r5 = new Rectangle(new Point(50, 150), s, d, 100, 100)
-
-
-
-
-
+    r1 = new Rectangle({x:0, y:0, width:10, height:10})
+    r2 = new Rectangle({x:0, y:0, width:100, height:100})
+    r3 = new Rectangle({x:150, y:150, width:100, height:100})
+    r4 = new Rectangle({x:50, y:50, width:100, height:100})
+    r5 = new Rectangle({x:50, y:150,width:100, height:100})
 
     ok(intersects(r1, r2), "Containing rectangles intersect")
     ok(intersects(r2, r4), "Partially overlapping rectangles intersect")
@@ -232,11 +221,8 @@ test "intersection", () ->
     ok(intersects(r3, r4), "One point adjacent rectangles intersect")
 
 test "containing intersection", () ->
-  d = new timber.Vector(1, -1)
-
-  one = new timber.Rectangle(new Point(10, 10), 0, d, 10, 800)
-  two = new timber.Rectangle(new Point(50, 0), 0, d, 50, 50)
-
+  one = new timber.Rectangle({x:10, y:10, width:10, height:800})
+  two = new timber.Rectangle({x:50, y:0, width:50, height:50})
   ok(one.intersects(two), "overlapping rectangles intersect")
 
 
@@ -266,10 +252,6 @@ test "detectCollisions", () ->
     equals(collisions.length, 5, "found five collisions")
 
 test "detectCollision", () ->
-
-    s = 0
-    d = new Vector(1, 1)
-
     r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
     r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
     r3 = new Rectangle(new Point(20, 20), s, d, 100, 100)
