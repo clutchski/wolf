@@ -26,25 +26,20 @@ class timber.Environment
     # @param element {Array} the element to update
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
-        for element in elements
-            resultant = @resultant(element, milliseconds)
-            element.applyForce(resultant, milliseconds)
+        (@applyForces(e, milliseconds) for e in elements)
         # HACK: Don't compile the loop into an expression.
         return this
 
-    # Return the resultant of all environmental forces on the element.
-    resultant : (element, milliseconds) ->
-        forces = [
-            @drag(element),
-            @gravity(element)
-        ]
-        #FIXME: not portable
-        return forces.reduce (t, s) -> t.add(s)
+    # Apply environmental forces to the element for the given number of
+    # milliseconds.
+    applyForces : (element, milliseconds) ->
+        # FIXME: possible optimization? ignore zero gravity, 
+        # zero density environments.
+        forces = [@drag(element), @gravity(element)]
+        resultant = forces.reduce (t, s) -> t.add(s) # FIXME: not portable.
+        element.applyForce(resultant, milliseconds)
  
     # Return the force of drag on the element.
-    #
-    # @param {Object} the element moving through the environment
-    # @return {Object} the drag on the element.
     drag : (element) ->
 
         # FIXME: this is broken at low speeds, and will in fact return a force
@@ -59,8 +54,6 @@ class timber.Environment
 
 
     # Return the force of gravity on the given element.
-    #
-    # @param element {Object}
     gravity : (element) ->
         # FIXME: technically, we should add drag as well.
         # FIXME: Optimize? Singleton?
