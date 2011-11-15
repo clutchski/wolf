@@ -17,6 +17,8 @@ https://github.com/clutchski/timber
 # The timber global object.
 timber = {}
 
-
 # Export timber to global scope.
 this.timber = timber
+
+# The current version.
+timber.VERSION = "0.0.0"
