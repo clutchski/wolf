@@ -184,7 +184,7 @@ class timber.Rectangle extends timber.Element
         corners.push(first)
         for c in corners
             context.lineTo(c.x, c.y)
-        context.stroke()
+        context.fill()
 
     getAxisAlignedBoundingBox : () ->
         return this.getCorners()
