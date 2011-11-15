@@ -4,6 +4,7 @@
 
 
 require "sprockets"
+require "uglifier"
 
 
 SOURCE_DIR = 'src'
@@ -61,6 +62,20 @@ desc "Clean build artifacts."
 task :clean do
     rm_rf BUILD_DIR
     notify("Clean!")
+end
+
+#
+# Distribution tasks.
+#
+
+desc "Create a new distribution"
+task :dist => [:build] do
+  sh("cp #{BUILD_DIR}/timber.js .")
+  source = IO.read("timber.js")
+  uglified = Uglifier.compile(source)
+  File.open("timber.min.js", "w") do |f|
+    f.write(uglified)
+  end
 end
 
 #
