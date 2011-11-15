@@ -10,7 +10,6 @@ SOURCE_DIR = 'src'
 BUILD_DIR = 'build'
 EXAMPLE_DIR = 'examples'
 TEST_DIR = 'tests'
-TEST_HARNESS = "#{TEST_DIR}/tests.html"
 
 
 #
