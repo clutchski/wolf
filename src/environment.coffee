@@ -46,7 +46,7 @@ class timber.Environment
         # that is larger than the element's velocity.
 
         s = element.speed
-        s = if s > 1 then timber.square(s) else s
+        s = if s > 1 then s * s else s
 
         m = 0.5 * @density * s * element.dragCoefficient
 

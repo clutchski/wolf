@@ -2,9 +2,6 @@
 # An assortment of Math functions and classes that power the simulations.
 #
 
-timber.square = (n) ->
-    return n * n
-
 # Return true if the value n is contained in the closed interval
 # [l, u], false otherwise.
 #
