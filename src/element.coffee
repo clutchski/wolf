@@ -19,6 +19,7 @@ class timber.Element
     #   speed: The element's initial speed. Defaults to zero.
     #   mass: The element's mass. Defaults to 1000.
     #   dragCoefficient: The element's drag co-efficient. Defaults to 0.7.
+    #   visible: The element's visiblity status. Defaults to true.
     constructor : (opts = {}) ->
         # Set default variables if necessary.
         @x = opts.x or 0
@@ -27,6 +28,7 @@ class timber.Element
         @mass = opts.mass or 1000
         @direction = opts.direction or new timber.Vector(0, 0)
         @dragCoefficient = if opts.dragCoefficient? then opts.dragCoefficient else 0.7
+        @visible = if opts.visible? then opts.visible else true
 
         # Ensure the Element class has a unique key, used for registering
         # class collision events.
