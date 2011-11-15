@@ -32,7 +32,6 @@ class timber.Environment
         # HACK: Don't compile the loop into an expression.
         return this
 
-
     # Return the resultant of all environmental forces on the element.
     resultant : (element, milliseconds) ->
         forces = [
