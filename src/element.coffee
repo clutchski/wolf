@@ -64,6 +64,21 @@ class timber.Element
         @direction = velocity.normalize()
         @speed = velocity.getLength()
 
+    # Apply the given force to the element for the given number of
+    # milliseconds.
+    applyForce : (force, milliseconds) ->
+        # Calculate the effect's of the force.
+        acceleration = force.scale(@getInverseMass())
+        velocity = @getVelocity().add(acceleration.scale(milliseconds))
+        displacement = velocity.scale(milliseconds)
+        position = @getPosition().add(displacement)
+
+        # Update the element's state.
+        @setPosition(position)
+        @speed = velocity.getLength()
+        @direction = velocity.normalize()
+
+
     # Return true if this element intersects with the other
     # element, false otherwise.
     #
