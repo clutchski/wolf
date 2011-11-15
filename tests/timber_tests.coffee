@@ -221,7 +221,7 @@ test "intersection", () ->
     ok(intersects(r3, r4), "One point adjacent rectangles intersect")
 
 test "containing intersection", () ->
-  one = new timber.Rectangle({x:10, y:10, width:10, height:800})
+  one = new timber.Rectangle({x:10, y:10, width:100, height:800})
   two = new timber.Rectangle({x:50, y:0, width:50, height:50})
   ok(one.intersects(two), "overlapping rectangles intersect")
 
@@ -231,15 +231,12 @@ module "timber.CollisionHandler"
 test "detectCollisions", () ->
     ch = new timber.CollisionHandler()
 
-    s = 0
-    d = new Vector(1, 1)
-
-    r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
-    r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
-    r3 = new Rectangle(new Point(150, 150), s, d, 100, 100)
-    r4 = new Rectangle(new Point(50, 50), s, d, 100, 100)
-    r5 = new Rectangle(new Point(50, 150), s, d, 100, 100)
-    r6 = new Rectangle(new Point(500, 500), s, d, 100, 100)
+    r1 = new Rectangle({x:0,    y:0,    width:10,  height:10})
+    r2 = new Rectangle({x:0,    y:0,    width:100, height:100})
+    r3 = new Rectangle({x:150,  y:150,  width:100, height:100})
+    r4 = new Rectangle({x:50,   y:50,   width:100, height:100})
+    r5 = new Rectangle({x:50,   y:150,  width:100, height:100})
+    r6 = new Rectangle({x:500,  y:500,  width:100, height:100})
 
     equals(ch.detectCollisions([]).length, 0, "no elements")
     equals(ch.detectCollisions([r1]).length, 0, "one element")
@@ -252,9 +249,9 @@ test "detectCollisions", () ->
     equals(collisions.length, 5, "found five collisions")
 
 test "detectCollision", () ->
-    r1 = new Rectangle(new Point(0, 0), s, d, 10, 10)
-    r2 = new Rectangle(new Point(0, 0), s, d, 100, 100)
-    r3 = new Rectangle(new Point(20, 20), s, d, 100, 100)
+    r1 = new Rectangle({x:0, y:0, width:10, height: 10})
+    r2 = new Rectangle({x:0, y:0, width:100, height: 100})
+    r3 = new Rectangle({x:20, y:20, width:100, height: 100})
 
     ch = new timber.CollisionHandler()
 
