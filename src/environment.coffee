@@ -33,14 +33,15 @@ class timber.Environment
     # Apply the environment's forces to the element for the given number of
     # milliseconds.
     applyForces : (element, milliseconds) ->
-        # FIXME: possible optimization? ignore zero gravity, 
-        # zero density environments.
-        forces = [@drag(element), @gravity(element)]
+        forces = [
+            @getDragForce(element),
+            @getGravitationalForce(element)
+        ]
         resultant = forces.reduce (t, s) -> t.add(s) # FIXME: not portable.
         element.applyForce(resultant, milliseconds)
  
     # Return the force of drag on the element.
-    drag : (element) ->
+    getDragForce : (element) ->
 
         # FIXME: this is broken at low speeds, and will in fact return a force
         # that is larger than the element's velocity.
@@ -54,7 +55,7 @@ class timber.Environment
 
 
     # Return the force of gravity on the given element.
-    gravity : (element) ->
+    getGravitationalForce : (element) ->
         # FIXME: technically, we should add drag as well.
         # FIXME: Optimize? Singleton?
         return new timber.Vector(0, @gravitationalConstant)
