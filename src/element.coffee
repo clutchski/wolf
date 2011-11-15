@@ -6,10 +6,6 @@
 #= require math
 
 
-# 
-#
-# An abstract base class for any drawable thing.
-#
 class timber.Element
 
     @key : null
