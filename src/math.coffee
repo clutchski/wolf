@@ -69,10 +69,17 @@ class timber.Vector extends timber.Point
     #
     # @return {Object} a normalized vector
     normalize : () ->
-        if @x == 0 and @y == 0
-            return new timber.Vector(0, 0)
+        return @copy() if @isZeroVector()
         length = this.getLength()
         return new timber.Vector(@x/length, @y/length)
+
+    # Return true if this vector is the zero vector, false otherwise.
+    isZeroVector : () ->
+        return @x == 0 and @y == 0
+
+    # Return a copy of this vector.
+    copy: () ->
+        return new timber.Vector(@x, @y)
 
     # Return a new vector scaled by the given value.
     #
