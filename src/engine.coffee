@@ -21,7 +21,7 @@ class timber.Engine
         @environment = new timber.Environment()
         @collisionHandler = new timber.CollisionHandler()
 
-        @elements = []
+        @elements = []     # The list of element's known to the engine.
         @timestamp = null  # The timestamp of the last step.
         @continue = true
         @interval = 5      # The # of the milliseconds to sleep between steps.
