@@ -63,7 +63,7 @@ class timber.Element
     # Apply the given force to the element for the given number of
     # milliseconds.
     applyForce : (force, milliseconds) ->
-        # Calculate the effect's of the force.
+        # Calculate the effects of the force.
         acceleration = force.scale(@getInverseMass())
         velocity = @getVelocity().add(acceleration.scale(milliseconds))
         displacement = velocity.scale(milliseconds)
