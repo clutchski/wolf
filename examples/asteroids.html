@@ -19,9 +19,14 @@ $(document).ready(function () {
     engine.environment.gravitationalConstant = 0;
     engine.environment.density = 0;
 
-    var d = new timber.Vector(0, 1).normalize();
-    var p = new timber.Point(500, 530);
-    var plane = new timber.Rectangle(p, d, 0, 10, 10);
+    var plane = new timber.Rectangle({
+        x: 500,
+        y: 530,
+        direction: new timber.Vector(0, 1),
+        speed: 0,
+        width: 10,
+        height: 10
+      });
 
     engine.add(plane);
 
@@ -30,10 +35,14 @@ $(document).ready(function () {
     };
 
     var createEnemy = function () {
-        var p = new timber.Point(Math.random() * 800, 100);
-        var speed = Math.random() * 0.5 + 0.2;
-
-        return new timber.Rectangle(p, new timber.Vector(0, 1), speed, 20, 20);
+        return new timber.Rectangle({
+            x: Math.random() * 800,
+            y: 100,
+            direction: new timber.Vector(0, 1),
+            speed: Math.random() * 0.5 + 0.2,
+            width: 20,
+            height: 20
+          });
     };
 
     setInterval(function () {
