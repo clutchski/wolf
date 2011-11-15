@@ -6,8 +6,8 @@ Timber is an embryonic Canvas game engine written in Coffeescript.
 
 #### Setup:
 
-- install an [execjs](https://github.com/sstephenson/execjs) runtime. I use Node.
-- install ruby, rake, bundler and run `bundle install`
+- Install an [execjs](https://github.com/sstephenson/execjs) runtime. I use Node.
+- Install ruby, rake, bundler and run `bundle install`
 
 #### Build:
 
