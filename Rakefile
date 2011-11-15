@@ -98,6 +98,7 @@ task :default => :test
 # Documentation tasks.
 #
 
+desc "Build the README file."
 task "readme" do
   mkdir_p BUILD_DIR
   sh("markdown README.md > #{BUILD_DIR}/readme.html")
