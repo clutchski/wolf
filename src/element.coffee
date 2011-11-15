@@ -130,7 +130,7 @@ class timber.Circle extends timber.Element
     render : (context) ->
         context.beginPath()
         context.arc(@x, @y, @radius, 0, Math.PI *2)
-        context.stroke()
+        context.fill()
 
     getAxisAlignedBoundingBox : () ->
         # FIXME: need non-axis aligned collisions for this
