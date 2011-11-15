@@ -68,7 +68,7 @@ end
 # Distribution tasks.
 #
 
-desc "Create a new distribution"
+desc "Create a new distribution."
 task :dist => [:build] do
   sh("cp #{BUILD_DIR}/timber.js .")
   source = IO.read("timber.js")
