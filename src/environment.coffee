@@ -12,7 +12,6 @@ class timber.Environment
     # Create a new environment.
     constructor: () ->
         #FIXME: add arguments for gravity and whatnot.
-
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
@@ -42,15 +41,11 @@ class timber.Environment
  
     # Return the force of drag on the element.
     getDragForce : (element) ->
-
         # FIXME: this is broken at low speeds, and will in fact return a force
         # that is larger than the element's velocity.
-
         s = element.speed
         s = if s > 1 then s * s else s
-
         m = 0.5 * @density * s * element.dragCoefficient
-
         return element.direction.scale(-m)
 
 
