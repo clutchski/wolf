@@ -10,7 +10,6 @@
 #= require logger
 
 
-
 class timber.Engine
 
     # Create an engine instance.
@@ -27,13 +26,13 @@ class timber.Engine
         @continue = true
         @interval = 5      # The # of the milliseconds to sleep between steps.
 
-    # Start the engine's event loop.
+    # Start the engine's time simulation.
     start : () ->
         @continue = true
         @timestamp = new Date()
-        @loop()
+        @step()
 
-    # Stop the engine's event loop.
+    # Stop the engine's time simulation.
     stop : () ->
         @continue = false
         @timestamp = null
@@ -42,12 +41,12 @@ class timber.Engine
     add : (elements...) ->
         @elements.push(element) for element in elements
 
-    # Run the engine's event loop.
-    loop : () ->
+    # Run a single step in the time simulation.
+    step : () ->
         # Stop, if so desired.
         return if not @continue
 
-        # Determine how much time has elapsed since the last loop.
+        # Determine how much time has elapsed since the last step.
         now = new Date()
         elapsed = now - @timestamp
 
@@ -62,5 +61,5 @@ class timber.Engine
         # Do it again when the stack clears.
         @timestamp = now
         setTimeout () =>
-            @.loop()
+            @.step()
         , @interval
