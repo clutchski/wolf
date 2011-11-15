@@ -26,20 +26,21 @@ class timber.Environment
     # @param element {Array} the element to update
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
-
         for element in elements
-            # Calculate the forces acting on the element.
-            forces = [
-                @drag(element),
-                @gravity(element)
-            ]
-            resultant = forces.reduce (t, s) -> t.add(s)    #FIXME: not portable
-
-            # Apply them.
+            resultant = @resultant(element, milliseconds)
             element.applyForce(resultant, milliseconds)
-
         # HACK: Don't compile the loop into an expression.
         return this
+
+
+    # Return the resultant of all environmental forces on the element.
+    resultant : (element, milliseconds) ->
+        forces = [
+            @drag(element),
+            @gravity(element)
+        ]
+        #FIXME: not portable
+        return forces.reduce (t, s) -> t.add(s)
  
     # Return the force of drag on the element.
     #
