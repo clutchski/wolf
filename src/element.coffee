@@ -30,7 +30,7 @@ class timber.Element
         @speed = opts.speed or 0
         @mass = opts.mass or 1000
         @direction = opts.direction or new timber.Vector(0, 0)
-        @dragCoefficient = opts.dragCoefficient or 0.7
+        @dragCoefficient = if opts.dragCoefficient? then opts.dragCoefficient else 0.7
 
         # Ensure the Element class has a unique key, used for registering
         # class collision events.
