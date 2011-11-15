@@ -47,6 +47,7 @@ class timber.Environment
             element.speed = velocity.getLength()
             element.direction = velocity.normalize()
 
+        return this # HACK: Don't compile the loop into an expression.
 
     # Return the force of drag on the element.
     #
@@ -70,5 +71,6 @@ class timber.Environment
     # @param element {Object}
     gravity : (element) ->
         # FIXME: technically, we should add drag as well.
+        # FIXME: Optimize? Singleton?
         return new timber.Vector(0, @gravitationalConstant)
 
