@@ -23,11 +23,10 @@ class timber.Canvas
         @context = @canvas.getContext("2d")
         throw new Error("no context") if not @context
 
-    # Render the given elements on the canvas.
-    #
-    # @param elements {Array} an array of elements to render.
+    # Render the given array of elements on the canvas.
     render: (elements) ->
         (e.render(@context) for e in elements)
+        return null # HACK: don't collect results
 
 
     # Clear the canvas.
