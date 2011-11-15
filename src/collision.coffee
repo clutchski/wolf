@@ -20,7 +20,7 @@ class timber.Collision
     getElements : () ->
         return [@element1, @element2]
 
-    # Return the collision's concact normal vector, relative
+    # Return the collision's contact normal vector, relative
     # to the first element in the collision.
     #
     # @return {Object}
@@ -28,21 +28,19 @@ class timber.Collision
         return @getRelativeVelocity().normalize()
         
     # Return the seperating velocity of the two elements.
-    #
-    # @return {Number}
     getSeperatingVelocity : () ->
         return @getRelativeVelocity().dotProduct(@getContactNormal())
 
+    # Return the relative velocity of the collision's elements.
     getRelativeVelocity : () ->
         return @element1.getVelocity().subtract(@element2.getVelocity())
 
     # Return the co-efficient of restitution for the given collision.
-    # 
-    # @return {Number}
     getRestitutionCoefficient : () ->
         #FIXME: implement me
         return 0.5
 
+    # Return the total mass of all elements in the collision.
     getMass : () ->
         @getElements().reduce((mass, e) ->
             mass += e.mass if 0 < e.mass
