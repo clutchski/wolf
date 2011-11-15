@@ -64,6 +64,14 @@ $(document).ready(function () {
         move(new timber.Vector(-1, 0));
     };
 
+    var moveUp = function () {
+        move(new timber.Vector(0, -1));
+    };
+
+    var moveDown = function () {
+        move(new timber.Vector(0, 1));
+    };
+
 
     var shoot = function () {
         var bullet = new timber.Circle({
@@ -77,12 +85,15 @@ $(document).ready(function () {
         engine.add(bullet);
     };
  
-    $(document).keypress(function (event) {
-        var key = event.which;
+    $(document).keydown(function (event) {
+        var key = (event.which) ? event.which : e.keyCode;
+
         console.log("keypress " + key);
         var behaviours = {
-            106 : moveLeft,
-            107 : moveRight,
+            37 : moveLeft,
+            39 : moveRight,
+            38 : moveUp,
+            40 : moveDown,
             113 : engine.stop,
             32 : shoot
         };
