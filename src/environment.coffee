@@ -26,28 +26,27 @@ class timber.Environment
     # @param element {Array} the element to update
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
-
-        for element in elements
-
-            # Find the net force on the element.
-            forces = [
-                @drag(element),
-                @gravity(element)
-            ]
-            resultant = forces.reduce (t, s) -> t.add(s)    #FIXME: not portable
-
-            # Calculate the effect of the forces on the element.
-            acceleration = resultant.scale(element.getInverseMass())
-            velocity = element.getVelocity().add(acceleration.scale(milliseconds))
-            displacement = velocity.scale(milliseconds)
-            position = element.getPosition().add(displacement)
-
-            # Update the element.
-            element.setPosition(position)
-            element.speed = velocity.getLength()
-            element.direction = velocity.normalize()
-
+        (@elapseElement(e, milliseconds) for e in elements)
         return this # HACK: Don't compile the loop into an expression.
+
+    elapseElement : (element, milliseconds) ->
+       # Find the net force on the element.
+       forces = [
+           @drag(element),
+           @gravity(element)
+       ]
+       resultant = forces.reduce (t, s) -> t.add(s)    #FIXME: not portable
+
+       # Calculate the effect of the forces on the element.
+       acceleration = resultant.scale(element.getInverseMass())
+       velocity = element.getVelocity().add(acceleration.scale(milliseconds))
+       displacement = velocity.scale(milliseconds)
+       position = element.getPosition().add(displacement)
+
+       # Update the element.
+       element.setPosition(position)
+       element.speed = velocity.getLength()
+       element.direction = velocity.normalize()
 
     # Return the force of drag on the element.
     #
