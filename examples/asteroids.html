@@ -52,7 +52,7 @@ $(document).ready(function () {
 
     
     var move = function (d) {
-        var impulse = d.scale(0.5);
+        var impulse = d.scale(0.3);
         plane.applyImpulse(impulse);
     };
 
@@ -63,6 +63,19 @@ $(document).ready(function () {
     var moveLeft = function () {
         move(new timber.Vector(-1, 0));
     };
+
+
+    var shoot = function () {
+        var bullet = new timber.Circle({
+            x: plane.x,
+            y: plane.y - 20,
+            radius: 5,
+            direction: new timber.Vector(0, -1),
+            speed: 1.5,
+            dragCoefficient: 0
+        });
+        engine.add(bullet);
+    };
  
     $(document).keypress(function (event) {
         var key = event.which;
@@ -70,7 +83,8 @@ $(document).ready(function () {
         var behaviours = {
             106 : moveLeft,
             107 : moveRight,
-            113 : engine.stop
+            113 : engine.stop,
+            32 : shoot
         };
 
         var callback = behaviours[key];
