@@ -30,7 +30,7 @@ class timber.Environment
         # HACK: Don't compile the loop into an expression.
         return this
 
-    # Apply environmental forces to the element for the given number of
+    # Apply the environment's forces to the element for the given number of
     # milliseconds.
     applyForces : (element, milliseconds) ->
         # FIXME: possible optimization? ignore zero gravity, 
