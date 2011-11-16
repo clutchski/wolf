@@ -18,5 +18,12 @@ test "mass", () ->
     equals(e.mass, 10, "mass is settable")
     equals(e.getInverseMass(), 1/10, "inverse mass works")
 
+test "destroy", 2, () ->
 
+    e = new TestElement()
 
+    e.bind 'destroyed', (actual) ->
+        ok(true, 'destroyed callback was called')
+        equals(actual, e, "destroyed passes the element as an argument")
+
+    e.destroy()

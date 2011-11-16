@@ -116,6 +116,10 @@ class timber.Element
     getInverseMass : () ->
         return 1/@mass
 
+    # Destroy the element.
+    destroy : () ->
+        @.trigger('destroyed', this)
+
 
 timber.extend(timber.Element::, timber.Events)
 
