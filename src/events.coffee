@@ -12,10 +12,11 @@ timber.Events =
         @_callbacks[event].push(callback)
         return this
 
-    # Unbind the given callback from the named event.
+    # Unbind one or many callbacks. If callback is null, remove all callbacks
+    # for the given event. If event is null, remove all callbacks for all
+    # events. If neither are null, remove the given callback.
     unbind : (event=null, callback=null) ->
         @_callbacks ?= {}
-
         if not event?
             @_callbacks = {}
         else if not callback?
@@ -23,9 +24,10 @@ timber.Events =
         else
             callbacks = @_callbacks[event] || []
             (callbacks[i] = null for c, i in callbacks when c? and c == callback)
-
         return this
 
+    # Trigger the given named event. Any additional arguments will be passed to 
+    # the bound callback functions.
     trigger : (event) ->
         callbacks = @_callbacks?[event] || []
         args = Array::slice.call(arguments, 1)
