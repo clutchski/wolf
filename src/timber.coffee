@@ -22,3 +22,9 @@ this.timber = timber
 
 # The current version.
 timber.VERSION = "0.0.0"
+
+
+# Copy the properties of the source object to the destination object.
+timber.extend = (destination, source) ->
+    (destination[k] = v for k, v of source)
+    return destination
