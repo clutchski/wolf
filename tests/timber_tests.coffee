@@ -25,42 +25,6 @@ test "intervalIntersects", () ->
     ok(ii([1, 10], [5, 6]),"Containing intervals intersect")
     ok(ii([0, 2], [0, 2]),"Identical intervals intersect")
 
-
-module "timber.Canvas"
-
-
-test "Non-existant canvas", () ->
-    raises(() ->
-        c = new timber.Canvas("a-non-existant-id")
-    , "A canvas that doesn't exist should throw an error")
-
-module "timber.Environment"
-
-
-test "Static elements don't move", () ->
-    d = new timber.Vector(1, 0)
-    e = new timber.Rectangle({x:5, y:5, direction:d, speed:0})
-
-    env = new timber.Environment()
-    env.elapse(e, 100)
-    equals(e.x, 5, "x is unchanged")
-    equals(e.y, 5, "y is unchanged")
-
-
-test "Elements with speed & direction move", () ->
-    d = new timber.Vector(1, 0)
-    e = new timber.Rectangle({x:0, y:0, speed:1, direction:d})
-
-    env = new timber.Environment()
-    env.gravitationalConstant = 0
-    env.density = 0
-
-    env.elapse([e], 1000)
-
-    equals(e.x, 1000, "Moves along x axis")
-    equals(e.y, 0, "Moves along x axis")
-
-
 module "timber.Rectangle"
 
 test "intersection", () ->
