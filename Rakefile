@@ -85,7 +85,7 @@ end
 desc "Build the test source."
 task "test:build" do
   mkdir_p BUILD_DIR
-  sprocketize('suite.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
+  sprocketize('test_suite.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
   notify("Built tests!")
 end
 
