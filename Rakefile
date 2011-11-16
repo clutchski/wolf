@@ -120,7 +120,3 @@ task "examples" => :build do
         open(example)
     end
 end
-
-task "examples:pong" do
-  open("#{EXAMPLE_DIR}/pong.html")
-end
