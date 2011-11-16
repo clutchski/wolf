@@ -66,8 +66,7 @@ class timber.Engine
         @environment.elapse(@elements, elapsed)
 
         # Update the canvas.
-        @canvas.clear()
-        @canvas.render(@elements)
+        @canvas.clear().render(@elements)
 
         # Do it again when the stack clears.
         @timestamp = now

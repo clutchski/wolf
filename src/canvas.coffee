@@ -26,9 +26,10 @@ class timber.Canvas
     # Render the given array of elements on the canvas.
     render: (elements) ->
         (e.render(@context) for e in elements)
-        return null # HACK: don't collect results
+        this
 
     # Clear the canvas.
     clear: () ->
         @context.clearRect(0, 0, @canvas.width, @canvas.height)
+        this
 
