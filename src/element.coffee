@@ -3,6 +3,7 @@
 #
 
 
+#= require events
 #= require math
 
 
@@ -114,6 +115,9 @@ class timber.Element
     # @return {Number}
     getInverseMass : () ->
         return 1/@mass
+
+
+timber.extend(timber.Element::, timber.Events)
 
 
 
