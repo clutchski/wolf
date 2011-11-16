@@ -1,31 +1,6 @@
-#
-# Timber canvas tests.
-#
+module "Rectangle"
 
-
-# Shortcuts
-
-Vector = timber.Vector
 Rectangle = timber.Rectangle
-Position = timber.Position
-Point = timber.Point
-
-
-
-module "timber"
-
-test "intervalIntersects", () ->
-
-    ii = timber.intervalIntersects
-
-    ok(not ii([0, 1], [2, 5]), "Doesn't intersect")
-    ok(ii([0, 1], [1, 2]), "Adjacent intersect")
-    ok(ii([0, 2], [1, 2]), "Overlapping intersect")
-    ok(ii([1, 2], [0, 2]), "Overlapping intersect both ways")
-    ok(ii([1, 10], [5, 6]),"Containing intervals intersect")
-    ok(ii([0, 2], [0, 2]),"Identical intervals intersect")
-
-module "timber.Rectangle"
 
 test "intersection", () ->
     # A shortcut test function to ensure intersection is always 
