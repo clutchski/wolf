@@ -36,6 +36,8 @@ class timber.Element
         if not @constructor.key
             throw new Error("Class missing required property 'key'")
 
+        @id = if opts.id? then opts.id else timber.getUniqueId(@constructor.key)
+
     # Return the element's position.
     getPosition : () ->
         return new timber.Point(@x, @y)

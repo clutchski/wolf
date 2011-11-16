@@ -28,3 +28,11 @@ timber.VERSION = "0.0.0"
 timber.extend = (destination, source) ->
     (destination[k] = v for k, v of source)
     return destination
+
+# Return a unique id, with an optional prefix.
+timber.getUniqueId = (() ->
+    id = 0
+    return (prefix="") ->
+        id += 1
+        return prefix + id
+)()

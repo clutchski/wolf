@@ -17,3 +17,14 @@ test "extend", () ->
     equals(dest.one, 1, "one property was copied")
     equals(dest.two, 2, "two property was copied")
 
+test "uniqueId", () ->
+
+    prefixes = [null, '', undefined, 'asdf', '', '', 'asdf', 'test']
+
+    idmap = {}
+    success = true
+    for id in (timber.getUniqueId(p) for p in prefixes)
+        success = success and not idmap[id]?
+        idmap[id] = true
+    ok(success, "unique ids were generated successfully")
+
