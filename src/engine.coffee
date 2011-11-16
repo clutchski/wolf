@@ -43,6 +43,7 @@ class timber.Engine
             @elements.push(element)
             element.bind 'destroyed', (e) =>
                 @remove(e)
+        return this
 
     # Remove the given elements from the engine.
     remove : (elements...) ->
