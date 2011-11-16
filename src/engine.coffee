@@ -39,7 +39,17 @@ class timber.Engine
 
     # Add the given elements to the engine.
     add : (elements...) ->
-        @elements.push(element) for element in elements
+        for element in elements
+            @elements.push(element)
+            element.bind 'destroyed', (e) =>
+                @remove(e)
+
+    # Remove the given elements from the engine.
+    remove : (elements...) ->
+        for element in elements
+            index = @elements.indexOf(element)
+            @elements.splice(index, 1) if index >= 0
+        return this
 
     # Run a single step in the time simulation.
     step : () ->

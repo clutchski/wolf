@@ -7,12 +7,23 @@ module "Engine"
 
 
 test "elements", () ->
+
     e = new timber.Engine("test-canvas")
     equals(e.elements.length, 0, "New canvas has no elements")
 
-    e.add(new timber.Rectangle())
+    r1 = new timber.Rectangle()
+    r2 = new timber.Rectangle()
+    r3 = new timber.Rectangle()
+
+    e.add(r1)
     equals(e.elements.length, 1, "Element was added")
 
-    e.add(new timber.Rectangle(), new timber.Rectangle())
+    e.add(r2, r3)
     equals(e.elements.length, 3, "variadic add works")
+
+    r1.destroy()
+    equals(e.elements.length, 2, "Destroyed elements are removed")
+
+    e.remove(r2)
+    equals(e.elements.length, 1, "We can remove elements")
 
