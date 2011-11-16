@@ -33,23 +33,6 @@ test "Non-existant canvas", () ->
     raises(() ->
         c = new timber.Canvas("a-non-existant-id")
     , "A canvas that doesn't exist should throw an error")
-
-
-module "timber.Engine"
-
-test "No elements", () ->
-    c = new timber.Engine("test-canvas")
-    equals(c.elements.length, 0, "New canvas has no elements")
-
-test "Add elements", () ->
-    c = new timber.Engine("test-canvas")
-    c.add(new timber.Rectangle())
-    equals(c.elements.length, 1, "Element was added")
-
-    c.add(new timber.Rectangle(), new timber.Rectangle())
-    equals(c.elements.length, 3, "variadic add works")
-
-
 module "timber.Point"
 
 test "equals", () ->
