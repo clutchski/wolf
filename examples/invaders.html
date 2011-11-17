@@ -47,6 +47,7 @@ $(document).ready(function () {
 
     setInterval(function () {
         var e = createEnemy();
+        killOnScreenLeave(e);
         e.bind('collided', function (c, other) {
             if (other instanceof timber.Circle) {
                 e.destroy();
@@ -82,17 +83,30 @@ $(document).ready(function () {
         move(new timber.Vector(0, 1));
     };
 
+    var killOnScreenLeave = function (e) {
+        e.bind('moved', function (el) {
+            if (!engine.environment.contains(el)) {
+                el.destroy();
+            }
+        });
+    };
 
-    var shoot = function () {
+    var addBullet = function (d) {
         var bullet = new timber.Circle({
             x: plane.x,
             y: plane.y - plane.height,
             radius: 5,
-            direction: new timber.Vector(0, -1),
+            direction: d,
             speed: 1.5,
             dragCoefficient: 0
         });
+        killOnScreenLeave(bullet);
         engine.add(bullet);
+    };
+
+
+    var shoot = function () {
+        addBullet(new timber.Vector(0, -1));
     };
 
     var toggle = function () {
@@ -105,8 +119,6 @@ $(document).ready(function () {
  
     $(document).keydown(function (event) {
         var key = (event.which) ? event.which : e.keyCode;
-
-        console.log(key);
 
         var behaviours = {
             37 : moveLeft,
