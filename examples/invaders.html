@@ -95,12 +95,18 @@ $(document).ready(function () {
         engine.add(bullet);
     };
 
-    var quit = function () {
-        engine.stop();
+    var toggle = function () {
+        engine.toggle();
+    };
+
+    var report = function () {
+        engine.logStatusReport();
     };
  
     $(document).keydown(function (event) {
         var key = (event.which) ? event.which : e.keyCode;
+
+        console.log(key);
 
         var behaviours = {
             37 : moveLeft,
@@ -108,7 +114,8 @@ $(document).ready(function () {
             38 : moveUp,
             40 : moveDown,
             32 : shoot,
-            81 : quit
+            81 : toggle,
+            80 : report
         };
 
         var callback = behaviours[key];
