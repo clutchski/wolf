@@ -14,8 +14,8 @@ class timber.Environment
         defaults =
             density : 10
             gravitationalConstant : 3
-            width : 0
-            height : 0
+            width : 800
+            height : 600
 
         ((@[k] = v) for k, v of timber.defaults(opts, defaults))
             
@@ -36,7 +36,7 @@ class timber.Environment
     # @param element {Array} the element to update
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
-        (@applyForces(e, milliseconds) for e in elements)
+        (@applyForces(e, milliseconds) for e in elements when e)
         return this
 
     # Apply the environment's forces to the element for the given number of
