@@ -114,6 +114,10 @@ class timber.CollisionHandler
 
     # Resolve the given collision.
     resolveCollision : (collision) ->
-        (e.trigger('collided', collision) for e in collision.getElements())
+        e1 = collision.element1
+        e2 = collision.element2
+
+        e1.trigger('collided', collision, e2)
+        e2.trigger('collided', collision, e1)
         if not collision.isResolved()
             collision.applyForces()
