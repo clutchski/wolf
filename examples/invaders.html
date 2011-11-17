@@ -84,6 +84,10 @@ $(document).ready(function () {
         });
         engine.add(bullet);
     };
+
+    var quit = function () {
+        engine.stop();
+    };
  
     $(document).keydown(function (event) {
         var key = (event.which) ? event.which : e.keyCode;
@@ -94,8 +98,8 @@ $(document).ready(function () {
             39 : moveRight,
             38 : moveUp,
             40 : moveDown,
-            113 : engine.stop,
-            32 : shoot
+            32 : shoot,
+            81 : quit
         };
 
         var callback = behaviours[key];
