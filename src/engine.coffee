@@ -55,6 +55,7 @@ class timber.Engine
 
     # Remove the given elements from the engine.
     remove : (elements...) ->
+        # FIXME: won't scale. O(n)
         for element in elements
             index = @elements.indexOf(element)
             @elements.splice(index, 1) if index >= 0
