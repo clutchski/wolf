@@ -46,3 +46,13 @@ test "applyForce", () ->
     equals(dynamicElement.x, 0, "x has returned to origin")
     equals(dynamicElement.y, 0, "y is as expected")
 
+test "setPosition", 4, () ->
+    e = new TestElement({x:0, y:0})
+    e.bind 'move', (a) ->
+        equals(e, a, 'move event fired')
+        equals(e.x, 1, 'correct x')
+
+    e.setPosition(e.getPosition().copy()) # shouldn't fire event
+    e.setPosition(new timber.Point(1, 1)) # should fire event
+    equals(e.x, 1, "x is correct")
+    equals(e.y, 1, "y is correct")

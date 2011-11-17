@@ -44,8 +44,10 @@ class timber.Element
 
     # Set the element's position.
     setPosition : (point) ->
-        @x = point.x
-        @y = point.y
+        if not @getPosition().equals(point)
+            @x = point.x
+            @y = point.y
+            @trigger('move', this)
 
     # Return the element's velocity.
     #
