@@ -62,8 +62,9 @@ class timber.Engine
 
     # Log a status report on the engine.
     logStatusReport : () ->
-        messages = [ "Status Report",
-            "Iteration: #{@iteration}"
+        messages = [
+            "Status Report",
+            "Iteration: #{@iteration}",
             "Num Elements: #{@elements.length}"
         ]
         (@logger.info(m) for m in messages)
