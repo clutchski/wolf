@@ -65,6 +65,7 @@ class timber.Engine
     logStatusReport : () ->
         messages = [
             "Status Report",
+            "Is running: #{@isRunning}",
             "Iteration: #{@iteration}",
             "Num Elements: #{@elements.length}"
         ]
