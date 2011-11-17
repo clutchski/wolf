@@ -24,7 +24,7 @@
            $o$$P"                 $$o$
 </pre>
 
-# Wolf
+## Wolf
 
 Wolf is an embryonic HTML5 Canvas game engine written in Coffeescript.
 
