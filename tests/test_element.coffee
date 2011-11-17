@@ -48,7 +48,7 @@ test "applyForce", () ->
 
 test "setPosition", 4, () ->
     e = new TestElement({x:0, y:0})
-    e.bind 'move', (a) ->
+    e.bind 'moved', (a) ->
         equals(e, a, 'move event fired')
         equals(e.x, 1, 'correct x')
 

@@ -52,7 +52,7 @@ class timber.Element
         if not @getPosition().equals(point)
             @x = point.x
             @y = point.y
-            @trigger('move', this)
+            @trigger('moved', this)
 
     # Return the element's velocity.
     #
