@@ -76,6 +76,7 @@ task :dist => [:build] do
   File.open("timber.min.js", "w") do |f|
     f.write(uglified)
   end
+  notify("Distro!")
 end
 
 #
