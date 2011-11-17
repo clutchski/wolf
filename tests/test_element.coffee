@@ -6,7 +6,7 @@
 module "Element"
 
 
-class TestElement extends timber.Element
+class TestElement extends wolf.Element
 
     @key = 'TestElement'
 
@@ -28,21 +28,21 @@ test "destroy", 2, () ->
 test "applyForce", () ->
 
     # An zero force on a zero vector doesn't move.
-    d = new timber.Vector(1, 0)
+    d = new wolf.Vector(1, 0)
     staticElement = new TestElement({x:5, y:5, direction:d, speed:0})
-    staticElement.applyForce(new timber.Vector(0, 0), 1000)
+    staticElement.applyForce(new wolf.Vector(0, 0), 1000)
     equals(staticElement.x, 5, "x is unchanged")
     equals(staticElement.y, 5, "y is unchanged")
 
     # Applying a zero force vector to a dynamic element does not
     # alter it's course.
     dynamicElement = new TestElement({x:0, y:0, speed:1, direction:d})
-    dynamicElement.applyForce(new timber.Vector(0, 0), 1000)
+    dynamicElement.applyForce(new wolf.Vector(0, 0), 1000)
     equals(dynamicElement.x, 1000, "x is as expected")
     equals(dynamicElement.y, 0, "y is as expected")
 
     # Applying a non-zero vector to a dynamic element changes it's course.
-    dynamicElement.applyForce(new timber.Vector(-2, 0), 1000)
+    dynamicElement.applyForce(new wolf.Vector(-2, 0), 1000)
     equals(dynamicElement.x, 0, "x has returned to origin")
     equals(dynamicElement.y, 0, "y is as expected")
 
@@ -53,6 +53,6 @@ test "setPosition", 4, () ->
         equals(e.x, 1, 'correct x')
 
     e.setPosition(e.getPosition().copy()) # shouldn't fire event
-    e.setPosition(new timber.Point(1, 1)) # should fire event
+    e.setPosition(new wolf.Point(1, 1)) # should fire event
     equals(e.x, 1, "x is correct")
     equals(e.y, 1, "y is correct")

@@ -3,9 +3,9 @@
 #
 
 
-class timber.Logger
+class wolf.Logger
 
-    # Create a timber logger.
+    # Create a wolf logger.
     #
     # @param module {String} an identifier for the logger
     constructor : (module) ->

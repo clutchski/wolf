@@ -8,7 +8,7 @@
 # @param l {Number} the interval's lower bound
 # @param u {Number} the interval's upper bound
 # @return {Boolean}
-timber.isBetween = (l, u, n) ->
+wolf.isBetween = (l, u, n) ->
     return l <= n and n <= u
 
 
@@ -17,16 +17,16 @@ timber.isBetween = (l, u, n) ->
 # @param i1 {Array} an interval
 # @param i2 {Array} an interval
 # @return {Boolean}
-timber.intervalIntersects = (i1, i2) ->
+wolf.intervalIntersects = (i1, i2) ->
 
-    ib = timber.isBetween
+    ib = wolf.isBetween
 
     return ib(i1[0], i1[1], i2[0]) or
            ib(i1[0], i1[1], i2[1]) or
            ib(i2[0], i2[1], i1[0]) or
            ib(i2[0], i2[1], i1[1])
 
-class timber.Point
+class wolf.Point
 
     # Create a point.
     #
@@ -38,7 +38,7 @@ class timber.Point
 
     # Return a copy of this point.
     copy: () ->
-        return new timber.Point(@x, @y)
+        return new wolf.Point(@x, @y)
 
     # Return true if this point is equal to the given point, false
     # otherwise.
@@ -55,14 +55,14 @@ class timber.Point
     # @param vector {Object}
     # @return {Object} the resultant point
     add : (vector) ->
-        return new timber.Vector(@x + vector.x, @y + vector.y)
+        return new wolf.Vector(@x + vector.x, @y + vector.y)
 
     # Return a string representation of the point.
     toString : () ->
-        return "timber.Point(#{@x}, #{@y})"
+        return "wolf.Point(#{@x}, #{@y})"
 
 
-class timber.Vector extends timber.Point
+class wolf.Vector extends wolf.Point
 
     # Return a unit vector with the same with the same direction
     # as this vector.
@@ -71,7 +71,7 @@ class timber.Vector extends timber.Point
     normalize : () ->
         return @copy() if @isZeroVector()
         length = this.getLength()
-        return new timber.Vector(@x/length, @y/length)
+        return new wolf.Vector(@x/length, @y/length)
 
     # Return true if this vector is the zero vector, false otherwise.
     isZeroVector : () ->
@@ -79,14 +79,14 @@ class timber.Vector extends timber.Point
 
     # Return a copy of this vector.
     copy: () ->
-        return new timber.Vector(@x, @y)
+        return new wolf.Vector(@x, @y)
 
     # Return a new vector scaled by the given value.
     #
     # @param scalar {Number} the value to scale by
     # @return {Object} the scaled vector.
     scale : (scalar) ->
-        return new timber.Vector(@x*scalar, @y*scalar)
+        return new wolf.Vector(@x*scalar, @y*scalar)
 
     # Return this vector's length.
     #
@@ -99,14 +99,14 @@ class timber.Vector extends timber.Point
     # @param {Object} the other vector
     # @return {Object}
     add : (other) ->
-        return new timber.Vector(@x + other.x, @y + other.y)
+        return new wolf.Vector(@x + other.x, @y + other.y)
 
     # Return the difference of this vector and the other.
     #
     # @param {Object} the other vector
     # @return {Object}
     subtract : (other) ->
-        return new timber.Vector(@x - other.x, @y - other.y)
+        return new wolf.Vector(@x - other.x, @y - other.y)
 
     # Return the dot product of this vector with the other vector.
     #
@@ -128,5 +128,5 @@ class timber.Vector extends timber.Point
 
     # Return a string representation of the vector.
     toString : () ->
-        return "timber.Vector(#{@x}, #{@y})"
+        return "wolf.Vector(#{@x}, #{@y})"
 

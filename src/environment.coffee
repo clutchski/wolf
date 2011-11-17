@@ -7,7 +7,7 @@
 #= require logger
 
 
-class timber.Environment
+class wolf.Environment
 
     # Create a new environment.
     constructor: (opts) ->
@@ -17,16 +17,16 @@ class timber.Environment
             width : 800
             height : 600
 
-        ((@[k] = v) for k, v of timber.defaults(opts, defaults))
+        ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
             
         #FIXME: add arguments for gravity and whatnot.
-        @logger = new timber.Logger("timber.Environment")
+        @logger = new wolf.Logger("wolf.Environment")
         @logger.debug("Initializing")
 
     # Return true if the element is contained in the environment's bounds,
     # false otherwise.
     contains : (element) ->
-        ib = timber.isBetween
+        ib = wolf.isBetween
         return ib(0, @width, element.x) and ib(0, @height, element.y)
         
 
@@ -61,5 +61,5 @@ class timber.Environment
 
     # Return the force of gravity on the given element.
     getGravitationalForce : (element) ->
-        return new timber.Vector(0, @gravitationalConstant)
+        return new wolf.Vector(0, @gravitationalConstant)
 

@@ -10,16 +10,16 @@
 #= require logger
 
 
-class timber.Engine
+class wolf.Engine
 
     # Create an engine instance.
     #
     # @param canvasId {String} the id of the canvas element.
     constructor : (canvasId) ->
-        @logger = new timber.Logger("timber.Engine")
-        @canvas = new timber.Canvas(canvasId)
-        @environment = new timber.Environment()
-        @collisionHandler = new timber.CollisionHandler()
+        @logger = new wolf.Logger("wolf.Engine")
+        @canvas = new wolf.Canvas(canvasId)
+        @environment = new wolf.Environment()
+        @collisionHandler = new wolf.CollisionHandler()
 
         @elements = []     # The list of element's known to the engine.
         @timestamp = null  # The timestamp of the last step.

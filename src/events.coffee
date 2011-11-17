@@ -3,7 +3,7 @@
 # named events. Inspired by code from Backbone.js.
 #
 
-timber.Events =
+wolf.Events =
 
     # Register the callback with the given named event.
     bind : (event, callback) ->

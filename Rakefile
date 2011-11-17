@@ -1,7 +1,3 @@
-#
-# Timber build script.
-#
-
 
 require "sprockets"
 require "uglifier"
@@ -54,7 +50,7 @@ end
 desc "Compile the source."
 task :build do
     mkdir_p BUILD_DIR
-    sprocketize('timber.coffee', "#{BUILD_DIR}/timber.js", [SOURCE_DIR])
+    sprocketize('wolf.coffee', "#{BUILD_DIR}/wolf.js", [SOURCE_DIR])
     notify("compiled source")
 end
 
@@ -70,10 +66,10 @@ end
 
 desc "Create a new distribution."
 task :dist => [:build] do
-  sh("cp #{BUILD_DIR}/timber.js .")
-  source = IO.read("timber.js")
+  sh("cp #{BUILD_DIR}/wolf.js .")
+  source = IO.read("wolf.js")
   uglified = Uglifier.compile(source)
-  File.open("timber.min.js", "w") do |f|
+  File.open("wolf.min.js", "w") do |f|
     f.write(uglified)
   end
   notify("Distro!")
@@ -86,7 +82,7 @@ end
 desc "Build the test source."
 task "test:build" do
   mkdir_p BUILD_DIR
-  sprocketize('test_suite.coffee', "#{BUILD_DIR}/timber_tests.js", [TEST_DIR])
+  sprocketize('test_suite.coffee', "#{BUILD_DIR}/wolf_tests.js", [TEST_DIR])
   notify("Built tests!")
 end
 

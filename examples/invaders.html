@@ -7,21 +7,21 @@
       <canvas id="example" width="800" height="600"></canvas>
     </div>
     
-    <script type="text/javascript" src="../build/timber.js"></script>
+    <script type="text/javascript" src="../build/wolf.js"></script>
     <script type="text/javascript" src="common/jquery-1.6.2.js"></script>
     <script type="text/javascript">
 $(document).ready(function () {
 
 
-    var engine = new timber.Engine("example");
-    var logger = new timber.Logger("asteroids");
+    var engine = new wolf.Engine("example");
+    var logger = new wolf.Logger("asteroids");
 
     engine.environment.gravitationalConstant = 0;
 
-    var plane = new timber.Rectangle({
+    var plane = new wolf.Rectangle({
         x: 500,
         y: 530,
-        direction: new timber.Vector(0, 1),
+        direction: new wolf.Vector(0, 1),
         speed: 0,
         width: 10,
         height: 10
@@ -34,10 +34,10 @@ $(document).ready(function () {
     };
 
     var createEnemy = function () {
-        return new timber.Rectangle({
+        return new wolf.Rectangle({
             x: Math.random() * 800,
             y: 100,
-            direction: new timber.Vector(0, 1),
+            direction: new wolf.Vector(0, 1),
             speed: Math.random() * 0.5,
             width: 20,
             height: 20,
@@ -49,7 +49,7 @@ $(document).ready(function () {
         var e = createEnemy();
         killOnScreenLeave(e);
         e.bind('collided', function (c, other) {
-            if (other instanceof timber.Circle) {
+            if (other instanceof wolf.Circle) {
                 e.destroy();
                 other.destroy();
             } else if (other === plane) {
@@ -68,19 +68,19 @@ $(document).ready(function () {
     };
 
     var moveRight = function () {
-        move(new timber.Vector(1, 0));
+        move(new wolf.Vector(1, 0));
     };
 
     var moveLeft = function () {
-        move(new timber.Vector(-1, 0));
+        move(new wolf.Vector(-1, 0));
     };
 
     var moveUp = function () {
-        move(new timber.Vector(0, -1));
+        move(new wolf.Vector(0, -1));
     };
 
     var moveDown = function () {
-        move(new timber.Vector(0, 1));
+        move(new wolf.Vector(0, 1));
     };
 
     var killOnScreenLeave = function (e) {
@@ -92,7 +92,7 @@ $(document).ready(function () {
     };
 
     var addBullet = function (d) {
-        var bullet = new timber.Circle({
+        var bullet = new wolf.Circle({
             x: plane.x,
             y: plane.y - plane.height,
             radius: 5,
@@ -106,7 +106,7 @@ $(document).ready(function () {
 
 
     var shoot = function () {
-        addBullet(new timber.Vector(0, -1));
+        addBullet(new wolf.Vector(0, -1));
     };
 
     var toggle = function () {

@@ -10,7 +10,7 @@ class BindTest
     testing : () ->
         return false
 
-timber.extend(BindTest::, timber.Events)
+wolf.extend(BindTest::, wolf.Events)
 
 
 test "bind", 5, () ->

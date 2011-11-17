@@ -13,7 +13,7 @@ test "extend", () ->
         other : () -> false
 
     ok(not dest.one? and not dest.two?, "source methods don't exist")
-    timber.extend(dest, source)
+    wolf.extend(dest, source)
     equals(dest.one, 1, "one property was copied")
     equals(dest.two, 2, "two property was copied")
 
@@ -23,14 +23,14 @@ test "uniqueId", () ->
 
     idmap = {}
     success = true
-    for id in (timber.getUniqueId(p) for p in prefixes)
+    for id in (wolf.getUniqueId(p) for p in prefixes)
         success = success and not idmap[id]?
         idmap[id] = true
     ok(success, "unique ids were generated successfully")
 
 test "intervalIntersects", () ->
 
-    ii = timber.intervalIntersects
+    ii = wolf.intervalIntersects
 
     ok(not ii([0, 1], [2, 5]), "Doesn't intersect")
     ok(ii([0, 1], [1, 2]), "Adjacent intersect")
@@ -43,7 +43,7 @@ test "defaults", () ->
     passed = {1:1, 2:2}
     defaults = {2:3, 3:4}
 
-    options = timber.defaults(passed, defaults)
+    options = wolf.defaults(passed, defaults)
 
     equals(options[1], 1, "no default arg is passed")
     equals(options[2], 2, "passed arg isn't overridden")

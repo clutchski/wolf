@@ -7,7 +7,7 @@
 #= require math
 
 
-class timber.Element
+class wolf.Element
 
     @key : null
 
@@ -29,10 +29,10 @@ class timber.Element
             y: 0
             speed: 0
             mass: 1000
-            direction: new timber.Vector(0, 0)
+            direction: new wolf.Vector(0, 0)
             dragCoefficient: 0.7
             visible: true
-        ((@[k] = v) for k, v of timber.defaults(opts, defaults))
+        ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 
         # Ensure the Element class has a unique key, used for registering
         # class collision events.
@@ -40,12 +40,12 @@ class timber.Element
             throw new Error("Class missing required property 'key'")
 
         # An the object a unique id.
-        @id = if opts.id? then opts.id else timber.getUniqueId(@constructor.key)
+        @id = if opts.id? then opts.id else wolf.getUniqueId(@constructor.key)
 
 
     # Return the element's position.
     getPosition : () ->
-        return new timber.Point(@x, @y)
+        return new wolf.Point(@x, @y)
 
     # Set the element's position.
     setPosition : (point) ->
@@ -105,7 +105,7 @@ class timber.Element
         tx = [ttl.x, ttr.x]
         ox = [otl.x, otr.x]
 
-        ii = timber.intervalIntersects
+        ii = wolf.intervalIntersects
         return ii(ty, oy) and ii(ox, tx)
 
 
@@ -130,7 +130,7 @@ class timber.Element
         @.trigger('destroyed', this)
 
 # Mix events into the element class.
-timber.extend(timber.Element::, timber.Events)
+wolf.extend(wolf.Element::, wolf.Events)
 
 
 
@@ -138,9 +138,9 @@ timber.extend(timber.Element::, timber.Events)
 # A circle element.
 #
 
-class timber.Circle extends timber.Element
+class wolf.Circle extends wolf.Element
 
-    @key : "timber.Circle",
+    @key : "wolf.Circle",
 
     constructor : (opts) ->
         super(opts)
@@ -160,10 +160,10 @@ class timber.Circle extends timber.Element
         xr = @x + @radius
 
         return [
-            new timber.Point(xl, yt)
-            new timber.Point(xr, yt)
-            new timber.Point(xr, yb)
-            new timber.Point(xl, yb)
+            new wolf.Point(xl, yt)
+            new wolf.Point(xr, yt)
+            new wolf.Point(xr, yb)
+            new wolf.Point(xl, yb)
         ]
 
 
@@ -171,9 +171,9 @@ class timber.Circle extends timber.Element
 # A rectangle element.
 #
 
-class timber.Rectangle extends timber.Element
+class wolf.Rectangle extends wolf.Element
 
-    @key : "timber.Rectangle",
+    @key : "wolf.Rectangle",
 
     # Create a rectangle element. Rectangles take the same standard parameters
     # as elements, along with two additional paramters, width and height.
@@ -189,10 +189,10 @@ class timber.Rectangle extends timber.Element
         x2 = @x + @width
         y2 = @y + @height
         return [
-            new timber.Point(x1, y1)
-            new timber.Point(x2, y1),
-            new timber.Point(x2, y2),
-            new timber.Point(x1, y2)
+            new wolf.Point(x1, y1)
+            new wolf.Point(x2, y1),
+            new wolf.Point(x2, y2),
+            new wolf.Point(x1, y2)
         ]
 
     render : (context) ->

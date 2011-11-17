@@ -1,11 +1,11 @@
 
 module "CollisionHandler"
 
-Rectangle = timber.Rectangle
-Vector = timber.Vector
+Rectangle = wolf.Rectangle
+Vector = wolf.Vector
 
 test "detectCollisions", () ->
-    ch = new timber.CollisionHandler()
+    ch = new wolf.CollisionHandler()
 
     r1 = new Rectangle({x:0,    y:0,    width:10,  height:10})
     r2 = new Rectangle({x:0,    y:0,    width:100, height:100})
@@ -29,7 +29,7 @@ test "detectCollision", () ->
     r2 = new Rectangle({x:0, y:0, width:100, height: 100})
     r3 = new Rectangle({x:20, y:20, width:100, height: 100})
 
-    ch = new timber.CollisionHandler()
+    ch = new wolf.CollisionHandler()
 
     ok(ch.detectCollision(r1, r2), "collision")
     ok(not ch.detectCollision(r1, r3), "no collision")
@@ -54,7 +54,7 @@ test "resolveCollision", 7, () ->
         e.bind 'collided', () ->
             ok(true, 'triggered handler')
 
-    ch = new timber.CollisionHandler()
+    ch = new wolf.CollisionHandler()
 
     r1StartSpeed = r1.speed
     r2StartSpeed = r2.speed

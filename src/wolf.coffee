@@ -1,11 +1,11 @@
 ###
 
-Timber - An HTML5 Canvas game engine.
+Wolf - An HTML5 Canvas game engine.
 
 Copyright 2011, Matthew Perpick.
-Timber is freely distributable under the MIT license.
+Wolf is freely distributable under the MIT license.
 
-https://github.com/clutchski/timber
+https://github.com/clutchski/wolf
 
 ###
 
@@ -14,24 +14,24 @@ https://github.com/clutchski/timber
 #= require_tree .
 
 
-# The timber global object.
-timber = {}
+# The wolf global object.
+wolf = {}
 
-# Export timber to global scope.
-this.timber = timber
+# Export wolf to global scope.
+this.wolf = wolf
 
 # The current version.
-timber.VERSION = "0.0.0"
+wolf.VERSION = "0.0.0"
 
 
 # Copy the properties of the source objects to the destination object.
-timber.extend = (destination, sources...) ->
+wolf.extend = (destination, sources...) ->
     for source in sources
         (destination[k] = v for k, v of source)
     return destination
 
 # Return a unique id, with an optional prefix.
-timber.getUniqueId = (() ->
+wolf.getUniqueId = (() ->
     id = 0
     return (prefix="") ->
         id += 1
@@ -40,6 +40,6 @@ timber.getUniqueId = (() ->
 
 # Patch any missing properties from defaults to options and return
 # the resulting object.
-timber.defaults = (options, defaults) ->
-    return timber.extend({}, defaults, options)
+wolf.defaults = (options, defaults) ->
+    return wolf.extend({}, defaults, options)
     

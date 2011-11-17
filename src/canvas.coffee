@@ -6,13 +6,13 @@
 #= require logger
 
 
-class timber.Canvas
+class wolf.Canvas
 
-    # Create a timber canvas object.
+    # Create a wolf canvas object.
     #
     # @param id {String} the id of the page's canvas element.
     constructor : (id) ->
-        @logger = new timber.Logger("timber.Canvas")
+        @logger = new wolf.Logger("wolf.Canvas")
         @logger.debug("creating canvas with id #{id}")
         @id = id
 

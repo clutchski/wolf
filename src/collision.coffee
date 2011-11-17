@@ -7,7 +7,7 @@
 #= require math
 
 
-class timber.Collision
+class wolf.Collision
 
     # Create a collision object.
     #
@@ -78,11 +78,11 @@ class timber.Collision
         return @resolved
 
 
-class timber.CollisionHandler
+class wolf.CollisionHandler
 
     # Create a collision handler.
     constructor : () ->
-        @logger = new timber.Logger("timber.CollisionHandler")
+        @logger = new wolf.Logger("wolf.CollisionHandler")
 
 
     # Check the given elements for collisions, and update them accordingly.
@@ -110,7 +110,7 @@ class timber.CollisionHandler
     # otherwise.
     detectCollision : (e1, e2) ->
         #FIXME: add an error of margin
-        if e1.intersects(e2) then new timber.Collision(e1, e2) else null
+        if e1.intersects(e2) then new wolf.Collision(e1, e2) else null
 
     # Resolve the given collision.
     resolveCollision : (collision) ->

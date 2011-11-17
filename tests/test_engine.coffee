@@ -8,12 +8,12 @@ module "Engine"
 
 test "elements", () ->
 
-    e = new timber.Engine("test-canvas")
+    e = new wolf.Engine("test-canvas")
     equals(e.elements.length, 0, "New canvas has no elements")
 
-    r1 = new timber.Rectangle()
-    r2 = new timber.Rectangle()
-    r3 = new timber.Rectangle()
+    r1 = new wolf.Rectangle()
+    r2 = new wolf.Rectangle()
+    r3 = new wolf.Rectangle()
 
     e.add(r1)
     equals(e.elements.length, 1, "Element was added")
