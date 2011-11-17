@@ -47,6 +47,27 @@ class timber.Collision
             return mass
         , 0)
 
+    # Apply the forces of the collision to the elements.
+    applyForces : () ->
+        # Calculate the seperating velocity of the elements.
+        seperatingVelocity = @getSeperatingVelocity()
+
+        return if 0 > seperatingVelocity
+
+        # Change the direction and scale by the elasticity of the elements.
+        velocity = -seperatingVelocity * @getRestitutionCoefficient()
+
+        magnitude = velocity * @getMass()
+        impulse = @getContactNormal().scale(magnitude)
+
+        # Apply the force of the collision to each element in proportion to
+        # it's mass.
+        impulse1 = impulse.scale(@element1.getInverseMass())
+        @element1.applyImpulse(impulse1)
+
+        impulse2 = impulse.scale(-1 * @element2.getInverseMass())
+        @element2.applyImpulse(impulse2)
+
 
 class timber.CollisionHandler
 
@@ -92,22 +113,5 @@ class timber.CollisionHandler
     # 
     # @param {collision} the collision to resolve.
     resolveCollision : (collision) ->
+        collision.applyForces()
       
-        # Calculate the seperating velocity of the elements.
-        seperatingVelocity = collision.getSeperatingVelocity()
-
-        return if 0 > seperatingVelocity
-
-        # Change the direction and scale by the elasticity of the elements.
-        velocity = -seperatingVelocity * collision.getRestitutionCoefficient()
-
-        magnitude = velocity * collision.getMass()
-        impulse = collision.getContactNormal().scale(magnitude)
-
-        # Apply the force of the collision to each element in proportion to
-        # it's mass.
-        impulse1 = impulse.scale(collision.element1.getInverseMass())
-        collision.element1.applyImpulse(impulse1)
-
-        impulse2 = impulse.scale(-1 * collision.element2.getInverseMass())
-        collision.element2.applyImpulse(impulse2)
