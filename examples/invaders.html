@@ -42,11 +42,21 @@ $(document).ready(function () {
             width: 20,
             height: 20,
             dragCoefficient: 0
-          });
+        });
     };
 
     setInterval(function () {
         var e = createEnemy();
+        e.bind('collided', function (c, other) {
+            if (other instanceof timber.Circle) {
+                e.destroy();
+                other.destroy();
+            } else if (other === plane) {
+                plane.destroy();
+                engine.stop();
+            }
+            c.resolve();
+        });
         engine.add(e);
     }, 1000);
 
@@ -92,7 +102,6 @@ $(document).ready(function () {
     $(document).keydown(function (event) {
         var key = (event.which) ? event.which : e.keyCode;
 
-        console.log("keypress " + key);
         var behaviours = {
             37 : moveLeft,
             39 : moveRight,
