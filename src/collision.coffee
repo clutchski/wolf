@@ -89,9 +89,7 @@ class timber.CollisionHandler
     # @param elements {Array} the elements to check for collisions.
     # @return {Array} an array of collisions.
     detectCollisions : (elements) ->
-        
         # FIXME: naive & inefficient solution.
-
         collisions = []
         for element, i in elements
             for other in elements[i+1..elements.length]
@@ -114,4 +112,3 @@ class timber.CollisionHandler
     # @param {collision} the collision to resolve.
     resolveCollision : (collision) ->
         collision.applyForces()
-      
