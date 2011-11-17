@@ -10,14 +10,25 @@
 class timber.Environment
 
     # Create a new environment.
-    constructor: () ->
+    constructor: (opts) ->
+        defaults =
+            density : 10
+            gravitationalConstant : 3
+            width : 0
+            height : 0
+
+        ((@[k] = v) for k, v of timber.defaults(opts, defaults))
+            
         #FIXME: add arguments for gravity and whatnot.
         @logger = new timber.Logger("timber.Environment")
         @logger.debug("Initializing")
 
-        @density = 10              # The density of the environment's medium.
-        @gravitationalConstant = 3 # The strength of the environment's gravity.
-
+    # Return true if the element is contained in the environment's bounds,
+    # false otherwise.
+    contains : (element) ->
+        ib = timber.isBetween
+        return ib(0, @width, element.x) and ib(0, @height, element.y)
+        
 
     # Update the elements with the effects of the given number of milliseconds
     # passing.
