@@ -39,4 +39,14 @@ test "intervalIntersects", () ->
     ok(ii([1, 10], [5, 6]),"Containing intervals intersect")
     ok(ii([0, 2], [0, 2]),"Identical intervals intersect")
 
+test "defaults", () ->
+    passed = {1:1, 2:2}
+    defaults = {2:3, 3:4}
+
+    options = timber.defaults(passed, defaults)
+
+    equals(options[1], 1, "no default arg is passed")
+    equals(options[2], 2, "passed arg isn't overridden")
+    equals(options[3], 4, "missing arg has default")
+
 
