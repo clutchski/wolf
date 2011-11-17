@@ -22,21 +22,26 @@ class timber.Element
     #   dragCoefficient: The element's drag co-efficient. Defaults to 0.7.
     #   visible: The element's visiblity status. Defaults to true.
     constructor : (opts = {}) ->
-        # Set default variables if necessary.
-        @x = opts.x or 0
-        @y = opts.y or 0
-        @speed = opts.speed or 0
-        @mass = opts.mass or 1000
-        @direction = opts.direction or new timber.Vector(0, 0)
-        @dragCoefficient = if opts.dragCoefficient? then opts.dragCoefficient else 0.7
-        @visible = if opts.visible? then opts.visible else true
+
+        # Set options with potentially default values.
+        defaults =
+            x: 0
+            y: 0
+            speed: 0
+            mass: 1000
+            direction: new timber.Vector(0, 0)
+            dragCoefficient: 0.7
+            visible: true
+        ((@[k] = v) for k, v of timber.defaults(opts, defaults))
 
         # Ensure the Element class has a unique key, used for registering
         # class collision events.
         if not @constructor.key
             throw new Error("Class missing required property 'key'")
 
+        # An the object a unique id.
         @id = if opts.id? then opts.id else timber.getUniqueId(@constructor.key)
+
 
     # Return the element's position.
     getPosition : () ->
