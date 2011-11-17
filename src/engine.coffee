@@ -32,11 +32,18 @@ class timber.Engine
         @isRunning = true
         @timestamp = new Date()
         @step()
+        return this
 
     # Stop the engine's time simulation.
     stop : () ->
         @isRunning = false
         @timestamp = null
+        return this
+
+    # Start the engine if it's stopped, stop it if it's running.
+    toggle : () ->
+        if @isRunning then @stop() else @start()
+        return this
 
     # Add the given elements to the engine.
     add : (elements...) ->
