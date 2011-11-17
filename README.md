@@ -2,6 +2,10 @@
 
 Wolf is an embryonic HTML5 Canvas game engine written in Coffeescript.
 
+## Documentation
+
+No documentation yet, so just check out the examples and source code.
+
 ## Contribute
 
 - Setup:
