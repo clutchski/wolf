@@ -93,7 +93,7 @@ class timber.CollisionHandler
     # @param {collision} the collision to resolve.
     resolveCollision : (collision) ->
       
-        # Calcule the seperating velocity of the elements.
+        # Calculate the seperating velocity of the elements.
         seperatingVelocity = collision.getSeperatingVelocity()
 
         return if 0 > seperatingVelocity
