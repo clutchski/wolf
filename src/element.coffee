@@ -129,7 +129,7 @@ class timber.Element
     destroy : () ->
         @.trigger('destroyed', this)
 
-
+# Mix events into the element class.
 timber.extend(timber.Element::, timber.Events)
 
 
