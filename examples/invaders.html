@@ -38,7 +38,7 @@ $(document).ready(function () {
             x: Math.random() * 800,
             y: 100,
             direction: new timber.Vector(0, 1),
-            speed: Math.random() * 0.5 + 0.2,
+            speed: Math.random() * 0.5,
             width: 20,
             height: 20,
             dragCoefficient: 0
@@ -86,7 +86,7 @@ $(document).ready(function () {
     var shoot = function () {
         var bullet = new timber.Circle({
             x: plane.x,
-            y: plane.y - 20,
+            y: plane.y - plane.height,
             radius: 5,
             direction: new timber.Vector(0, -1),
             speed: 1.5,
