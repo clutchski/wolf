@@ -26,7 +26,6 @@ class timber.Environment
     # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
         (@applyForces(e, milliseconds) for e in elements)
-        # HACK: Don't compile the loop into an expression.
         return this
 
     # Apply the environment's forces to the element for the given number of
@@ -51,7 +50,5 @@ class timber.Environment
 
     # Return the force of gravity on the given element.
     getGravitationalForce : (element) ->
-        # FIXME: technically, we should add drag as well.
-        # FIXME: Optimize? Singleton?
         return new timber.Vector(0, @gravitationalConstant)
 
