@@ -25,7 +25,7 @@ class timber.Engine
         @timestamp = null  # The timestamp of the last step.
         @isRunning = false
         @interval = 5      # The # of the milliseconds to sleep between steps.
-        @iteration = 0
+        @iteration = 0     # The # of iterations the engine has executed.
 
     # Start the engine's time simulation.
     start : () ->
