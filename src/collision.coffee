@@ -16,6 +16,7 @@ class timber.Collision
     constructor : (element1, element2) ->
         @element1 = element1
         @element2 = element2
+        @resolved = false
 
     getElements : () ->
         return [@element1, @element2]
@@ -68,6 +69,14 @@ class timber.Collision
         impulse2 = impulse.scale(-1 * @element2.getInverseMass())
         @element2.applyImpulse(impulse2)
 
+    # Resolve the collision so as to prevent further handler.
+    resolve : () ->
+        @resolved = true
+    
+    # Return true if the collision has been resolved.
+    isResolved : () ->
+        return @resolved
+
 
 class timber.CollisionHandler
 
@@ -99,16 +108,12 @@ class timber.CollisionHandler
 
     # Return a collision if the two elements are colliding, null 
     # otherwise.
-    #
-    # @param e1 {Object} the first of the elements
-    # @param e2 {Object} the second of the elements
-    # @return {Object} or {null}
     detectCollision : (e1, e2) ->
         #FIXME: add an error of margin
         if e1.intersects(e2) then new timber.Collision(e1, e2) else null
 
     # Resolve the given collision.
-    # 
-    # @param {collision} the collision to resolve.
     resolveCollision : (collision) ->
-        collision.applyForces()
+        (e.trigger('collided', collision) for e in collision.getElements())
+        if not collision.isResolved()
+            collision.applyForces()

@@ -2,6 +2,7 @@
 module "CollisionHandler"
 
 Rectangle = timber.Rectangle
+Vector = timber.Vector
 
 test "detectCollisions", () ->
     ch = new timber.CollisionHandler()
@@ -32,3 +33,57 @@ test "detectCollision", () ->
 
     ok(ch.detectCollision(r1, r2), "collision")
     ok(not ch.detectCollision(r1, r3), "no collision")
+
+test "resolveCollision", 7, () ->
+
+    # Assert a collision taht doesn't resolve the collsion still applies the
+    # physics.
+    r1 = new Rectangle({
+        x:0, y:0,
+        width:10,
+        height: 10,
+        speed: 2000,
+        direction: new Vector(-1, 0)
+    })
+    r2 = new Rectangle({
+        x:0, y:0, width:100, height: 100,
+        direction: new Vector(1, 0), speed:10000
+    })
+
+    for e in [r1, r2]
+        e.bind 'collided', () ->
+            ok(true, 'triggered handler')
+
+    ch = new timber.CollisionHandler()
+
+    r1StartSpeed = r1.speed
+    r2StartSpeed = r2.speed
+    ch.elapse([r1, r2], 1000)
+
+    QUnit.ok(r1StartSpeed != r1.speed, "collision applied to r1")
+    QUnit.ok(r2StartSpeed != r2.speed, "collision applied to r2")
+
+    # Assert a collision that is resolved with custom handlers doesn't apply
+    # physics translations.
+    r4 = new Rectangle({
+        x:0, y:0,
+        width:10,
+        height: 10,
+        speed: 2000,
+        direction: new Vector(-1, 0)
+    })
+    r3 = new Rectangle({
+        x:0, y:0, width:100, height: 100,
+        direction: new Vector(1, 0), speed:4000
+    })
+
+    r3.bind 'collided', (c) ->
+        ok(true, 'called the handler')
+        c.resolve()
+
+    r3Start = r3.speed
+    r4Start = r4.speed
+
+    ch.elapse([r4, r3], 1000)
+    QUnit.equals(r3Start, r3.speed, "r3 didn't move")
+    QUnit.equals(r3Start, r3.speed, "r4 didn't move")
