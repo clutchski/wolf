@@ -23,18 +23,19 @@ class timber.Engine
 
         @elements = []     # The list of element's known to the engine.
         @timestamp = null  # The timestamp of the last step.
-        @continue = true
+        @isRunning = false
         @interval = 5      # The # of the milliseconds to sleep between steps.
+        @iteration = 0
 
     # Start the engine's time simulation.
     start : () ->
-        @continue = true
+        @isRunning = true
         @timestamp = new Date()
         @step()
 
     # Stop the engine's time simulation.
     stop : () ->
-        @continue = false
+        @isRunning = false
         @timestamp = null
 
     # Add the given elements to the engine.
@@ -55,7 +56,10 @@ class timber.Engine
     # Run a single step in the time simulation.
     step : () ->
         # Stop, if so desired.
-        return if not @continue
+        return if not @isRunning
+
+        # Update the iteration count.
+        @iteration += 1
 
         # Determine how much time has elapsed since the last step.
         now = new Date()
