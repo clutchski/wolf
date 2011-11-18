@@ -31,12 +31,11 @@ wolf.extend = (destination, sources...) ->
     return destination
 
 # Return a unique id, with an optional prefix.
-wolf.getUniqueId = (() ->
+wolf.getUniqueId = do ->
     id = 0
     return (prefix="") ->
         id += 1
         return prefix + id
-)()
 
 # Patch any missing properties from defaults to options and return
 # the resulting object.
