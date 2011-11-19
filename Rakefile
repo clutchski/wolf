@@ -25,9 +25,11 @@ end
 
 # Compile with sprockets.
 def sprocketize(input_file, output_file, include_paths=[])
+    output_dir = File.dirname(output_file)
+    mkdir_p output_dir
+  
     environment = Sprockets::Environment.new
     include_paths.each{|p| environment.append_path(p)}
-
     File.open(output_file, 'w') do |f|
         f.write(environment[input_file])
     end
@@ -49,7 +51,6 @@ end
 
 desc "Compile the source."
 task :build do
-    mkdir_p BUILD_DIR
     sprocketize('wolf.coffee', "#{BUILD_DIR}/wolf.js", [SOURCE_DIR])
     notify("compiled source")
 end
@@ -81,7 +82,6 @@ end
 
 desc "Build the test source."
 task "test:build" do
-  mkdir_p BUILD_DIR
   sprocketize('test_suite.coffee', "#{BUILD_DIR}/wolf_tests.js", [TEST_DIR])
   notify("Built tests!")
 end
