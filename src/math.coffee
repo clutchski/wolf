@@ -12,18 +12,16 @@ wolf.random = (lower, upper) ->
     return Math.random() * (upper - lower + 1) + lower
 
 # Return true if the given interval intersects, false otherwise.
-#
-# @param i1 {Array} an interval
-# @param i2 {Array} an interval
-# @return {Boolean}
 wolf.intervalIntersects = (i1, i2) ->
 
-    ib = wolf.isBetween
+    [i10, i11] = i1
+    [i20, i21] = i2
 
-    return ib(i1[0], i1[1], i2[0]) or
-           ib(i1[0], i1[1], i2[1]) or
-           ib(i2[0], i2[1], i1[0]) or
-           ib(i2[0], i2[1], i1[1])
+    return i10 <= i20 <= i11 or
+           i10 <= i21 <= i11 or
+           i20 <= i10 <= i21 or
+           i20 <= i11 <= i21
+
 
 class wolf.Point
 
