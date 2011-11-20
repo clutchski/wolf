@@ -121,13 +121,14 @@ class wolf.Vector extends wolf.Point
             return sum + coords[0] * coords[1]
         , 0)
 
-    # Return the project of this vector onto the given vector.
+    # Return the projection of this vector onto the given vector.
     #
     # @param {Object} the vector to project onto.
     # @return {Object} the projected vector.
     project : (other) ->
         b = other.normalize()
         return b.scale(this.dotProduct(b))
+
 
     # Return a string representation of the vector.
     toString : () ->
