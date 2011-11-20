@@ -121,7 +121,7 @@ task "examples:build" do
 end
 
 desc "Run the example programs."
-task "examples" => [:build, "build:examples"] do
+task "examples" => [:build, "examples:build"] do
     Dir.glob("#{EXAMPLE_DIR}/*.html").each do |example|
         open(example)
     end
