@@ -11,6 +11,9 @@
 wolf.isBetween = (l, u, n) ->
     return l <= n and n <= u
 
+# Return a random number between the upper and lower values.
+wolf.random = (lower, upper) ->
+    return Math.random() * (upper - lower + 1) + lower
 
 # Return true if the given interval intersects, false otherwise.
 #
