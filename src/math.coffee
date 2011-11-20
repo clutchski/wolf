@@ -2,11 +2,6 @@
 # An assortment of Math functions and classes that power the simulations.
 #
 
-# Return true if the value n is contained in the closed interval
-# [l, u], false otherwise.
-wolf.isBetween = (l, u, n) ->
-    return l <= n <= u
-
 # Return a random number between the upper and lower values.
 wolf.random = (lower, upper) ->
     return Math.random() * (upper - lower + 1) + lower

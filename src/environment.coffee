@@ -26,9 +26,8 @@ class wolf.Environment
     # Return true if the element is contained in the environment's bounds,
     # false otherwise.
     contains : (element) ->
-        ib = wolf.isBetween
-        return ib(0, @width, element.x) and ib(0, @height, element.y)
-        
+        return 0 <= element.x <= @width and
+               0 <= element.y <= @height
 
     # Update the elements with the effects of the given number of milliseconds
     # passing.
