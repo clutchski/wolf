@@ -2,6 +2,14 @@
 module "Vector"
 
 
+# A helper function to test "equality" between floating 
+# point numbers. Obviously, not exact, but good enough
+# for the girls we go out with.
+almostEquals = (actual, expected, msg) ->
+    diff =  Math.abs(actual - expected)
+    ok(diff < 0.0000001, "#{msg} close enough: #{diff}")
+
+
 test "length", () ->
     length = (x, y) ->
         return new wolf.Vector(x, y).getLength()
@@ -79,4 +87,16 @@ test "project", () ->
     ok(v1.project(v1).equals(v1), "vector projected on itself")
     ok(v2.project(v3).equals(v3), "vector projection works")
 
+test "rotate", () ->
+    v = (x, y) ->
+        new wolf.Vector(x, y)
+
+    vequals = (v1, v2, msg) ->
+        almostEquals(v1.x, v2.x, "x equal when #{msg}")
+        almostEquals(v1.y, v2.y, "y equal when #{msg}")
+
+    vequals(v(2, 3).rotate(0), v(2, 3), "rotated by zero")
+    vequals(v(1, 0).rotate(90), v(0, 1), "rotated 90 degress")
+    vequals(v(3, 4).rotate(180), v(-3, -4), "rotated 190 degress")
+    vequals(v(0, 0).rotate(180), v(0, 0), "rotated 180 degress")
 

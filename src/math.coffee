@@ -129,6 +129,16 @@ class wolf.Vector extends wolf.Point
         b = other.normalize()
         return b.scale(this.dotProduct(b))
 
+    # Return the vector created by rotating this vector by the given angle
+    # in degrees.
+    rotate : (a) ->
+        r = a * Math.PI / 180
+
+        # By rights, this should be matrix multiplication, but we
+        # can hack this here.
+        cosr = Math.cos(r)
+        sinr = Math.sin(r)
+        return new wolf.Vector(@x*cosr - @y*sinr, @x*sinr + @y*cosr)
 
     # Return a string representation of the vector.
     toString : () ->
