@@ -111,8 +111,17 @@ end
 # Example tasks.
 #
 
+task "examples:build" do
+  Dir.glob("#{EXAMPLE_DIR}/*.coffee") do |f|
+    fname = File.basename(f)
+    noext = fname.chomp(File.extname(fname))
+    sprocketize(fname, "#{BUILD_DIR}/#{noext}.js", [EXAMPLE_DIR])
+  end
+  notify("Built examples!")
+end
+
 desc "Run the example programs."
-task "examples" => :build do
+task "examples" => [:build, "build:examples"] do
     Dir.glob("#{EXAMPLE_DIR}/*.html").each do |example|
         open(example)
     end
