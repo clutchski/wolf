@@ -4,12 +4,8 @@
 
 # Return true if the value n is contained in the closed interval
 # [l, u], false otherwise.
-#
-# @param l {Number} the interval's lower bound
-# @param u {Number} the interval's upper bound
-# @return {Boolean}
 wolf.isBetween = (l, u, n) ->
-    return l <= n and n <= u
+    return l <= n <= u
 
 # Return a random number between the upper and lower values.
 wolf.random = (lower, upper) ->
