@@ -52,7 +52,7 @@ end
 desc "Compile the source."
 task :build do
     sprocketize('wolf.coffee', "#{BUILD_DIR}/wolf.js", [SOURCE_DIR])
-    notify("compiled source")
+    notify("compiled source!")
 end
 
 desc "Clean build artifacts."
