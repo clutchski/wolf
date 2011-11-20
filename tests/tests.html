@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="vendor/qunit.css" type="text/css" />
   </head>
 <body>
-  <h1 id="qunit-header">Test Suite</h1>
+  <h1 id="qunit-header">Unit Test Suite</h1>
   <h2 id="qunit-banner"></h2>
   <div id="qunit-testrunner-toolbar"></div>
   <h2 id="qunit-userAgent"></h2>
@@ -13,8 +13,12 @@
     <!-- test markup, will be hidden -->
     <canvas id="test-canvas"></canvas>
   </div>
+  <br />
+  <h1 class="qunit-header">Performance Test Suite</h1>
+  <div id="jslitmus_container"></div>
 
   <script type="text/javascript" src="vendor/qunit.js"></script>
+  <script type="text/javascript" src="vendor/JSLitmus.js"></script>
   <script type="text/javascript" src="../build/wolf.js"></script>
   <script type="text/javascript" src="../build/wolf_tests.js"></script>
 </body>
