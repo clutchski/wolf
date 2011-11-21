@@ -65,3 +65,5 @@ test "setPosition", 4, () ->
     e.setPosition(new wolf.Point(1, 1)) # should fire event
     equals(e.x, 1, "x is correct")
     equals(e.y, 1, "y is correct")
+
+    e.setPosition(new wolf.Point(10, 10), silent=true) # Shouldn't fire event.
