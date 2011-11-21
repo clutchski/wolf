@@ -68,6 +68,10 @@ class wolf.Element
     render : (context) ->
         throw new Error("Not Implemented error")
 
+    # Return the center point of the element.
+    getCenter : (context) ->
+        throw new Error("Not Implemented error")
+
     # Apply an impulse force to the element.
     applyImpulse : (impulse) ->
         velocity = @getVelocity().add(impulse)
@@ -176,6 +180,21 @@ class wolf.Polygon extends wolf.Element
         context.lineTo(first.x, first.y)
         context.fill()
         return this
+
+    getCenter : ()  ->
+        # Ensure the polygon is valid
+        throw new Error("polygon has no vertices") unless @vertices?.length
+
+        # Sum the points.
+        c = @vertices.reduce((p, v) ->
+            return p.add(v)
+        , new wolf.Point(0, 0))
+
+        # Take the average.
+        c.x = c.x / @vertices.length
+        c.y = c.y / @vertices.length
+
+        return c
 
 #
 # A rectangle element.
