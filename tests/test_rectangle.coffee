@@ -20,8 +20,7 @@ test "intersection", () ->
     ok(intersects(r3, r4), "One point adjacent rectangles intersect")
 
 test "containing intersection", () ->
-  one = new wolf.Rectangle({x:10, y:10, width:100, height:800})
-  two = new wolf.Rectangle({x:50, y:0, width:50, height:50})
-  ok(one.intersects(two), "overlapping rectangles intersect")
-
+    one = new wolf.Rectangle({x:10, y:10, width:100, height:800})
+    two = new wolf.Rectangle({x:50, y:0, width:50, height:50})
+    ok(one.intersects(two), "overlapping rectangles intersect")
 
