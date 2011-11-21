@@ -61,17 +61,6 @@ class wolf.Element
     # @return {Object} the velocity vector.
     getVelocity : () ->
         return @direction.normalize().scale(@speed)
-
-    # Render the element on the given canvas context.
-    #
-    # @param context {Object} the HTML5 canvas context
-    render : (context) ->
-        throw new Error("Not Implemented error")
-
-    # Return the center point of the element.
-    getCenter : (context) ->
-        throw new Error("Not Implemented error")
-
     # Apply an impulse force to the element.
     applyImpulse : (impulse) ->
         velocity = @getVelocity().add(impulse)
@@ -114,17 +103,6 @@ class wolf.Element
         ii = wolf.intervalIntersects
         return ii(ty, oy) and ii(ox, tx)
 
-
-    # Return an array of points that when joined create a convex polygon
-    # that fully enclosed the element.
-    #
-    # @return {Array} an array of points
-    getAxisAlignedBoundingBox : () ->
-        # FIXME: not sure if an array of points is the best way to represent
-        # this, though it might be the easiest way to extend to non-axis
-        # aligned shapes.
-        throw new Error("Not Implemented error")
-
     # Return the element's inverse mass.
     #
     # @return {Number}
@@ -137,6 +115,24 @@ class wolf.Element
         @trigger('destroyed', @)
         @unbind()
         return this
+
+    # Render the element on the given canvas context.
+    render : (context) ->
+        throw new Error("Not Implemented error")
+
+    # Return the center point of the element.
+    getCenter : (context) ->
+        throw new Error("Not Implemented error")
+
+    # Return an array of points that when joined create a convex polygon
+    # that fully enclosed the element.
+    getAxisAlignedBoundingBox : () ->
+        # FIXME: not sure if an array of points is the best way to represent
+        # this, though it might be the easiest way to extend to non-axis
+        # aligned shapes.
+        throw new Error("Not Implemented error")
+
+
 
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
