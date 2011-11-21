@@ -159,11 +159,13 @@ class wolf.Polygon extends wolf.Element
     setPosition : (point, silent=false) ->
         dx = point.x - (@x || 0)
         dy = point.y - (@y || 0)
-        if dx or dy or not @x or not @y
+        if dx or dy or not @x? or not @y?
             for v in @vertices
                 v.x += dx
                 v.y += dy
-            super(point, silent)
+            @x = point.x
+            @y = point.y
+            @trigger('moved', @) if (dx or dy) and not silent
         return this
 
     render : (context) ->
