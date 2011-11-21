@@ -133,7 +133,6 @@ class wolf.Element
         throw new Error("Not Implemented error")
 
 
-
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
 
@@ -153,6 +152,7 @@ class wolf.Polygon extends wolf.Element
     constructor : (opts={}) ->
         defaults = {vertices : []}
         super(wolf.defaults(opts, defaults))
+        throw new Error("polygons need vertices") unless @vertices?.length
         @setPosition(@vertices[0], silent=true)
 
     # Set the position of the polygon to the given point.
@@ -178,18 +178,14 @@ class wolf.Polygon extends wolf.Element
         return this
 
     getCenter : ()  ->
-        # Ensure the polygon is valid
-        throw new Error("polygon has no vertices") unless @vertices?.length
-
-        # Sum the points.
+        # The co-ordinates of the center point are the 
+        # averages of the polygon's vertices.
         c = @vertices.reduce((p, v) ->
             return p.add(v)
         , new wolf.Point(0, 0))
 
-        # Take the average.
         c.x = c.x / @vertices.length
         c.y = c.y / @vertices.length
-
         return c
 
 #
