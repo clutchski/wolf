@@ -54,6 +54,7 @@ class wolf.Element
             @x = point.x
             @y = point.y
             @trigger('moved', this) if not silent
+        return this
 
     # Return the element's velocity.
     #
@@ -138,6 +139,69 @@ wolf.extend(wolf.Element::, wolf.Events)
 
 
 
+
+#
+# A class representing an arbitrary convex polygon.
+#
+
+class wolf.Polygon extends wolf.Element
+    
+    @key : 'wolf.Polygon'
+
+    # Create a polygon. The x and y co-ordinates are taken to the
+    # first point.
+    constructor : (opts={}) ->
+        defaults = {vertices : []}
+        super(wolf.defaults(opts, defaults))
+        @setPosition(@vertices[0], silent=true)
+
+    # Set the position of the polygon to the given point.
+    setPosition : (point, silent=false) ->
+        dx = point.x - (@x || 0)
+        dy = point.y - (@y || 0)
+        if dx or dy or not @x or not @y
+            for v in @vertices
+                v.x += dx
+                v.y += dy
+            super(point, silent)
+        return this
+
+    render : (context) ->
+        [first, rest...] = @vertices
+        context.beginPath()
+        context.moveTo(first.x, first.y)
+        (context.lineTo(v.x, v.y) for v in rest)
+        context.lineTo(first.x, first.y)
+        context.fill()
+        return this
+
+#
+# A rectangle element.
+#
+
+class wolf.Rectangle extends wolf.Polygon
+
+    @key : "wolf.Rectangle",
+
+    # Create a rectangle element. Rectangles take the same standard parameters
+    # as elements, along with two additional paramters, width and height.
+    constructor : (opts = {}) ->
+        @height = opts.height
+        @width = opts.width
+        @x = opts.x
+        @y = opts.y
+
+        opts.vertices = [
+            new wolf.Point(@x, @y)
+            new wolf.Point(@x + @width, @y)
+            new wolf.Point(@x + @width, @y + @height)
+            new wolf.Point(@x, @y + @height)
+        ]
+        super(opts)
+
+    getAxisAlignedBoundingBox : () ->
+        @vertices
+
 #
 # A circle element.
 #
@@ -170,45 +234,4 @@ class wolf.Circle extends wolf.Element
             new wolf.Point(xl, yb)
         ]
 
-
-#
-# A rectangle element.
-#
-
-class wolf.Rectangle extends wolf.Element
-
-    @key : "wolf.Rectangle",
-
-    # Create a rectangle element. Rectangles take the same standard parameters
-    # as elements, along with two additional paramters, width and height.
-    constructor : (opts = {}) ->
-        super(opts)
-        @height = opts.height
-        @width = opts.width
-
-    getCorners : () ->
-        # Find the co-ordinates of the rectangle's corners.
-        x1 = @x
-        y1 = @y
-        x2 = @x + @width
-        y2 = @y + @height
-        return [
-            new wolf.Point(x1, y1)
-            new wolf.Point(x2, y1),
-            new wolf.Point(x2, y2),
-            new wolf.Point(x1, y2)
-        ]
-
-    render : (context) ->
-        corners = this.getCorners()
-        context.beginPath()
-        first = corners.shift()
-        context.moveTo(first.x, first.y)
-        corners.push(first)
-        for c in corners
-            context.lineTo(c.x, c.y)
-        context.fill()
-
-    getAxisAlignedBoundingBox : () ->
-        return this.getCorners()
 
