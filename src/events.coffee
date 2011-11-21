@@ -23,7 +23,7 @@ wolf.Events =
             @_callbacks[event] = []
         else
             callbacks = @_callbacks[event] || []
-            (callbacks[i] = null for c, i in callbacks when c? and c == callback)
+            (callbacks[i] = null for c, i in callbacks when c == callback)
         return this
 
     # Trigger the given named event. Any additional arguments will be passed to 
