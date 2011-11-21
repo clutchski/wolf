@@ -125,9 +125,12 @@ class wolf.Element
     getInverseMass : () ->
         return 1/@mass
 
-    # Destroy the element.
+    # Destroy the element. This will fire the 'destroyed' callback and then
+    # unbind all other event callbacks that are bound.
     destroy : () ->
-        @.trigger('destroyed', this)
+        @trigger('destroyed', @)
+        @unbind()
+        return this
 
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)

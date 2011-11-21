@@ -20,10 +20,19 @@ test "mass", () ->
 
 test "destroy", 2, () ->
     e = new TestElement()
+
+    # Add a callback that should get called on destruction.
     e.bind 'destroyed', (actual) ->
         ok(true, 'destroyed callback was called')
         equals(actual, e, "destroyed passes the element as an argument")
-    e.destroy()
+
+    # Add a callback that should be unbound when the element
+    # is destroyed.
+    e.bind 'another', () ->
+        ok(false, "This callback should never be called")
+
+    e.destroy().trigger('another')
+
 
 test "applyForce", () ->
 
