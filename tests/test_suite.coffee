@@ -1,5 +1,8 @@
-#
-# An empty file used to concatenate all tests files.
-#
+###
 
+Wolf Test Suite
+
+###
+
+#= require_self
 #= require_directory .
