@@ -35,10 +35,9 @@ class wolf.Point
         # FIXME: floating point math. What to do here?
         return @x == other.x and @y == other.y
 
-    # Return the point produced by summing this point with the given
-    # vector.
-    add : (vector) ->
-        return new wolf.Vector(@x + vector.x, @y + vector.y)
+    # Return the point produced by summing this point with the given point.
+    add : (point) ->
+        return new wolf.Point(@x + point.x, @y + point.y)
 
     # Return the point produced by substracting the other point from
     # this point.
