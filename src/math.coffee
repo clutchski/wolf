@@ -40,6 +40,11 @@ class wolf.Point
     add : (vector) ->
         return new wolf.Vector(@x + vector.x, @y + vector.y)
 
+    # Return the point produced by substracting the other point from
+    # this point.
+    subtract : (other) ->
+        return new wolf.Point(@x - other.x, @y - other.y)
+
     # Return true if the point is the origin, otherwise false.
     isOrigin : () ->
         return @x == 0 and @y == 0
