@@ -48,6 +48,10 @@ class wolf.Point
     isOrigin : () ->
         return @x == 0 and @y == 0
 
+    # Return a vector from the origin to this point.
+    toVector : () ->
+        return new wolf.Vector(@x, @y)
+
     # Return a string representation of the point.
     toString : () ->
         return "wolf.Point(#{@x}, #{@y})"
@@ -127,6 +131,10 @@ class wolf.Vector extends wolf.Point
         cosr = Math.cos(r)
         sinr = Math.sin(r)
         return new wolf.Vector(@x*cosr - @y*sinr, @x*sinr + @y*cosr)
+
+    # Return the vector's endpoint.
+    getEndPoint : () ->
+        return new wolf.Point(@x, @y)
 
     # Return a string representation of the vector.
     toString : () ->
