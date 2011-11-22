@@ -43,4 +43,23 @@ test "getCenterPoint", () ->
     equals(sc.x, 1, "center x of a square is correct")
     equals(sc.y, 1, "center y of a square is correct")
 
+test "rotate", () ->
+    # Rotate a square.
+    square = polygon([1, 1], [-1, 1], [-1, -1], [1, -1])
+    square.rotate(90)
+
+    almostEqual = (x, y, msg) ->
+        ok(x - y < 0.000001, "#{msg} almost equal")
+
+    # Assert the vertices are as expected.
+    expected = [[-1, 1], [-1, -1], [1, -1], [1, 1]]
+    actual = ([v.x, v.y] for v in square.vertices)
+    for i in [0..expected.length-1]
+        e = expected[i]
+        a = actual[i]
+        for j in [0..1]
+            almostEqual(e[j], a[j], "vertex #{i}.#{j} rotation")
+    almostEqual(square.getPosition().x, -1, "x pos")
+    almostEqual(square.getPosition().y, 1, "y pos")
+
 

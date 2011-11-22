@@ -122,6 +122,12 @@ class wolf.Element
     getAxisAlignedBoundingBox : () ->
         throw new Error("Not Implemented error")
 
+    # Rotate the element counter-clockwise by the given number of degrees
+    # about it's center.
+    rotate : (degrees) ->
+        throw new Error("Not Implemented error")
+
+
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
 
@@ -140,28 +146,13 @@ class wolf.Polygon extends wolf.Element
     constructor : (opts={}) ->
         # Construct the polygon.
         super(opts)
-        throw new Error("polygons need vertices") unless @vertices?.length
-
-        # Set the position to the first vertex.
-        position = @vertices[0]
-
-        # FIXME: this is a pain. I think elements should have a position
-        # and x and y can be read from there.
-        @x = position.x
-        @y = position.y
-
+        @setVertices(@vertices, silent=true)
+ 
     # Set the position of the polygon to the given point.
     setPosition : (point, silent=false) ->
         # Calculate the distance the point has moved.
         delta = point.subtract(@getPosition())
-
-        # If the point has moved, update the vertices.
-        if not delta.isOrigin()
-            @vertices = (v.add(delta) for v in @vertices)
-            @x = point.x
-            @y = point.y
-            @trigger('moved', @) unless silent
-        return this
+        return @setVertices((v.add(delta) for v in @vertices), silent)
 
     render : (context) ->
         [first, rest...] = @vertices
@@ -171,6 +162,17 @@ class wolf.Polygon extends wolf.Element
         context.lineTo(first.x, first.y)
         context.fill()
         return this
+
+    setVertices : (vertices, silent=false) ->
+        if not vertices? or vertices.length < 3
+            throw new Error("minimum three vertices")
+        position = vertices[0]
+        changed = not @getPosition().equals(position)
+        @vertices = vertices
+        @x = position.x
+        @y = position.y
+        @trigger('moved', @) if changed and not silent
+        this
 
     getCenter : ()  ->
         # The co-ordinates of the center point are the 
@@ -182,6 +184,13 @@ class wolf.Polygon extends wolf.Element
         c.x = c.x / @vertices.length
         c.y = c.y / @vertices.length
         return c
+
+    rotate : (degrees, silent=false) ->
+        return this if not degrees
+        c = @getCenter()
+        rotatedVertices = for v in @vertices
+            v.subtract(c).toVector().rotate(degrees).getEndPoint().add(c)
+        return @setVertices(rotatedVertices, silent)
 
 #
 # A rectangle element.
