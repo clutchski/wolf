@@ -150,12 +150,12 @@ class wolf.Polygon extends wolf.Element
 
     # Set the position of the polygon to the given point.
     setPosition : (point, silent=false) ->
-        dx = point.x - @x
-        dy = point.y - @y
-        if dx or dy
-            for v in @vertices
-                v.x += dx
-                v.y += dy
+        # Calculate the distance the point has moved.
+        delta = point.subtract(@getPosition())
+
+        # If the point has moved, update the vertices.
+        if not delta.isOrigin()
+            @vertices = (v.add(delta) for v in @vertices)
             @x = point.x
             @y = point.y
             @trigger('moved', @) unless silent
