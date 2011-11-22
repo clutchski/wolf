@@ -61,6 +61,7 @@ class wolf.Element
     # @return {Object} the velocity vector.
     getVelocity : () ->
         return @direction.normalize().scale(@speed)
+
     # Apply an impulse force to the element.
     applyImpulse : (impulse) ->
         velocity = @getVelocity().add(impulse)
