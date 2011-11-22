@@ -21,9 +21,6 @@ wolf.intervalIntersects = (i1, i2) ->
 class wolf.Point
 
     # Create a point.
-    #
-    # @param x {Number} the x co-ordinate
-    # @param y {Number} the y co-ordinate
     constructor : (x, y) ->
         @x = x
         @y = y
@@ -34,18 +31,12 @@ class wolf.Point
 
     # Return true if this point is equal to the given point, false
     # otherwise.
-    #
-    # @param other {Object} the point to compare against.
-    # @return {Boolean}
     equals : (other) ->
         # FIXME: floating point math. What to do here?
         return @x == other.x and @y == other.y
 
     # Return the point produced by summing this point with the given
     # vector.
-    #
-    # @param vector {Object}
-    # @return {Object} the resultant point
     add : (vector) ->
         return new wolf.Vector(@x + vector.x, @y + vector.y)
 
