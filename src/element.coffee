@@ -147,6 +147,9 @@ class wolf.Polygon extends wolf.Element
 
         # Set the position to the first vertex.
         position = @vertices[0]
+
+        # FIXME: this is a pain. I think elements should have a position
+        # and x and y can be read from there.
         @x = position.x
         @y = position.y
 
