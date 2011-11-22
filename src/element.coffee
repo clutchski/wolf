@@ -141,9 +141,11 @@ class wolf.Polygon extends wolf.Element
     # Create a polygon. The x and y co-ordinates are taken to the
     # first point.
     constructor : (opts={}) ->
-        defaults = {vertices : []}
-        super(wolf.defaults(opts, defaults))
+        # Construct the polygon.
+        super(opts)
         throw new Error("polygons need vertices") unless @vertices?.length
+
+        # Set the position to the first vertex.
         position = @vertices[0]
         @x = position.x
         @y = position.y
