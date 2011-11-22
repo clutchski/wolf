@@ -144,19 +144,21 @@ class wolf.Polygon extends wolf.Element
         defaults = {vertices : []}
         super(wolf.defaults(opts, defaults))
         throw new Error("polygons need vertices") unless @vertices?.length
-        @setPosition(@vertices[0], silent=true)
+        position = @vertices[0]
+        @x = position.x
+        @y = position.y
 
     # Set the position of the polygon to the given point.
     setPosition : (point, silent=false) ->
-        dx = point.x - (@x || 0)
-        dy = point.y - (@y || 0)
-        if dx or dy or not @x? or not @y?
+        dx = point.x - @x
+        dy = point.y - @y
+        if dx or dy
             for v in @vertices
                 v.x += dx
                 v.y += dy
             @x = point.x
             @y = point.y
-            @trigger('moved', @) if (dx or dy) and not silent
+            @trigger('moved', @) unless silent
         return this
 
     render : (context) ->
