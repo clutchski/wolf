@@ -49,6 +49,10 @@ class wolf.Point
     add : (vector) ->
         return new wolf.Vector(@x + vector.x, @y + vector.y)
 
+    # Return true if the point is the origin, otherwise false.
+    isOrigin : () ->
+        return @x == 0 and @y == 0
+
     # Return a string representation of the point.
     toString : () ->
         return "wolf.Point(#{@x}, #{@y})"

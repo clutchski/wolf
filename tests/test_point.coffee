@@ -30,3 +30,7 @@ test "add", () ->
 
 test "toString", () ->
     equals("wolf.Point(10, -10)", new Point(10, -10).toString(), "alls well")
+
+test "isOrigin", () ->
+    ok(not new Point(0, 1).isOrigin(), "not the origin")
+    ok(new Point(0, 0).isOrigin(), "not the origin")
