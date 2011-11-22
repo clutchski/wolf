@@ -121,9 +121,6 @@ class wolf.Element
     # Return an array of points that when joined create a convex polygon
     # that fully enclosed the element.
     getAxisAlignedBoundingBox : () ->
-        # FIXME: not sure if an array of points is the best way to represent
-        # this, though it might be the easiest way to extend to non-axis
-        # aligned shapes.
         throw new Error("Not Implemented error")
 
 
