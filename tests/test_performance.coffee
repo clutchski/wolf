@@ -11,4 +11,4 @@ JSLitmus.test 'intervalIntersects', () ->
     for i1, idx in intervals
         for i2 in intervals[idx..intervals.length]
             wolf.intervalIntersects(i1, i2)
-    this
+    return this
