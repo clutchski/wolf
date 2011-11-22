@@ -5,14 +5,15 @@
 module "Polygon"
 
 
+# A factory function for points.
+polygon = (points...) ->
+    vertices = (new wolf.Point(p[0], p[1]) for p in points)
+    return new wolf.Polygon({vertices : vertices})
+
 test "setPosition", 10, () ->
 
     # Assert that all vertices are updated on when moving.
-    t = new wolf.Polygon({vertices : [
-        new wolf.Point(0, 0)
-        new wolf.Point(0, 1)
-        new wolf.Point(1, 1)
-    ]})
+    t = polygon([0, 0], [0, 1], [1, 1])
 
     equals(t.x, 0, "initial x works")
     equals(t.y, 0, "initial y works")
@@ -37,14 +38,9 @@ test "setPosition", 10, () ->
 
 test "getCenterPoint", () ->
     # Assert that all vertices are updated on when moving.
-    square = new wolf.Polygon({vertices : [
-        new wolf.Point(0, 0)
-        new wolf.Point(2, 0)
-        new wolf.Point(2, 2)
-        new wolf.Point(0, 2)
-    ]})
-
+    square = polygon([0, 0], [2, 0], [2, 2], [0, 2])
     sc = square.getCenter()
     equals(sc.x, 1, "center x of a square is correct")
     equals(sc.y, 1, "center y of a square is correct")
+
 
