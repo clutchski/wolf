@@ -83,8 +83,8 @@ class wolf.Element
     # Return true if this element intersects with the other
     # element, false otherwise.
     intersects : (other) ->
-        bb = this.getAxisAlignedBoundingBox()
-        ob = other.getAxisAlignedBoundingBox()
+        bb = this.getBoundingBox()
+        ob = other.getBoundingBox()
 
         [ttl, ttr, tbl, tbr] = bb # this top left, this top right, etc.
         [otl, otr, obl, obr] = ob # other top left, other top, right, etc.
@@ -119,7 +119,7 @@ class wolf.Element
 
     # Return an array of points that when joined create a convex polygon
     # that fully enclosed the element.
-    getAxisAlignedBoundingBox : () ->
+    getBoundingBox : () ->
         throw new Error("Not Implemented error")
 
     # Rotate the element counter-clockwise by the given number of degrees
@@ -216,7 +216,7 @@ class wolf.Rectangle extends wolf.Polygon
         ]
         super(opts)
 
-    getAxisAlignedBoundingBox : () ->
+    getBoundingBox : () ->
         @vertices
 
 #
@@ -236,7 +236,7 @@ class wolf.Circle extends wolf.Element
         context.arc(@x, @y, @radius, 0, Math.PI *2)
         context.fill()
 
-    getAxisAlignedBoundingBox : () ->
+    getBoundingBox : () ->
         # FIXME: need non-axis aligned collisions for this
 
         yt = @y - @radius

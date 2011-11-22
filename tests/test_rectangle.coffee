@@ -24,18 +24,18 @@ test "containing intersection", () ->
     two = new wolf.Rectangle({x:50, y:0, width:50, height:50})
     ok(one.intersects(two), "overlapping rectangles intersect")
 
-test "getAxisAlignedBoundingBox", () ->
+test "getBoundingBox", () ->
     r1 = new Rectangle({x:0, y:0, width:10, height:10})
 
     # Assert the bounding box is all good.
-    aabb = r1.getAxisAlignedBoundingBox()
+    aabb = r1.getBoundingBox()
     equals(aabb.length, 4, "box has 4 points")
     ok(aabb[0].equals(new wolf.Point(0, 0)), "first point is equal")
     ok(aabb[2].equals(new wolf.Point(10, 10)), "last point is equal")
 
     # Move the shape and assert the bounding box moves along.
     r1.setPosition(new wolf.Point(10, 10))
-    aabb = r1.getAxisAlignedBoundingBox()
+    aabb = r1.getBoundingBox()
     equals(aabb.length, 4, "box has 4 points")
     ok(aabb[0].equals(new wolf.Point(10, 10)), "first point is equal")
     ok(aabb[2].equals(new wolf.Point(20, 20)), "last point is equal")
