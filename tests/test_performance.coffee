@@ -50,3 +50,7 @@ JSLitmus.test 'intersects', () ->
         for e2 in elements[idx..elements.length]
             e1.intersects(e2)
     return this
+
+JSLitmus.test 'rotate', () ->
+    (p.rotate(random(0, 360)) for p in polygons)
+    return this
