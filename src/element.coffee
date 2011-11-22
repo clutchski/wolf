@@ -80,7 +80,6 @@ class wolf.Element
         @speed = velocity.getLength()
         @direction = velocity.normalize()
 
-
     # Return true if this element intersects with the other
     # element, false otherwise.
     intersects : (other) ->
@@ -123,10 +122,8 @@ class wolf.Element
     getAxisAlignedBoundingBox : () ->
         throw new Error("Not Implemented error")
 
-
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
-
 
 
 
