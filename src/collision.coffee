@@ -84,7 +84,6 @@ class wolf.CollisionHandler
     constructor : () ->
         @logger = new wolf.Logger("wolf.CollisionHandler")
 
-
     # Check the given elements for collisions, and update them accordingly.
     #
     # @param elements {Array} a list of elements to check for collisions.
