@@ -57,8 +57,6 @@ class wolf.Element
         return this
 
     # Return the element's velocity.
-    #
-    # @return {Object} the velocity vector.
     getVelocity : () ->
         return @direction.normalize().scale(@speed)
 
@@ -85,9 +83,6 @@ class wolf.Element
 
     # Return true if this element intersects with the other
     # element, false otherwise.
-    #
-    # @param other {Object} the other element
-    # @return {Boolean}
     intersects : (other) ->
         bb = this.getAxisAlignedBoundingBox()
         ob = other.getAxisAlignedBoundingBox()
@@ -105,8 +100,6 @@ class wolf.Element
         return ii(ty, oy) and ii(ox, tx)
 
     # Return the element's inverse mass.
-    #
-    # @return {Number}
     getInverseMass : () ->
         return 1/@mass
 
