@@ -123,8 +123,8 @@ class wolf.Vector extends wolf.Point
 
     # Return the vector created by rotating this vector by the given angle
     # in degrees.
-    rotate : (a) ->
-        r = a * Math.PI / 180
+    rotate : (degrees) ->
+        r = degrees * Math.PI / 180
 
         # By rights, this should be matrix multiplication, but we
         # can hack this here.
