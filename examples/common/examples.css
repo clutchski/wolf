@@ -1,14 +1,18 @@
 body {
-  background-color: #2b2b2b;
+  margin:0;
+  background-color:#4f4f4f;
 }
 
 #game {
   width: 800px;
-  margin-left:auto;
-  margin-right:auto;
+  height: 600px;
+  position:absolute;
+  left:50%;
+  top:50%;
+  margin:-300px 0 0 -400px;
 }
 
 #example {
   background-color: #eee;
-  -webkit-box-shadow: 0 0 2px 2px #aaa;
+  -webkit-box-shadow: 0 0 5px 5px #eee;
 }
