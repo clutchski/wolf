@@ -1,5 +1,5 @@
 #
-# A class representing an arbitrary convex polygon.
+# Polygons.
 #
 
 
@@ -7,6 +7,10 @@
 #= require math
 
 
+
+#
+# This class represents an arbitrary convex polygon
+#
 class wolf.Polygon extends wolf.Element
     
     @key : 'wolf.Polygon'
@@ -24,6 +28,7 @@ class wolf.Polygon extends wolf.Element
         delta = point.subtract(@getPosition())
         return @setVertices((v.add(delta) for v in @vertices), silent)
 
+    # Render the polygon on the given canvas context.
     render : (context) ->
         [first, rest...] = @vertices
         context.beginPath()
@@ -33,6 +38,8 @@ class wolf.Polygon extends wolf.Element
         context.fill()
         return this
 
+    # Set the polygon's vertices. The first vertex will dictate the element's
+    # position.
     setVertices : (vertices, silent=false) ->
         if not vertices? or vertices.length < 3
             throw new Error("minimum three vertices")
@@ -44,17 +51,16 @@ class wolf.Polygon extends wolf.Element
         @trigger('moved', @) if changed and not silent
         this
 
+    # Return the point at the geometrical center of the element.
     getCenter : ()  ->
-        # The co-ordinates of the center point are the 
-        # averages of the polygon's vertices.
         c = @vertices.reduce((p, v) ->
             return p.add(v)
         , new wolf.Point(0, 0))
-
         c.x = c.x / @vertices.length
         c.y = c.y / @vertices.length
         return c
 
+    # Rotate the element counter-clockwise by the given number of degrees.
     rotate : (degrees, silent=false) ->
         return this if not degrees
         c = @getCenter()
