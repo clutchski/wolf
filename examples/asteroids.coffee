@@ -24,21 +24,31 @@ class Ship extends wolf.Polygon
 
     # Apply the shift's thrusters.
     thrust : () ->
-        impulse = @direction.scale(0.5)
+        impulse = @direction.scale(0.8)
         @applyImpulse(impulse)
 
     # Turn the ship to the starboard side.
     starboard : () ->
-        @turn(-15)
+        @turn(-1)
 
     # Turn the ship to the port side.
     port : () ->
-        @turn(15)
+        @turn(1)
 
-    # Turn the ship by the given number of degrees.
-    turn : (degrees) ->
-        @rotate(degrees)
-        @direction = @direction.rotate(degrees)
+    # Turn the ship in the given direction.
+    turn : (orientation) ->
+        magnitude = 20
+
+        doTurn = () =>
+            turn = 5
+            if 0 < magnitude
+                degrees = turn * orientation
+                @rotate(degrees)
+                @direction = @direction.rotate(degrees)
+                setTimeout(doTurn, 40)
+            magnitude -= turn
+
+        doTurn()
 
 
 # Asteroids floating around space.
