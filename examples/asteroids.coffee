@@ -4,24 +4,21 @@
 
 
 # The ship piloted by the player.
-class Ship extends wolf.Rectangle
+class Ship extends wolf.Polygon
 
     @key : 'Ship'
 
     constructor : (opts = {}) ->
-        opts.height ?= 20
-        opts.width ?= 20
-        opts.direction ?= new wolf.Vector(0, -1)
-        opts.speed ?= 0.1
-        opts.orientation ?= 90
+        shape  = [[0, 0], [-15, -35], [-30, 0]]
+        opts.vertices = (new wolf.Point(a+opts.x, b+opts.y) for [a, b] in shape)
         super(opts)
 
-   
     # Return a bullet fired by the ship.
     shootBullet : () ->
+        c = @getCenter()
         bullet = new Bullet(
-            x: @x,
-            y: @y - @height,
+            x: c.x
+            y: c.y - 30,
             direction: @direction.copy()
         )
 
@@ -30,14 +27,23 @@ class Ship extends wolf.Rectangle
         impulse = @direction.scale(0.5)
         @applyImpulse(impulse)
 
-    # Jump to a random point on screen.
-    jumpIntoHyperspace : (xmax, ymax) ->
-        x = Math.random() * xmax
-        y = Math.random() * ymax
+    # Turn the ship to the starboard side.
+    starboard : () ->
+        @turn(-15)
+
+    # Turn the ship to the port side.
+    port : () ->
+        @turn(15)
+
+    # Turn the ship by the given number of degrees.
+    turn : (degrees) ->
+        @rotate(degrees)
+        @direction = @direction.rotate(degrees)
+
 
 # Asteroids floating around space.
 class Asteroid extends wolf.Circle
-    
+
     @key : 'Asteroid'
 
     constructor : (opts = {}) ->
@@ -73,47 +79,43 @@ class Bullet extends wolf.Circle
         opts.dragCoefficient = 0
         super(opts)
 
-#
-# Create the engine.
-#
 
+# Create the engine.
 engine = new wolf.Engine("example")
 engine.environment.gravitationalConstant = 0 # Since this an overhead 2d game.
 
 # Create the plane.
-ship = new Ship({x: 200, y:200, speed:0.05, direction: new wolf.Vector(0, -1)})
-
-# Create some asteroids.
-asteroids = (new Asteroid() for i in [1..10])
-
-# Add them to the engine.
+ship = new Ship({x: 200, y:200, speed:0.01, direction: new wolf.Vector(0, -1)})
 engine.add(ship)
-#(engine.add(a) for a in asteroids)
+
+
+# Map key presses to behaviours.
+commands =
+    107 : () ->
+        ship.thrust()
+    106 : () ->
+        ship.starboard()
+    108 : () ->
+        ship.port()
+    32 : () ->
+        bullet = ship.shootBullet()
+        engine.add(bullet)
+    80 : () ->
+        engine.logStatusReport()
 
 
 # Attach behaviours.
-$(document).keydown (event) ->
-
-    behaviours =
-        38 : () ->
-            ship.thrust()
-        #32 : shoot
-        #81 : toggle
-        #80 : report
-
+$(document).keypress (event) ->
     key = event.which || event.keyCode
     console.log(key)
 
-    callback = behaviours[key]
+    callback = commands[key]
     callback() if callback
 
 # Export start and stop to global scope.
 this.asteroids =
 
-    engine: engine
-
     run : () ->
         engine.start()
-        engine.toggle()
 
 
