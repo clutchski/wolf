@@ -86,6 +86,12 @@ class wolf.Engine
             @.step()
         , @interval
 
+    # Stop and destroy the engine.
+    destroy : () ->
+        @stop()
+        @canvas.clear()
+        @elements = []
+
     # Log a status report on the engine.
     logStatusReport : () ->
         messages = [
@@ -96,5 +102,3 @@ class wolf.Engine
         ]
         (@logger.info(m) for m in messages)
         this
-
-
