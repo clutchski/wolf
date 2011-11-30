@@ -7,9 +7,8 @@
 
 class wolf.Canvas
 
-    # Create a wolf canvas object.
-    #
-    # @param id {String} the id of the page's canvas element.
+    # Create a canvas linked to the canvas element with the given
+    # DOM id.
     constructor : (id) ->
         @logger = new wolf.Logger("wolf.Canvas")
         @logger.debug("creating canvas with id #{id}")
