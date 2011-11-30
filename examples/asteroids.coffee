@@ -6,8 +6,6 @@
 # The ship piloted by the player.
 class Ship extends wolf.Polygon
 
-    @key : 'Ship'
-
     constructor : (opts = {}) ->
         shape  = [[0, 0], [-15, -35], [-30, 0]]
         opts.vertices = (new wolf.Point(a+opts.x, b+opts.y) for [a, b] in shape)
@@ -54,8 +52,6 @@ class Ship extends wolf.Polygon
 # Asteroids floating around space.
 class Asteroid extends wolf.Circle
 
-    @key : 'Asteroid'
-
     constructor : (opts = {}) ->
         defaults =
             x: wolf.random(0, 800)
@@ -71,8 +67,6 @@ class Asteroid extends wolf.Circle
 # Enemy ships trying to kill you.
 class EnemyShip extends Ship
 
-    @key : 'EnemyShip'
-
     constructor : (opts = {}) ->
         opts.height = 20
         opts.width = 20
@@ -80,8 +74,6 @@ class EnemyShip extends Ship
 
 # Bullets kill things!
 class Bullet extends wolf.Circle
-
-    @key : 'Bullet'
 
     constructor : (opts={}) ->
         opts.radius = 5

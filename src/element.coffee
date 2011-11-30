@@ -9,8 +9,6 @@
 
 class wolf.Element
 
-    @key : null
-
     # Create an element. The constructor takes a single argument which is a map
     # of options. Here are the accepted parameters:
     #
@@ -32,16 +30,8 @@ class wolf.Element
             direction: new wolf.Vector(0, 0)
             dragCoefficient: 0.7
             visible: true
+            id: wolf.getUniqueId()
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
-
-        # Ensure the Element class has a unique key, used for registering
-        # class collision events.
-        if not @constructor.key
-            throw new Error("Class missing required property 'key'")
-
-        # An the object a unique id.
-        @id = if opts.id? then opts.id else wolf.getUniqueId(@constructor.key)
-
 
     # Return the element's position.
     getPosition : () ->

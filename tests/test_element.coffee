@@ -8,9 +8,6 @@ module "Element"
 
 class TestElement extends wolf.Element
 
-    @key = 'TestElement'
-
-
 test "mass", () ->
     e = new TestElement()
     ok(e.mass, "mass has a default value")
@@ -35,7 +32,6 @@ test "destroy", 2, () ->
 
 
 test "applyForce", () ->
-
     # An zero force on a zero vector doesn't move.
     d = new wolf.Vector(1, 0)
     staticElement = new TestElement({x:5, y:5, direction:d, speed:0})

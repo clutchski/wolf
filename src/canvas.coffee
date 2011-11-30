@@ -2,7 +2,6 @@
 # An interface to an HTML5 Canvas element.
 #
 
-
 #= require logger
 
 

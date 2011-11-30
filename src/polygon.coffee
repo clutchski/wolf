@@ -12,8 +12,6 @@
 # This class represents an arbitrary convex polygon
 #
 class wolf.Polygon extends wolf.Element
-    
-    @key : 'wolf.Polygon'
 
     # Create a polygon. The x and y co-ordinates are taken to the
     # first point.
@@ -21,7 +19,7 @@ class wolf.Polygon extends wolf.Element
         # Construct the polygon.
         super(opts)
         @setVertices(@vertices, silent=true)
- 
+
     # Set the position of the polygon to the given point.
     setPosition : (point, silent=false) ->
         # Calculate the distance the point has moved.
@@ -68,13 +66,17 @@ class wolf.Polygon extends wolf.Element
             v.subtract(c).toVector().rotate(degrees).getEndPoint().add(c)
         return @setVertices(rotatedVertices, silent)
 
+    # Return the element's minimum axis aligned bounding box.
+    getBoundingBox : () ->
+        #FIXME: broken for anything but squares.
+        @vertices
+
+
 #
 # A rectangle element.
 #
 
 class wolf.Rectangle extends wolf.Polygon
-
-    @key : "wolf.Rectangle",
 
     # Create a rectangle element. Rectangles take the same standard parameters
     # as elements, along with two additional paramters, width and height.
@@ -91,17 +93,11 @@ class wolf.Rectangle extends wolf.Polygon
             new wolf.Point(@x, @y + @height)
         ]
         super(opts)
-
-    getBoundingBox : () ->
-        @vertices
-
 #
 # A circle element.
 #
 
 class wolf.Circle extends wolf.Element
-
-    @key : "wolf.Circle",
 
     constructor : (opts) ->
         super(opts)
