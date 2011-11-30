@@ -1,5 +1,5 @@
 #
-# A version of Asteroids written in Wolf.
+# A version of Asteroids written with Wolf.
 #
 
 
