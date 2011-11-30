@@ -61,17 +61,6 @@ class wolf.Engine
             @elements.splice(index, 1) if index >= 0
         return this
 
-    # Log a status report on the engine.
-    logStatusReport : () ->
-        messages = [
-            "Status Report",
-            "Is running: #{@isRunning}",
-            "Iteration: #{@iteration}",
-            "Num Elements: #{@elements.length}"
-        ]
-        (@logger.info(m) for m in messages)
-        this
-
     # Run a single step in the time simulation.
     step : () ->
         # Stop, if so desired.
@@ -96,3 +85,16 @@ class wolf.Engine
         setTimeout () =>
             @.step()
         , @interval
+
+    # Log a status report on the engine.
+    logStatusReport : () ->
+        messages = [
+            "Status Report",
+            "Is running: #{@isRunning}",
+            "Iteration: #{@iteration}",
+            "Num Elements: #{@elements.length}"
+        ]
+        (@logger.info(m) for m in messages)
+        this
+
+
