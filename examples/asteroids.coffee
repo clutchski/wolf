@@ -96,11 +96,11 @@ initialize = () ->
 
     # Map key presses to behaviours.
     commands =
-        107 : () ->
+        38 : () ->
             ship.thrust()
-        106 : () ->
+        37 : () ->
             ship.starboard()
-        108 : () ->
+        39 : () ->
             ship.port()
         32 : () ->
             bullet = ship.shootBullet()
@@ -110,7 +110,7 @@ initialize = () ->
 
 
     # Attach behaviours.
-    $(document).keypress (event) ->
+    $(document).keydown (event) ->
         key = event.which || event.keyCode
         console.log(key)
 
