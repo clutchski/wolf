@@ -118,7 +118,6 @@ initialize = () ->
     $(document).keydown (event) ->
         key = event.which || event.keyCode
         callback = commands[key]
-        console.log('aaa')
         callback() if callback
 
     engine.start()
