@@ -17,9 +17,4 @@ body {
   border: 2px solid #666;
   border-radius: 10px;
   -moz-border-radius: 10px;
-  /*
-  -webkit-box-shadow: 0 0 5px 5px #eee;
-  -moz-box-shadow: 0 0 5px 5px #eee;
-  box-shadow: 0 0 5px 5px #eee;
-  */
 }
