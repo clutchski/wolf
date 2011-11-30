@@ -6,8 +6,8 @@
     <div id="container">
 
       <ul>
-        <li><a href="#" class="gamelink" gameid="invaders">Invaders</a></li>
-        <li><a href="#" class="gamelink" gameid="asteroids">Asteroids</a></li>
+        <li><a href="#invaders" class="gamelink" gameid="invaders">Invaders</a></li>
+        <li><a href="#asteroids" class="gamelink" gameid="asteroids">Asteroids</a></li>
       </ul>
 
       <div id="game">
@@ -21,23 +21,31 @@
     <script type="text/javascript" src="../build/invaders.js"></script>
     <script>
       $(document).ready(function () {
-          var currentGame = null;
-          $('.gamelink').click(function (event) {
 
+          var currentGame = null;
+
+          // Run the game whose global object is id.
+          var runGame = function (id) {
               if (currentGame) {
                   currentGame.stop()
                   currentGame = null
-              }
 
+              }
+              currentGame = window[id];
+              currentGame.run()
+          };
+
+          // Run games on click.
+          $('.gamelink').click(function (event) {
               var link = $(event.target);
               var gameId = link.attr('gameid');
-              currentGame = window[gameId]
-              currentGame.run()
+              runGame(gameId);
           });
 
+          // Run the default game or the game specific in the hash.
           if (!currentGame) {
-              currentGame = invaders;
-              currentGame.run()
+              var gameId = window.location.hash.split('#')[1] || 'invaders';
+              runGame(gameId);
           }
       });
     </script>
