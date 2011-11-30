@@ -1,15 +1,19 @@
 body {
   margin:0;
   background-color:#9f9f9f;
+  font-family:Monospace;
+}
+
+#container {
+  padding:5px;
+  width: 800px;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 #game {
-  width: 800px;
-  height: 600px;
-  position:absolute;
-  left:50%;
-  top:50%;
-  margin:-300px 0 0 -400px;
+  width:800px;
+  height:500px;
 }
 
 #example {
@@ -17,4 +21,36 @@ body {
   border: 2px solid #666;
   border-radius: 10px;
   -moz-border-radius: 10px;
+}
+
+#title {
+  float:left;
+  display:inline;
+  margin:10px;
+  font-size:40px;
+}
+
+#gamelinks {
+  list-style:none;
+  float:right;
+}
+
+#gamelinks li {
+  float:left;
+  margin-left:10px;
+}
+
+
+.gamelink.active {
+  background-color:#ccc;
+  border: 1px solid #666;
+}
+
+.gamelink, .gamelink:visited {
+  text-decoration:none;
+  padding:5px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  font-size:150%;
+  color:black;
 }

@@ -5,13 +5,15 @@
   <body>
     <div id="container">
 
-      <ul>
+      <h1 id="title">WOLF</h1>
+
+      <ul id="gamelinks">
         <li><a href="#invaders" class="gamelink" gameid="invaders">Invaders</a></li>
         <li><a href="#asteroids" class="gamelink" gameid="asteroids">Asteroids</a></li>
       </ul>
 
       <div id="game">
-        <canvas id="example" width="800" height="600"></canvas>
+        <canvas id="example" width="800" height="500"></canvas>
       </div>
     </div>
 
@@ -26,12 +28,14 @@
 
           // Run the game whose global object is id.
           var runGame = function (id) {
+              $('.gamelink').removeClass('active');
               if (currentGame) {
                   currentGame.stop()
                   currentGame = null
-
               }
               currentGame = window[id];
+              $('[gameid="'+id+'"]').addClass('active');
+
               currentGame.run()
           };
 
