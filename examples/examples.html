@@ -5,6 +5,11 @@
   <body>
     <div id="container">
 
+      <ul>
+        <li><a href="#" class="gamelink" gameid="invaders">Invaders</a></li>
+        <li><a href="#" class="gamelink" gameid="asteroids">Asteroids</a></li>
+      </ul>
+
       <div id="game">
         <canvas id="example" width="800" height="600"></canvas>
       </div>
@@ -13,9 +18,27 @@
     <script type="text/javascript" src="common/zepto.min.js"></script>
     <script type="text/javascript" src="../build/wolf.js"></script>
     <script type="text/javascript" src="../build/asteroids.js"></script>
+    <script type="text/javascript" src="../build/invaders.js"></script>
     <script>
       $(document).ready(function () {
-          asteroids.run();
+          var currentGame = null;
+          $('.gamelink').click(function (event) {
+
+              if (currentGame) {
+                  currentGame.stop()
+                  currentGame = null
+              }
+
+              var link = $(event.target);
+              var gameId = link.attr('gameid');
+              currentGame = window[gameId]
+              currentGame.run()
+          });
+
+          if (!currentGame) {
+              currentGame = invaders;
+              currentGame.run()
+          }
       });
     </script>
   </body>

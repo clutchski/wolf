@@ -13,10 +13,10 @@ class Ship extends wolf.Polygon
 
     # Return a bullet fired by the ship.
     shootBullet : () ->
-        c = @getCenter()
+        position = @direction.add(@getCenter().add(new wolf.Point(15, 30)))
         bullet = new Bullet(
-            x: c.x
-            y: c.y - 30,
+            x: position.x
+            y: position.y
             direction: @direction.copy()
         )
 
@@ -83,41 +83,51 @@ class Bullet extends wolf.Circle
 
 
 # Create the engine.
-engine = new wolf.Engine("example")
-engine.environment.gravitationalConstant = 0 # Since this an overhead 2d game.
+engine = null
 
-# Create the plane.
-ship = new Ship({x: 200, y:200, speed:0.01, direction: new wolf.Vector(0, -1)})
-engine.add(ship)
+initialize = () ->
+    engine = new wolf.Engine("example")
+    engine.environment.gravitationalConstant = 0 # Since this an overhead 2d game.
 
-
-# Map key presses to behaviours.
-commands =
-    107 : () ->
-        ship.thrust()
-    106 : () ->
-        ship.starboard()
-    108 : () ->
-        ship.port()
-    32 : () ->
-        bullet = ship.shootBullet()
-        engine.add(bullet)
-    80 : () ->
-        engine.logStatusReport()
+    # Create the plane.
+    ship = new Ship({x: 200, y:200, speed:0.01, direction: new wolf.Vector(0, -1)})
+    engine.add(ship)
 
 
-# Attach behaviours.
-$(document).keypress (event) ->
-    key = event.which || event.keyCode
-    console.log(key)
+    # Map key presses to behaviours.
+    commands =
+        107 : () ->
+            ship.thrust()
+        106 : () ->
+            ship.starboard()
+        108 : () ->
+            ship.port()
+        32 : () ->
+            bullet = ship.shootBullet()
+            engine.add(bullet)
+        80 : () ->
+            engine.logStatusReport()
 
-    callback = commands[key]
-    callback() if callback
 
-# Export start and stop to global scope.
+    # Attach behaviours.
+    $(document).keypress (event) ->
+        key = event.which || event.keyCode
+        console.log(key)
+
+        callback = commands[key]
+        callback() if callback
+
+    engine.start()
+
+## Export start and stop to global scope.
 this.asteroids =
 
     run : () ->
-        engine.start()
+        initialize()
 
+    stop : () ->
+        engine.stop()
+        engine.canvas.clear()
+        $(document).unbind('keydown')
+        engine = null
 

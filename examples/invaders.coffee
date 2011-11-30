@@ -138,4 +138,6 @@ invaders.run = () ->
 
 invaders.stop = () ->
     engine.stop()
+    engine.canvas.clear()
+    $(document).unbind('keydown')
     engine = null
