@@ -117,5 +117,10 @@ class wolf.Element
     rotate : (degrees) ->
         throw new Error("Not Implemented error")
 
+
+    # Tell the element that one step in the simulation has elapsed.
+    elapse : (milliseconds, iteration) ->
+        this
+
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
