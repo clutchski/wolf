@@ -10,11 +10,8 @@ class wolf.Canvas
     # Create a canvas linked to the canvas element with the given
     # DOM id.
     constructor : (id) ->
-        @logger = new wolf.Logger("wolf.Canvas")
-        @logger.debug("creating canvas with id #{id}")
         @id = id
 
-        # Set-up the canvas.
         @canvas = document.getElementById(@id)
         throw new Error("No element with id: #{id}") if not @canvas
 
