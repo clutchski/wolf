@@ -16,8 +16,10 @@ class wolf.Polygon extends wolf.Element
     # Create a polygon. The x and y co-ordinates are taken to the
     # first point.
     constructor : (opts={}) ->
-        # Construct the polygon.
-        super(opts)
+        defaults =
+            fillStyle: "#000"
+
+        super(wolf.defaults(opts, defaults))
         @setVertices(@vertices, silent=true)
 
     # Set the position of the polygon to the given point.
@@ -28,6 +30,9 @@ class wolf.Polygon extends wolf.Element
 
     # Render the polygon on the given canvas context.
     render : (context) ->
+        # Initialize canvas colors.
+        context.fillStyle = @fillStyle
+        # Draw the polygon
         [first, rest...] = @vertices
         context.beginPath()
         context.moveTo(first.x, first.y)
