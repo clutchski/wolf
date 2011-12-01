@@ -16,10 +16,7 @@ class wolf.Environment
             gravitationalConstant : 3
             width : 800
             height : 600
-
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
-        @logger = new wolf.Logger("wolf.Environment")
-        @logger.debug("Initializing")
 
     # Return true if the element is contained in the environment's bounds,
     # false otherwise.
