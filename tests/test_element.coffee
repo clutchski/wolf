@@ -49,6 +49,15 @@ test "applyForce", () ->
     equals(dynamicElement.x, 0, "x has returned to origin")
     equals(dynamicElement.y, 0, "y is as expected")
 
+test "applyImpulse", () ->
+    e = new wolf.Element()
+    ok(e.getVelocity().equals(new wolf.Vector(0, 0)), "element is static")
+    impulse = new wolf.Vector(1, 0)
+    e.applyImpulse(impulse)
+    ok(e.getVelocity().equals(impulse), "impulse applied to static object")
+    e.applyImpulse(impulse)
+    ok(e.getVelocity().equals(impulse.scale(2)), "impulse applied to moving object")
+
 test "setPosition", 4, () ->
     e = new wolf.Element({x:0, y:0})
     e.bind 'moved', (a) ->
