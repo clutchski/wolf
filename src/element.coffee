@@ -68,7 +68,7 @@ class wolf.Element
         # Update the element's state.
         @setPosition(position)
         @speed = velocity.getLength()
-        @direction = velocity.normalize()
+        @direction = velocity.normalize() unless velocity.isZeroVector()
 
     # Return true if this element intersects with the other
     # element, false otherwise.
