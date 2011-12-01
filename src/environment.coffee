@@ -49,7 +49,6 @@ class wolf.Environment
         m = 0.5 * @density * s * element.dragCoefficient
         return element.direction.scale(-m)
 
-
     # Return the force of gravity on the given element.
     getGravitationalForce : (element) ->
         return new wolf.Vector(0, @gravitationalConstant)
