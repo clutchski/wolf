@@ -52,11 +52,20 @@ test "applyForce", () ->
 test "applyImpulse", () ->
     e = new wolf.Element()
     ok(e.getVelocity().equals(new wolf.Vector(0, 0)), "element is static")
+
+    # Apply impulse to a static element.
     impulse = new wolf.Vector(1, 0)
     e.applyImpulse(impulse)
     ok(e.getVelocity().equals(impulse), "impulse applied to static object")
+
+    # Apply impulse to a moving element.
     e.applyImpulse(impulse)
     ok(e.getVelocity().equals(impulse.scale(2)), "impulse applied to moving object")
+
+    # Applying a zero force has no effect.
+    v = e.getVelocity()
+    e.applyImpulse(new wolf.Vector(0, 0))
+    ok(e.getVelocity().equals(v), "velocity is unchanged")
 
 test "setPosition", 4, () ->
     e = new wolf.Element({x:0, y:0})
