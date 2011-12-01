@@ -27,6 +27,7 @@ class wolf.Engine
 
     # Start the engine's time simulation.
     start : () ->
+        @logger.info("Starting engine.")
         @isRunning = true
         @timestamp = new Date()
         @step()
@@ -34,6 +35,7 @@ class wolf.Engine
 
     # Stop the engine's time simulation.
     stop : () ->
+        @logger.info("Stopping engine.")
         @isRunning = false
         @timestamp = null
         return this
