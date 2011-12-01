@@ -6,17 +6,15 @@
 module "Element"
 
 
-class TestElement extends wolf.Element
-
 test "mass", () ->
-    e = new TestElement()
+    e = new wolf.Element()
     ok(e.mass, "mass has a default value")
     e.mass = 10
     equals(e.mass, 10, "mass is settable")
     equals(e.getInverseMass(), 1/10, "inverse mass works")
 
 test "destroy", 2, () ->
-    e = new TestElement()
+    e = new wolf.Element()
 
     # Add a callback that should get called on destruction.
     e.bind 'destroyed', (actual) ->
@@ -34,14 +32,14 @@ test "destroy", 2, () ->
 test "applyForce", () ->
     # An zero force on a zero vector doesn't move.
     d = new wolf.Vector(1, 0)
-    staticElement = new TestElement({x:5, y:5, direction:d, speed:0})
+    staticElement = new wolf.Element({x:5, y:5, direction:d, speed:0})
     staticElement.applyForce(new wolf.Vector(0, 0), 1000)
     equals(staticElement.x, 5, "x is unchanged")
     equals(staticElement.y, 5, "y is unchanged")
 
     # Applying a zero force vector to a dynamic element does not
     # alter it's course.
-    dynamicElement = new TestElement({x:0, y:0, speed:1, direction:d})
+    dynamicElement = new wolf.Element({x:0, y:0, speed:1, direction:d})
     dynamicElement.applyForce(new wolf.Vector(0, 0), 1000)
     equals(dynamicElement.x, 1000, "x is as expected")
     equals(dynamicElement.y, 0, "y is as expected")
@@ -52,7 +50,7 @@ test "applyForce", () ->
     equals(dynamicElement.y, 0, "y is as expected")
 
 test "setPosition", 4, () ->
-    e = new TestElement({x:0, y:0})
+    e = new wolf.Element({x:0, y:0})
     e.bind 'moved', (a) ->
         equals(e, a, 'move event fired')
         equals(e.x, 1, 'correct x')
