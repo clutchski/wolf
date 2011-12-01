@@ -16,6 +16,9 @@ class wolf.Logger
     info : (message) ->
         @write("INFO", message)
 
+    # Log the message at the given level.
     write : (level, message) ->
-        console.log([level, @module, message].join(" | ")) if console
-
+        if console
+            fields = [new Date().toString(), level, @module, message]
+            console.log(fields.join(" | "))
+        this
