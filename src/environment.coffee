@@ -18,8 +18,6 @@ class wolf.Environment
             height : 600
 
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
-
-        #FIXME: add arguments for gravity and whatnot.
         @logger = new wolf.Logger("wolf.Environment")
         @logger.debug("Initializing")
 
