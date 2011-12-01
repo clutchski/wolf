@@ -18,7 +18,7 @@ class wolf.Environment
             height : 600
 
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
-            
+
         #FIXME: add arguments for gravity and whatnot.
         @logger = new wolf.Logger("wolf.Environment")
         @logger.debug("Initializing")
@@ -31,9 +31,6 @@ class wolf.Environment
 
     # Update the elements with the effects of the given number of milliseconds
     # passing.
-    #
-    # @param element {Array} the element to update
-    # @param milliseconds {Number} the number of ms that have elapsed
     elapse: (elements, milliseconds) ->
         (@applyForces(e, milliseconds) for e in elements when e)
         return this
@@ -47,7 +44,7 @@ class wolf.Environment
         ]
         resultant = forces.reduce (t, s) -> t.add(s) # FIXME: not portable.
         element.applyForce(resultant, milliseconds)
- 
+
     # Return the force of drag on the element.
     getDragForce : (element) ->
         # FIXME: this is broken at low speeds, and will in fact return a force

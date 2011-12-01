@@ -13,8 +13,6 @@
 class wolf.Engine
 
     # Create an engine instance.
-    #
-    # @param canvasId {String} the id of the canvas element.
     constructor : (canvasId) ->
         @logger = new wolf.Logger("wolf.Engine")
         @canvas = new wolf.Canvas(canvasId)
