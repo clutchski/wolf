@@ -10,9 +10,6 @@
 class wolf.Collision
 
     # Create a collision object.
-    #
-    # @param element1 {Object}
-    # @param element2 {Object}
     constructor : (element1, element2) ->
         @element1 = element1
         @element2 = element2
@@ -23,11 +20,9 @@ class wolf.Collision
 
     # Return the collision's contact normal vector, relative
     # to the first element in the collision.
-    #
-    # @return {Object}
     getContactNormal : () ->
         return @getRelativeVelocity().normalize()
-        
+
     # Return the seperating velocity of the two elements.
     getSeperatingVelocity : () ->
         return @getRelativeVelocity().dotProduct(@getContactNormal())
@@ -72,7 +67,7 @@ class wolf.Collision
     # Resolve the collision so as to prevent further handler.
     resolve : () ->
         @resolved = true
-    
+
     # Return true if the collision has been resolved.
     isResolved : () ->
         return @resolved
@@ -85,17 +80,11 @@ class wolf.CollisionHandler
         @logger = new wolf.Logger("wolf.CollisionHandler")
 
     # Check the given elements for collisions, and update them accordingly.
-    #
-    # @param elements {Array} a list of elements to check for collisions.
-    # @param milliseconds {Number} the time since the last collision check.
     elapse : (elements, milliseconds) ->
         collisions = this.detectCollisions(elements)
         (@resolveCollision(c) for c in collisions)
 
     # Return the collisions occuring between the given elements.
-    #
-    # @param elements {Array} the elements to check for collisions.
-    # @return {Array} an array of collisions.
     detectCollisions : (elements) ->
         # FIXME: naive & inefficient solution.
         collisions = []
@@ -105,7 +94,7 @@ class wolf.CollisionHandler
                 collisions.push(c) if c
         return collisions
 
-    # Return a collision if the two elements are colliding, null 
+    # Return a collision if the two elements are colliding, null
     # otherwise.
     detectCollision : (e1, e2) ->
         #FIXME: add an error of margin
