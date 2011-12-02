@@ -93,6 +93,7 @@ class wolf.Engine
     destroy : () ->
         @stop()
         @canvas.clear()
+        (e.destroy() for e in @elements when e)
         @elements = []
 
     # Log a status report on the engine.
