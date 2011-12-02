@@ -106,12 +106,21 @@ class wolf.Vector extends wolf.Point
     # in degrees.
     rotate : (degrees) ->
         r = degrees * Math.PI / 180
-
         # By rights, this should be matrix multiplication, but we
         # can hack this here.
         cosr = Math.cos(r)
         sinr = Math.sin(r)
         return new wolf.Vector(@x*cosr - @y*sinr, @x*sinr + @y*cosr)
+
+    # Return the angle between this vector and the given vector in radians.
+    angle : (other) ->
+        ct = @normalize().dotProduct(other.normalize())
+        return Math.acos(ct)
+
+    # Return this vector's angle on the unit circle in radians.
+    getRotation : () ->
+        angle = @angle(new wolf.Vector(1, 0))
+        return if @y < 0 then Math.PI * 2 - angle else angle
 
     # Return the vector's endpoint.
     getEndPoint : () ->

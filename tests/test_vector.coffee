@@ -2,7 +2,7 @@
 module "Vector"
 
 
-# A helper function to test "equality" between floating 
+# A helper function to test "equality" between floating
 # point numbers. Obviously, not exact, but good enough
 # for the girls we go out with.
 almostEquals = (actual, expected, msg) ->
@@ -51,7 +51,7 @@ test "subtract", () ->
     equals(s.x, -2, "x is correct")
     equals(s.y, -9, "y is correct")
 
-    
+
 test "scale", () ->
     v = new wolf.Vector(3, 4)
     equals(v.scale(0).getLength(), 0, "Scaling by zero produces the zero vector")
@@ -100,3 +100,16 @@ test "rotate", () ->
     vequals(v(3, 4).rotate(180), v(-3, -4), "rotated 190 degress")
     vequals(v(0, 0).rotate(180), v(0, 0), "rotated 180 degress")
 
+test "angle", () ->
+    v1 = new wolf.Vector(1, 0)
+    v2 = new wolf.Vector(0, 1)
+    v3 = new wolf.Vector(3, 3)
+    v4 = new wolf.Vector(-1, 0)
+    v5 = new wolf.Vector(0, -1)
+    v6 = new wolf.Vector(-1, -1)
+    equals(v1.getRotation(), 0, "right angle are equal")
+    equals(v2.getRotation(), Math.PI/2, "non-unit vectors work")
+    equals(v3.getRotation(), Math.PI/4, "non normalized vectors work")
+    equals(v4.getRotation(), Math.PI, "180 works")
+    equals(v5.getRotation(), Math.PI/2 + Math.PI, "270 works")
+    equals(v6.getRotation(), Math.PI/4 + Math.PI, "225 works")
