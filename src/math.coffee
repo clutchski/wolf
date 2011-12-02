@@ -6,6 +6,12 @@
 wolf.random = (lower, upper) ->
     return Math.random() * (upper - lower + 1) + lower
 
+# Return a random element of the array.
+wolf.randomElement = (array) ->
+    i = Math.floor(Math.random()*array.length)
+    return array[i]
+
+
 # Return true if the given interval intersects, false otherwise.
 wolf.intervalIntersects = (i1, i2) ->
 
