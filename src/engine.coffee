@@ -77,8 +77,8 @@ class wolf.Engine
         @collisionHandler.elapse(@elements, elapsed)
         @environment.elapse(@elements, elapsed)
 
-        # Tell each element they've been updated.
-        (e.elapse(elapsed, @iteration) for e in @elements)
+        # Update each element. # HACK: why is this null?
+        (e.elapse(elapsed, @iteration) for e in @elements when e)
 
         # Update the canvas.
         @canvas.clear().render(@elements)
