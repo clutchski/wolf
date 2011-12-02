@@ -105,11 +105,14 @@ class wolf.Rectangle extends wolf.Polygon
 class wolf.Circle extends wolf.Element
 
     constructor : (opts) ->
+        defaults =
+            fillStyle: "#000"
         super(opts)
         @radius = opts.radius
 
     render : (context) ->
         context.beginPath()
+        context.fillStyle = @fillStyle
         context.arc(@x, @y, @radius, 0, Math.PI *2)
         context.fill()
 
