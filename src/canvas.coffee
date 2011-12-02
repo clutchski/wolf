@@ -20,7 +20,11 @@ class wolf.Canvas
 
     # Render the given array of elements on the canvas.
     render: (elements) ->
-        (e.render(@context) for e in elements)
+        c = @context
+        for e in elements
+            c.save()
+            e.render(c)
+            c.restore()
         this
 
     # Clear the canvas.
