@@ -32,6 +32,7 @@ class wolf.Element
             dragCoefficient: 0.7
             visible: true
             id: wolf.getUniqueId()
+            static: false
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 
     # Return the element's position.
@@ -53,13 +54,19 @@ class wolf.Element
 
     # Apply an impulse force to the element.
     applyImpulse : (impulse) ->
+        return this if @isStatic()
         velocity = @getVelocity().add(impulse)
+        @setVelocity(velocity)
+
+    setVelocity : (velocity) ->
         @direction = velocity.normalize()
         @speed = velocity.getLength()
 
     # Apply the given force to the element for the given number of
     # milliseconds.
     applyForce : (force, milliseconds) ->
+        return this if @isStatic()
+
         # Calculate the effects of the force.
         acceleration = force.scale(@getInverseMass())
         velocity = @getVelocity().add(acceleration.scale(milliseconds))
@@ -100,6 +107,10 @@ class wolf.Element
         @unbind()
         return this
 
+    # Return true if the element is static.
+    isStatic : () ->
+        return @static
+
     # Render the element on the given canvas context.
     render : (context) ->
         throw new Error("Not Implemented error")
@@ -117,7 +128,6 @@ class wolf.Element
     # about it's center.
     rotate : (degrees) ->
         throw new Error("Not Implemented error")
-
 
     # Tell the element that one step in the simulation has elapsed.
     elapse : (milliseconds, iteration) ->
