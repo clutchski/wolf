@@ -2,6 +2,10 @@
 # An assortment of Math functions and classes that power the simulations.
 #
 
+
+#= require wolf
+
+
 # Return a random number between the upper and lower values.
 wolf.random = (lower, upper) ->
     return Math.random() * (upper - lower + 1) + lower

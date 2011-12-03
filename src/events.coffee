@@ -3,6 +3,8 @@
 # named events. Inspired by code from Backbone.js.
 #
 
+#= require wolf
+
 wolf.Events =
 
     # Register the callback with the given named event.
@@ -26,7 +28,7 @@ wolf.Events =
             (callbacks[i] = null for c, i in callbacks when c == callback)
         return this
 
-    # Trigger the given named event. Any additional arguments will be passed to 
+    # Trigger the given named event. Any additional arguments will be passed to
     # the bound callback functions.
     trigger : (event) ->
         callbacks = @_callbacks?[event] || []

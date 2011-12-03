@@ -3,6 +3,7 @@
 #
 
 
+#= require wolf
 #= require events
 #= require math
 

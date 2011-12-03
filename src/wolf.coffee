@@ -1,17 +1,3 @@
-###
-
-Wolf - An HTML5 Canvas game engine.
-
-Copyright 2011, Matthew Perpick.
-Wolf is freely distributable under the MIT license.
-
-https://github.com/clutchski/wolf
-
-###
-
-
-#= require_self
-#= require_tree .
 
 
 # The wolf global object.
@@ -41,4 +27,4 @@ wolf.getUniqueId = do ->
 # the resulting object.
 wolf.defaults = (options, defaults) ->
     return wolf.extend({}, defaults, options)
-    
+

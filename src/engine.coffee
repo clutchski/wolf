@@ -4,6 +4,7 @@
 #
 
 
+#= require wolf
 #= require canvas
 #= require collision
 #= require environment

@@ -2,7 +2,7 @@
 # The code that has collision detection and resolution.
 #
 
-
+#= require wolf
 #= require logger
 #= require math
 

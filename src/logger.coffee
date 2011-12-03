@@ -3,6 +3,8 @@
 #
 
 
+#= require wolf
+
 class wolf.Logger
 
     constructor : (module) ->
