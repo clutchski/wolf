@@ -26,26 +26,3 @@ test "elements", () ->
 
     e.remove(r2)
     equals(e.elements.length, 1, "We can remove elements")
-
-test 'step', () ->
-
-    class TestElement extends wolf.Element
-        elapse : (elapsed, iteration) ->
-            console.log('aaa')
-            ok(elapsed, "passed ms elapsed")
-            ok(iteration, "passed iteration")
-            @counter = if @counter? then @counter + 1 else 1
-
-        render : () ->
-            this
-
-    # Start the engine, but don't automatically step, so we can control
-    # those.
-    engine = new wolf.Engine("test-canvas")
-    engine.start()
-
-    # Listen for elapsed events.
-    element = new TestElement()
-    engine.add(element)
-
-    equals(element.counter, 2, "the elapsed handler was executed twice")
