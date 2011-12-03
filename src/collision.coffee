@@ -21,7 +21,10 @@ class wolf.Collision
     # Return the collision's contact normal vector, relative
     # to the first element in the collision.
     getContactNormal : () ->
-        return @getRelativeVelocity().normalize()
+        if @element2.isStatic()
+            return @element1.direction
+        else
+            return @getRelativeVelocity().normalize()
 
     # Return the seperating velocity of the two elements.
     getSeperatingVelocity : () ->
@@ -39,7 +42,7 @@ class wolf.Collision
     # Return the total mass of all elements in the collision.
     getMass : () ->
         @getElements().reduce((mass, e) ->
-            mass += e.mass if 0 < e.mass
+            mass += e.mass unless e.isStatic()
             return mass
         , 0)
 
@@ -97,8 +100,10 @@ class wolf.CollisionHandler
     # Return a collision if the two elements are colliding, null
     # otherwise.
     detectCollision : (e1, e2) ->
-        #FIXME: add an error of margin
-        if e1.intersects(e2) then new wolf.Collision(e1, e2) else null
+        return null if (e1.isStatic() and e2.isStatic()) or not e1.intersects(e2)
+        # If one of the elements is static, pass it second.
+        [first, second] = if e1.isStatic() then [e2, e1] else [e1, e2]
+        return new wolf.Collision(first, second)
 
     # Resolve the given collision.
     resolveCollision : (collision) ->
