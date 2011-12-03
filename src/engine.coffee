@@ -67,9 +67,6 @@ class wolf.Engine
         # Stop, if so desired.
         return if not @isRunning
 
-        # Update the iteration count.
-        @iteration += 1
-
         # Determine how much time has elapsed since the last step.
         now = new Date()
         elapsed = now - @timestamp
@@ -85,6 +82,7 @@ class wolf.Engine
         @canvas.clear().render(@elements)
 
         # Do it again when the stack clears.
+        @iteration += 1
         @timestamp = now
         setTimeout () =>
             @.step()
