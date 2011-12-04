@@ -42,15 +42,16 @@ class wolf.Element
     getVelocity : () ->
         return @direction.normalize().scale(@speed)
 
+    # Set the element's velocity.
+    setVelocity : (velocity) ->
+        @speed = velocity.getLength()
+        @direction = velocity.normalize() unless velocity.isZeroVector()
+
     # Apply an impulse force to the element.
     applyImpulse : (impulse) ->
         return this if @isStatic()
         velocity = @getVelocity().add(impulse)
         @setVelocity(velocity)
-
-    setVelocity : (velocity) ->
-        @direction = velocity.normalize()
-        @speed = velocity.getLength()
 
     # Apply the given force to the element for the given number of
     # milliseconds.
@@ -65,8 +66,7 @@ class wolf.Element
 
         # Update the element's state.
         @setPosition(position)
-        @speed = velocity.getLength()
-        @direction = velocity.normalize() unless velocity.isZeroVector()
+        @setVelocity(velocity)
 
     # Return true if this element intersects with the other
     # element, false otherwise.
