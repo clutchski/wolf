@@ -28,13 +28,18 @@ class wolf.Environment
     # Update the elements with the effects of the given number of milliseconds
     # passing.
     elapse: (elements, milliseconds) ->
-        (@applyForces(e, milliseconds) for e in elements when e)
+        (@elapseElement(e, milliseconds) for e in elements when e)
         return this
 
-    # Apply the environment's forces to the element for the given number of
-    # milliseconds.
-    applyForces : (element, milliseconds) ->
-        element.addForces(@getDragForce(element), @getGravitationalForce(element))
+    # Update the element with the effects of the number of milliseconds passing
+    # in the environment.
+    elapseElement : (element, milliseconds) ->
+        # Add the environmental forces.
+        drag = @getDragForce(element)
+        gravity = @getGravitationalForce()
+        element.addForces(drag, gravity)
+        # Pass the time.
+        element.elapse(milliseconds)
 
     # Return the force of drag on the element.
     getDragForce : (element) ->
