@@ -21,6 +21,8 @@ class wolf.Collision
     # Return the collision's contact normal vector, relative
     # to the first element in the collision.
     getContactNormal : () ->
+        # FIXME: this needs to be based on the edges which intersect, not just
+        # movement of the elements.
         if @element2.isStatic()
             @element1.direction
         else
