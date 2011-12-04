@@ -6,7 +6,6 @@
 #= require logger
 #= require math
 
-logger = new wolf.Logger("wolf.Collision")
 
 class wolf.Collision
 
@@ -23,17 +22,17 @@ class wolf.Collision
     # to the first element in the collision.
     getContactNormal : () ->
         if @element2.isStatic()
-            return @element1.direction
+            @element1.direction
         else
-            return @getRelativeVelocity().normalize()
+            @getRelativeVelocity().normalize()
 
     # Return the seperating velocity of the two elements.
     getSeperatingVelocity : () ->
-        return @getRelativeVelocity().dotProduct(@getContactNormal())
+        @getRelativeVelocity().dotProduct(@getContactNormal())
 
     # Return the relative velocity of the collision's elements.
     getRelativeVelocity : () ->
-        return @element1.getVelocity().subtract(@element2.getVelocity())
+        @element1.getVelocity().subtract(@element2.getVelocity())
 
     # Return the co-efficient of restitution for the given collision.
     getRestitutionCoefficient : () ->
