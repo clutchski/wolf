@@ -11,16 +11,8 @@
 class wolf.Element
 
     # Create an element. The constructor takes a single argument which is a map
-    # of options. Here are the accepted parameters:
-    #
-    #   x: The x co-ordinate. Defaults to zero.
-    #   y: The y co-ordinate. Defaults to zero.
-    #   direction: A direction vector. Defaults to (0, 0)
-    #   speed: The element's initial speed. Defaults to zero.
-    #   mass: The element's mass. Defaults to 1000.
-    #   dragCoefficient: The element's drag co-efficient. Defaults to 0.7.
+    # of options.
     constructor : (opts = {}) ->
-
         # Set options with potentially default values.
         defaults =
             x: 0
@@ -29,6 +21,7 @@ class wolf.Element
             mass: 1000
             direction: new wolf.Vector(0, 0)
             dragCoefficient: 0.7
+            restitution: 0.5
             static: false
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 

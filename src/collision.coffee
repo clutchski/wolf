@@ -6,6 +6,7 @@
 #= require logger
 #= require math
 
+logger = new wolf.Logger("wolf.Collision")
 
 class wolf.Collision
 
@@ -36,8 +37,7 @@ class wolf.Collision
 
     # Return the co-efficient of restitution for the given collision.
     getRestitutionCoefficient : () ->
-        #FIXME: implement me
-        return 0.5
+        @element1.restitution * @element2.restitution
 
     # Return the total mass of all elements in the collision.
     getMass : () ->
@@ -62,10 +62,11 @@ class wolf.Collision
         # Apply the force of the collision to each element in proportion to
         # it's mass.
         impulse1 = impulse.scale(@element1.getInverseMass())
-        @element1.applyImpulse(impulse1)
+        @element1.setVelocity(impulse1)
 
-        impulse2 = impulse.scale(-1 * @element2.getInverseMass())
-        @element2.applyImpulse(impulse2)
+        if not @element2.isStatic()
+            impulse2 = impulse.scale(-1 * @element2.getInverseMass())
+            @element2.setVelocity(impulse2)
 
     # Resolve the collision so as to prevent further handler.
     resolve : () ->
@@ -80,7 +81,6 @@ class wolf.CollisionHandler
 
     # Create a collision handler.
     constructor : () ->
-        @logger = new wolf.Logger("wolf.CollisionHandler")
 
     # Check the given elements for collisions, and update them accordingly.
     elapse : (elements, milliseconds) ->
