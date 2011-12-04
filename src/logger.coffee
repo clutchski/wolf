@@ -12,14 +12,14 @@ class wolf.Logger
 
     # Log a message at the debug level.
     debug : (message) ->
-        @write("DEBUG", message)
+        @log("DEBUG", message)
 
     # Log a message at the info level.
     info : (message) ->
-        @write("INFO", message)
+        @log("INFO", message)
 
     # Log the message at the given level.
-    write : (level, message) ->
+    log : (level, message) ->
         if console
             fields = [new Date().toString(), level, @module, message]
             console.log(fields.join(" | "))
