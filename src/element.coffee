@@ -19,7 +19,6 @@ class wolf.Element
     #   speed: The element's initial speed. Defaults to zero.
     #   mass: The element's mass. Defaults to 1000.
     #   dragCoefficient: The element's drag co-efficient. Defaults to 0.7.
-    #   visible: The element's visiblity status. Defaults to true.
     constructor : (opts = {}) ->
 
         # Set options with potentially default values.
@@ -30,8 +29,6 @@ class wolf.Element
             mass: 1000
             direction: new wolf.Vector(0, 0)
             dragCoefficient: 0.7
-            visible: true
-            id: wolf.getUniqueId()
             static: false
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 
