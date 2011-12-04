@@ -34,12 +34,7 @@ class wolf.Environment
     # Apply the environment's forces to the element for the given number of
     # milliseconds.
     applyForces : (element, milliseconds) ->
-        forces = [
-            @getDragForce(element),
-            @getGravitationalForce(element)
-        ]
-        resultant = forces.reduce (t, s) -> t.add(s) # FIXME: not portable.
-        element.applyForce(resultant, milliseconds)
+        element.addForces(@getDragForce(element), @getGravitationalForce(element))
 
     # Return the force of drag on the element.
     getDragForce : (element) ->

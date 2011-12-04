@@ -25,6 +25,10 @@ class wolf.Element
             static: false
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 
+        # A list of of forces that will be applied to the element on the
+        # next iteration.
+        @forces = []
+
     # Return the element's position.
     getPosition : () ->
         return new wolf.Point(@x, @y)
@@ -67,6 +71,19 @@ class wolf.Element
         # Update the element's state.
         @setPosition(position)
         @setVelocity(velocity)
+
+    # Apply the given forces to the element on the next step of the simulation.
+    addForces : (forces...) ->
+        (@forces.push(f) for f in forces)
+        this
+
+    # Update the state of the element with the effect's of the given
+    # number of milliseconds elapsing.
+    elapse : (milliseconds, iteration) ->
+        # Reduce all the forces into a single force.
+        resultant = @forces.reduce (t, s) -> t.add(s)
+        @applyForce(resultant, milliseconds)
+        @forces = []
 
     # Return true if this element intersects with the other
     # element, false otherwise.
@@ -118,10 +135,5 @@ class wolf.Element
     # about it's center.
     rotate : (degrees) ->
         throw new Error("Not Implemented error")
-
-    # Tell the element that one step in the simulation has elapsed.
-    elapse : (milliseconds, iteration) ->
-        this
-
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
