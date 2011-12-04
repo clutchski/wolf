@@ -60,6 +60,12 @@ class wolf.Collision
         magnitude = velocity * @getMass()
         impulse = @getContactNormal().scale(magnitude)
 
+        # FIXME: I think this shouldn't be setting the velocity, but rather
+        # applying an impulse.
+
+        # FIXME: What about colliding with static objects? How do you add
+        # inverse gravity to make people not fall through the ground.
+
         # Apply the force of the collision to each element in proportion to
         # it's mass.
         impulse1 = impulse.scale(@element1.getInverseMass())
