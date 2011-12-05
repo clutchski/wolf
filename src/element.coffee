@@ -56,6 +56,7 @@ class wolf.Element
         return this if @isStatic()
         velocity = @getVelocity().add(impulse)
         @setVelocity(velocity)
+        return this
 
     # Apply the given force to the element for the given number of
     # milliseconds.
@@ -71,6 +72,7 @@ class wolf.Element
         # Update the element's state.
         @setPosition(position)
         @setVelocity(velocity)
+        return this
 
     # Apply the given forces to the element on the next step of the simulation.
     addForces : (forces...) ->
@@ -84,6 +86,7 @@ class wolf.Element
         resultant = @forces.reduce (t, s) -> t.add(s)
         @applyForce(resultant, milliseconds)
         @forces = []
+        return this
 
     # Return true if this element intersects with the other
     # element, false otherwise.
