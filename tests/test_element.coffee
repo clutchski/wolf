@@ -67,15 +67,8 @@ test "applyImpulse", () ->
     e.applyImpulse(new wolf.Vector(0, 0))
     ok(e.getVelocity().equals(v), "velocity is unchanged")
 
-test "setPosition", 4, () ->
+test "setPosition", () ->
     e = new wolf.Element({x:0, y:0})
-    e.bind 'moved', (a) ->
-        equals(e, a, 'move event fired')
-        equals(e.x, 1, 'correct x')
-
-    e.setPosition(e.getPosition().copy()) # shouldn't fire event
     e.setPosition(new wolf.Point(1, 1)) # should fire event
     equals(e.x, 1, "x is correct")
     equals(e.y, 1, "y is correct")
-
-    e.setPosition(new wolf.Point(10, 10), silent=true) # Shouldn't fire event.

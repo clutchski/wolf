@@ -24,10 +24,10 @@ class wolf.Polygon extends wolf.Element
         @setVertices(@vertices, silent=true)
 
     # Set the position of the polygon to the given point.
-    setPosition : (point, silent=false) ->
+    setPosition : (point) ->
         # Calculate the distance the point has moved.
         delta = point.subtract(@getPosition())
-        return @setVertices((v.add(delta) for v in @vertices), silent)
+        return @setVertices((v.add(delta) for v in @vertices))
 
     # Render the polygon on the given canvas context.
     render : (context) ->
@@ -44,15 +44,13 @@ class wolf.Polygon extends wolf.Element
 
     # Set the polygon's vertices. The first vertex will dictate the element's
     # position.
-    setVertices : (vertices, silent=false) ->
+    setVertices : (vertices) ->
         if not vertices? or vertices.length < 3
             throw new Error("minimum three vertices")
         position = vertices[0]
-        changed = not @getPosition().equals(position)
         @vertices = vertices
         @x = position.x
         @y = position.y
-        @trigger('moved', @) if changed and not silent
         this
 
     # Return the point at the geometrical center of the element.

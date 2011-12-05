@@ -33,13 +33,10 @@ class wolf.Element
     getPosition : () ->
         return new wolf.Point(@x, @y)
 
-    # Set the element's position. This will fire the event 'moved' unless
-    # silent is set to true.
+    # Set the element's position.
     setPosition : (point, silent=false) ->
-        if not @getPosition().equals(point)
-            @x = point.x
-            @y = point.y
-            @trigger('moved', this) if not silent
+        @x = point.x
+        @y = point.y
         return this
 
     # Return the element's velocity.
