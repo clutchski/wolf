@@ -1,9 +1,13 @@
 #
 # A module to that can be mixed into any object, allowing the object to trigger
-# named events. Inspired by code from Backbone.js.
+# named events.
+#
+# Based on code from Backbone.js (http://documentcloud.github.com/backbone)
 #
 
+
 #= require wolf
+
 
 wolf.Events =
 
