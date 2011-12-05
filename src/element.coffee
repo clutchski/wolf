@@ -26,7 +26,7 @@ class wolf.Element
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 
         # A list of of forces that will be applied to the element on the
-        # next iteration.
+        # next step of the time simulation.
         @forces = []
 
     # Return the element's position.
