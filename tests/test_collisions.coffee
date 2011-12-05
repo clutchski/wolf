@@ -7,12 +7,12 @@ Vector = wolf.Vector
 test "detectCollisions", () ->
     ch = new wolf.CollisionHandler()
 
-    r1 = new Rectangle({x:0,    y:0,    width:10,  height:10})
-    r2 = new Rectangle({x:0,    y:0,    width:100, height:100})
-    r3 = new Rectangle({x:150,  y:150,  width:100, height:100})
-    r4 = new Rectangle({x:50,   y:50,   width:100, height:100})
-    r5 = new Rectangle({x:50,   y:150,  width:100, height:100})
-    r6 = new Rectangle({x:500,  y:500,  width:100, height:100})
+    r1 = new Rectangle({x:5,    y:5,    width:10,  height:10})
+    r2 = new Rectangle({x:50,   y:50,   width:100, height:100})
+    r3 = new Rectangle({x:200,  y:200,  width:100, height:100})
+    r4 = new Rectangle({x:100,  y:100,  width:100, height:100})
+    r5 = new Rectangle({x:100,   y:200,  width:100, height:100})
+    r6 = new Rectangle({x:600,  y:600,  width:100, height:100})
 
     equals(ch.detectCollisions([]).length, 0, "no elements")
     equals(ch.detectCollisions([r1]).length, 0, "one element")
@@ -25,9 +25,9 @@ test "detectCollisions", () ->
     equals(collisions.length, 5, "found five collisions")
 
 test "detectCollision", () ->
-    r1 = new Rectangle({x:0, y:0, width:10, height: 10})
-    r2 = new Rectangle({x:0, y:0, width:100, height: 100})
-    r3 = new Rectangle({x:20, y:20, width:100, height: 100})
+    r1 = new Rectangle({x:5, y:5, width:10, height: 10})
+    r2 = new Rectangle({x:50, y:50, width:100, height: 100})
+    r3 = new Rectangle({x:70, y:70, width:100, height: 100})
 
     ch = new wolf.CollisionHandler()
 

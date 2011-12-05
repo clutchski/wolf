@@ -19,14 +19,14 @@ this.invaders = invaders
 class Ship extends wolf.Polygon
 
     constructor : (opts = {}) ->
-        shape  = [[0, 0], [-15, -35], [-30, 0]]
-        opts.vertices = (new wolf.Point(a+opts.x, b+opts.y) for [a, b] in shape)
+        shape  = [[-10, 0], [0, -35], [10, 0]]
+        opts.vertices = (new wolf.Point(a, b) for [a, b] in shape)
         super(opts)
 
     # Return a bullet fired by the ship.
     shootBullet : () ->
-        position = @getCenter().add(new wolf.Point(0, -30))
-        bullet = new Bullet(
+        position = @getPosition().add(new wolf.Point(0, -50))
+        return new Bullet(
             x: position.x
             y: position.y
         )

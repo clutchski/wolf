@@ -15,6 +15,10 @@ wolf.randomElement = (array) ->
     i = Math.floor(Math.random()*array.length)
     return array[i]
 
+# Return true if the given numbers are almost equal.
+wolf.almostEqual = (n1, n2, epsilon) ->
+    return n1 - n2 < epsilon
+
 
 # Return true if the given interval intersects, false otherwise.
 wolf.intervalIntersects = (i1, i2) ->

@@ -14,27 +14,21 @@
 #
 class wolf.Polygon extends wolf.Element
 
-    # Create a polygon. The x and y co-ordinates are taken to the
-    # first point.
+    # Create a polygon. Pass the standard element options, as well as an array
+    # of points representing the polygon's vertices. The points are relative to
+    # the polygon's position.
     constructor : (opts={}) ->
         defaults =
             fillStyle: "#000"
-
+            vertices: []
         super(wolf.defaults(opts, defaults))
-        @setVertices(@vertices)
-
-    # Set the position of the polygon to the given point.
-    setPosition : (point) ->
-        # Calculate the distance the point has moved.
-        delta = point.subtract(@getPosition())
-        return @setVertices((v.add(delta) for v in @vertices))
 
     # Render the polygon on the given canvas context.
     render : (context) ->
         # Initialize canvas colors.
         context.fillStyle = @fillStyle
         # Draw the polygon
-        [first, rest...] = @vertices
+        [first, rest...] = @getAbsoluteVertices()
         context.beginPath()
         context.moveTo(first.x, first.y)
         (context.lineTo(v.x, v.y) for v in rest)
@@ -42,38 +36,33 @@ class wolf.Polygon extends wolf.Element
         context.fill()
         return this
 
-    # Set the polygon's vertices. The first vertex will dictate the element's
-    # position.
+    # Set the polygon's vertices.
     setVertices : (vertices) ->
-        if not vertices? or vertices.length < 3
-            throw new Error("minimum three vertices")
-        position = vertices[0]
         @vertices = vertices
-        @x = position.x
-        @y = position.y
         this
+
+    # Return the vertices relative to the points center.
+    getVertices : () ->
+        return @vertices
+
+    # Return the polygon's absolute vertices.
+    getAbsoluteVertices : () ->
+        position = @getPosition()
+        for v in @vertices
+            v.toVector().rotate(@angle).getEndPoint().add(position)
 
     # Return the point at the geometrical center of the element.
     getCenter : ()  ->
-        c = @vertices.reduce((p, v) ->
+        c = @getAbsoluteVertices().reduce((p, v) ->
             return p.add(v)
         , new wolf.Point(0, 0))
         c.x = c.x / @vertices.length
         c.y = c.y / @vertices.length
         return c
 
-    # Rotate the element counter-clockwise by the given number of degrees.
-    rotate : (degrees) ->
-        return this if not degrees
-        c = @getCenter()
-        rotatedVertices = for v in @vertices
-            v.subtract(c).toVector().rotate(degrees).getEndPoint().add(c)
-        return @setVertices(rotatedVertices)
-
     # Return the element's minimum axis aligned bounding box.
     getBoundingBox : () ->
-        #FIXME: broken for anything but squares.
-        @vertices
+        return @getAbsoluteVertices()
 
 
 #
@@ -90,11 +79,14 @@ class wolf.Rectangle extends wolf.Polygon
         @x = opts.x
         @y = opts.y
 
+        halfWidth = @width/2
+        halfHeight = @height/2
+
         opts.vertices = [
-            new wolf.Point(@x, @y)
-            new wolf.Point(@x + @width, @y)
-            new wolf.Point(@x + @width, @y + @height)
-            new wolf.Point(@x, @y + @height)
+            new wolf.Point(-halfWidth, halfHeight)
+            new wolf.Point(halfWidth, halfHeight)
+            new wolf.Point(halfWidth, -halfHeight)
+            new wolf.Point(-halfWidth, -halfHeight)
         ]
         super(opts)
 #

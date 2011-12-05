@@ -5,45 +5,72 @@
 module "Polygon"
 
 
-# A factory function for points.
-polygon = (points...) ->
-    vertices = (new wolf.Point(p[0], p[1]) for p in points)
-    return new wolf.Polygon({vertices : vertices})
+#
+# Test helpers.
+#
+
+points = (coords...) ->
+    return (new wolf.Point(c[0], c[1]) for c in coords)
+
+polygon = (position, vcoords...) ->
+    return new wolf.Polygon({
+        x:position[0]
+        y:position[1]
+        vertices : points(vcoords)
+    })
+
+Point = wolf.Point
+
+#
+# Tests.
+#
 
 test "setPosition", () ->
-    # Assert that all vertices are updated on when moving.
-    t = polygon([1, 1], [1, 2], [2, 2])
-    equals(t.x, 1, "initial x works")
-    equals(t.y, 1, "initial y works")
 
-    t.setPosition(new wolf.Point(2, 2))
+    t = new wolf.Polygon({
+        x: 0,
+        y: 0,
+        vertices: points([-1, -1], [-1, 1], [1, 1], [1, -1])
+    })
+
+    # assert initial state of vertices is all good.
+    equals(t.x, 0, "initial x works")
+    equals(t.y, 0, "initial y works")
+    ok(new Point(1, 1).equals(t.getVertices()[2]), "Relative vertices work")
+    ok(new Point(1, 1).equals(t.getAbsoluteVertices()[2]), "Absolute vertices work")
+    ok(new Point(1, 1).equals(t.getBoundingBox()[2]), "Bounding box works")
+
+    # Assert that all vertices are updated on when moving.
+    t.setPosition(new Point(2, 2))
     equals(t.x, 2, "x works after move")
     equals(t.y, 2, "y works after move")
-    equals(t.vertices[2].x, 3, "other corner moved")
-    equals(t.vertices[2].y, 3, "other corner moved")
+    ok(new Point(1, 1).equals(t.getVertices()[2]), "Relative vertices didn't move")
+    ok(new Point(3, 3).equals(t.getAbsoluteVertices()[2]), "Absolute vertice moved")
+    ok(new Point(3, 3).equals(t.getBoundingBox()[2]), "Bounding box moves")
 
-test "getCenterPoint", () ->
-    # Assert that all vertices are updated on when moving.
-    square = polygon([0, 0], [2, 0], [2, 2], [0, 2])
-    sc = square.getCenter()
-    equals(sc.x, 1, "center x of a square is correct")
-    equals(sc.y, 1, "center y of a square is correct")
 
 test "rotate", () ->
-    # Rotate a square.
-    square = polygon([1, 1], [-1, 1], [-1, -1], [1, -1])
-    square.rotate(90)
 
     almostEqual = (x, y, msg) ->
-        ok(x - y < 0.000001, "#{msg} almost equal")
+        ok(wolf.almostEqual(x, y, 0.00001), "#{msg} #{x} #{y} almost equal")
 
-    # Assert the vertices are as expected.
-    expected = [[-1, 1], [-1, -1], [1, -1], [1, 1]]
-    actual = ([v.x, v.y] for v in square.vertices)
+    # Rotate a square.
+    s = new wolf.Polygon({
+        x:1,
+        y:1,
+        vertices: points([-1, -1], [-1, 1], [1, 1], [1, -1])
+    })
+    s.rotate(90)
+
+    # Assert all is well.
+    equals(s.x, 1, "center did not move")
+    equals(s.y, 1, "center did not move")
+
+    # Expected.
+    expected = [[-2, 0], [0, -2], [-2, 0], [0, 2]]
+    actual = ([v.x, v.y] for v in s.getAbsoluteVertices())
     for i in [0..expected.length-1]
         e = expected[i]
         a = actual[i]
         for j in [0..1]
-            almostEqual(e[j], a[j], "vertex #{i}.#{j} rotation")
-    almostEqual(square.getPosition().x, -1, "x pos")
-    almostEqual(square.getPosition().y, 1, "y pos")
+            almostEqual(e[j], a[j], "vertex #{i}.#{j}")

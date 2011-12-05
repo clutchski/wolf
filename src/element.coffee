@@ -89,20 +89,24 @@ class wolf.Element
     # Return true if this element intersects with the other
     # element, false otherwise.
     intersects : (other) ->
-        bb = this.getBoundingBox()
-        ob = other.getBoundingBox()
-
-        [ttl, ttr, tbl, tbr] = bb # this top left, this top right, etc.
-        [otl, otr, obl, obr] = ob # other top left, other top, right, etc.
-
-        # Find axis projection intervals.
-        ty = [ttl.y, tbl.y]
-        oy = [otl.y, obl.y]
-        tx = [ttl.x, ttr.x]
-        ox = [otl.x, otr.x]
-
+        [tx, ty] = @getAxisProjections()
+        [ox, oy] = other.getAxisProjections()
         ii = wolf.intervalIntersects
         return ii(ty, oy) and ii(ox, tx)
+
+    # Return the axis projections of the element's bounding box.
+    getAxisProjections : () ->
+        bb = @getBoundingBox()
+        first = bb[0]
+        # FIXME: this is an insanely slow
+        maxx = minx = first.x
+        maxy = miny = first.y
+        for p in bb[1..bb.length]
+            maxx = Math.max(maxx, p.x)
+            minx = Math.min(minx, p.x)
+            maxy = Math.max(maxy, p.y)
+            miny = Math.min(miny, p.y)
+        return [[minx, maxx], [miny, maxy]]
 
     # Return the element's inverse mass.
     getInverseMass : () ->

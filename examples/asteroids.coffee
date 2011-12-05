@@ -7,13 +7,13 @@
 class Ship extends wolf.Polygon
 
     constructor : (opts = {}) ->
-        shape  = [[0, 0], [-15, -35], [-30, 0]]
-        opts.vertices = (new wolf.Point(a+opts.x, b+opts.y) for [a, b] in shape)
+        shape  = [[-10, 0], [0, -35], [10, 0]]
+        opts.vertices = (new wolf.Point(a, b) for [a, b] in shape)
         super(opts)
 
     # Return a bullet fired by the ship.
     shootBullet : () ->
-        position = @direction.add(@getCenter().add(new wolf.Point(15, 30)))
+        position = @direction.add(@getCenter().add(new wolf.Point(10, 50)))
         bullet = new Bullet(
             x: position.x
             y: position.y
