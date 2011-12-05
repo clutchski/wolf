@@ -98,7 +98,8 @@ class wolf.Element
     getAxisProjections : () ->
         bb = @getBoundingBox()
         first = bb[0]
-        # FIXME: this is an insanely slow
+        # FIXME: this is an insanely slow. Memoize? Rely on ordering
+        # so we don't have to sort or search?
         maxx = minx = first.x
         maxy = miny = first.y
         for p in bb[1..bb.length]
