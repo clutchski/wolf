@@ -56,9 +56,13 @@ class wolf.Engine
 
     # Remove the given elements from the engine.
     remove : (elements...) ->
-        # FIXME: won't scale. O(n)
+        # FIXME: won't scale O(n)
         for element in elements
             index = @elements.indexOf(element)
+            # FIXME: element's are often removed while we're iterating the
+            # engine's elements (e.g. during collision handling) which is
+            # causing problematic behaviour and lots of checks for element is
+            # not null when looping over elements.
             @elements.splice(index, 1) if index >= 0
         return this
 
