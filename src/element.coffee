@@ -77,7 +77,7 @@ class wolf.Element
         (@forces.push(f) for f in forces)
         this
 
-    # Update the state of the element with the effect's of the given
+    # Update the state of the element with the effects of the given
     # number of milliseconds elapsing.
     elapse : (milliseconds, iteration) ->
         # Reduce all the forces into a single force.
@@ -135,5 +135,6 @@ class wolf.Element
     # about it's center.
     rotate : (degrees) ->
         throw new Error("Not Implemented error")
+
 # Mix events into the element class.
 wolf.extend(wolf.Element::, wolf.Events)
