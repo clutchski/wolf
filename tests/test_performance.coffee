@@ -54,3 +54,8 @@ JSLitmus.test 'intersects', () ->
 JSLitmus.test 'rotate', () ->
     (p.rotate(random(0, 360)) for p in polygons)
     return this
+
+JSLitmus.test 'Canvas.clear' , () ->
+    canvas = new wolf.Canvas('test-canvas')
+    (canvas.clear() for i in [0..100])
+    this

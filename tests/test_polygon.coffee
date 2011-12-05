@@ -61,5 +61,3 @@ test "rotate", () ->
             almostEqual(e[j], a[j], "vertex #{i}.#{j} rotation")
     almostEqual(square.getPosition().x, -1, "x pos")
     almostEqual(square.getPosition().y, 1, "y pos")
-
-
