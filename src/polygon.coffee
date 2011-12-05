@@ -21,7 +21,7 @@ class wolf.Polygon extends wolf.Element
             fillStyle: "#000"
 
         super(wolf.defaults(opts, defaults))
-        @setVertices(@vertices, silent=true)
+        @setVertices(@vertices)
 
     # Set the position of the polygon to the given point.
     setPosition : (point) ->
@@ -63,12 +63,12 @@ class wolf.Polygon extends wolf.Element
         return c
 
     # Rotate the element counter-clockwise by the given number of degrees.
-    rotate : (degrees, silent=false) ->
+    rotate : (degrees) ->
         return this if not degrees
         c = @getCenter()
         rotatedVertices = for v in @vertices
             v.subtract(c).toVector().rotate(degrees).getEndPoint().add(c)
-        return @setVertices(rotatedVertices, silent)
+        return @setVertices(rotatedVertices)
 
     # Return the element's minimum axis aligned bounding box.
     getBoundingBox : () ->

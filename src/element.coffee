@@ -34,7 +34,7 @@ class wolf.Element
         return new wolf.Point(@x, @y)
 
     # Set the element's position.
-    setPosition : (point, silent=false) ->
+    setPosition : (point) ->
         @x = point.x
         @y = point.y
         return this
