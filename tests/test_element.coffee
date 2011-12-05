@@ -72,3 +72,12 @@ test "setPosition", () ->
     e.setPosition(new wolf.Point(1, 1)) # should fire event
     equals(e.x, 1, "x is correct")
     equals(e.y, 1, "y is correct")
+
+
+test "angle", () ->
+    e = new wolf.Element()
+    equals(e.angle, 0, "initial angle is correct")
+    e.rotate(90)
+    equals(e.angle, 90, "initial angle is correct")
+    e.rotate(720)
+    equals(e.angle, 90, "rotating over 360 is ok")

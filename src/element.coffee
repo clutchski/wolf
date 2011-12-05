@@ -23,6 +23,7 @@ class wolf.Element
             dragCoefficient: 0.7
             restitution: 0.5
             static: false
+            angle: 0
         ((@[k] = v) for k, v of wolf.defaults(opts, defaults))
 
         # A list of of forces that will be applied to the element on the
@@ -118,6 +119,12 @@ class wolf.Element
     isStatic : () ->
         return @static
 
+    # Rotate the element counter-clockwise by the given number of degrees
+    # about it's center.
+    rotate : (degrees) ->
+        @angle = (@angle + degrees) % 360
+        this
+
     # Render the element on the given canvas context.
     render : (context) ->
         throw new Error("Not Implemented error")
@@ -129,11 +136,6 @@ class wolf.Element
     # Return an array of points that when joined create a convex polygon
     # that fully enclosed the element.
     getBoundingBox : () ->
-        throw new Error("Not Implemented error")
-
-    # Rotate the element counter-clockwise by the given number of degrees
-    # about it's center.
-    rotate : (degrees) ->
         throw new Error("Not Implemented error")
 
 # Mix events into the element class.
